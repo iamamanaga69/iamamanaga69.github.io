@@ -2,6 +2,31 @@ const Flexist = (() => {
   const route = document.body.dataset.page || "home";
   const themeKey = "flexist-theme";
 
+  const navItems = [
+    ["home", "./", "Home"],
+    ["about", "about", "About"],
+    ["services", "services", "Services"],
+    ["india-hub", "india-hub", "India Hub"],
+    ["projects", "projects", "Projects"],
+    ["insights", "blog", "Insights"],
+    ["contact", "contact", "Contact"]
+  ];
+
+  const footerLinks = [
+    ["About Flexist", "about"],
+    ["Founder", "founder"],
+    ["Experience", "experience"],
+    ["India Growth Services", "services"],
+    ["India Expansion Hub", "india-hub"],
+    ["Founder Inquiry", "inquiry"]
+  ];
+
+  const socialItems = [
+    ["Telegram", "https://t.me/FlexistCrypto", '<path d="M21 4 3 11.2l6.8 2.4L17 8.2l-5.4 6.8.2 5.1 3.1-3.5 4.2 3L21 4Z"/>'],
+    ["X", "https://x.com/flexistcrypto", '<path d="m4 4 12.4 16H20L7.6 4H4Zm16 0-7.3 8.2M11.4 15.2 4 20"/>'],
+    ["Linktree", "https://linktr.ee/FlexistWeb3", '<path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5M4 12h16"/>']
+  ];
+
   function getPreferredTheme() {
     const preview = new URLSearchParams(window.location.search).get("theme");
     if (preview === "light" || preview === "dark") return preview;
@@ -22,24 +47,11 @@ const Flexist = (() => {
     window.dispatchEvent(new CustomEvent("flexist:themechange", { detail: { theme } }));
   }
 
-  const navItems = [
-    ["home", "index.html", "Home"],
-    ["about", "about.html", "About"],
-    ["services", "services.html", "Services"],
-    ["india-hub", "india-hub.html", "India Hub"],
-    ["projects", "projects.html", "Projects"],
-    ["insights", "blog.html", "Insights"],
-    ["contact", "contact.html", "Contact"]
-  ];
-
-  const footerLinks = [
-    ["About Flexist", "about.html"],
-    ["Founder", "founder.html"],
-    ["Experience", "experience.html"],
-    ["India Growth Services", "services.html"],
-    ["India Expansion Hub", "india-hub.html"],
-    ["Founder Inquiry", "inquiry.html"]
-  ];
+  function socialLink([label, href, icon], withText = false) {
+    return `<a class="social-icon" href="${href}" target="_blank" rel="noreferrer" aria-label="${label}">
+      <svg viewBox="0 0 24 24" aria-hidden="true">${icon}</svg>${withText ? `<span>${label}</span>` : ""}
+    </a>`;
+  }
 
   function renderShell() {
     const nav = document.querySelector("[data-site-nav]");
@@ -49,26 +61,30 @@ const Flexist = (() => {
     favicon.type = "image/png";
     favicon.href = "assets/images/flexist-avatar-192.png";
     document.head.appendChild(favicon);
+
     if (nav) {
       nav.innerHTML = `
         <a class="skip-link" href="#main-content">Skip to content</a>
         <header class="site-nav">
           <div class="container nav-inner">
-            <a class="brand" href="index.html" aria-label="Flexist Crypto home">
+            <a class="brand" href="./" aria-label="Flexist Crypto home">
               <img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt="">
               <span class="gradient-text">FLEXIST CRYPTO</span>
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
               ${navItems.map(([key, href, label]) => `<a class="${route === key ? "active" : ""}" href="${href}">${label}</a>`).join("")}
-              <a class="nav-mobile-cta" href="inquiry.html">Start Expansion</a>
+              <a class="nav-mobile-cta" href="inquiry">Start Expansion</a>
             </nav>
             <div class="nav-actions">
+              <div class="nav-socials" aria-label="Social links">
+                ${socialItems.map((item) => socialLink(item)).join("")}
+              </div>
               <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch theme" title="Switch theme">
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3m0 14v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg>
               </button>
-              <a class="ghost-button" href="contact.html">Schedule Call</a>
-              <a class="neon-button" href="inquiry.html">Start Expansion <span>↗</span></a>
+              <a class="ghost-button" href="contact">Schedule Call</a>
+              <a class="neon-button" href="inquiry">Start Expansion <span>&rarr;</span></a>
               <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
               </button>
@@ -82,12 +98,13 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand" href="index.html"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><span class="gradient-text">FLEXIST CRYPTO</span></a>
+              <a class="brand" href="./"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><span class="gradient-text">FLEXIST CRYPTO</span></a>
               <p class="footer-copy">India growth infrastructure for Web3 projects ready to turn attention into durable adoption.</p>
               <div class="social-links">
-                <a href="https://linktr.ee/FlexistWeb3" target="_blank" rel="noreferrer">Linktree</a>
-                <a href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer">Telegram</a>
-                <a href="mailto:FlexistCrypto@gmail.com">Email</a>
+                ${socialItems.map((item) => socialLink(item, true)).join("")}
+                <a class="social-icon" href="mailto:FlexistCrypto@gmail.com" aria-label="Email">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7"/></svg><span>Email</span>
+                </a>
               </div>
             </div>
             <div>
@@ -105,7 +122,7 @@ const Flexist = (() => {
             </div>
           </div>
           <div class="container footer-bottom">
-            <span>© ${new Date().getFullYear()} Flexist Crypto</span>
+            <span>&copy; ${new Date().getFullYear()} Flexist Crypto</span>
             <span>Built for Web3 founders // India node online</span>
           </div>
         </footer>`;

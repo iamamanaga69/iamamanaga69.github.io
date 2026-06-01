@@ -104,7 +104,7 @@
 
 .framework-step:not(:last-child)::after {
   color: var(--accent-cyan);
-  content: "→";
+  content: "->";
   font-family: var(--font-mono);
   position: absolute;
   right: -17px;
@@ -242,6 +242,14 @@
   font-family: var(--font-mono);
   font-size: 3rem;
   letter-spacing: -0.1em;
+}
+
+.result-summary {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: -10px auto 24px;
+  max-width: 720px;
+  text-align: center;
 }
 
 .recommendation-grid {

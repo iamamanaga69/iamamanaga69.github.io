@@ -2,28 +2,127 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Open a founder inquiry with Flexist Crypto and map your India Web3 growth strategy.">
+  <meta name="description" content="Open a structured India Web3 growth inquiry with Flexist Crypto and receive a readiness ticket.">
   <title>Founder Inquiry Portal | Flexist Crypto</title>
   <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/animations.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/inquiry.css">
 </head>
 <body data-page="inquiry">
   <div data-site-nav></div>
   <main id="main-content">
-    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Founder Inquiry Terminal // Secure Entry</p><h1 class="page-title">START INDIA<br><span class="gradient-text">EXPANSION.</span></h1><p class="page-lede">Give Flexist Crypto the operating context. The right first step is a focused conversation around your stage, goals, and India opportunity.</p></div></section>
+    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Founder Inquiry Terminal // Growth Intake</p><h1 class="page-title">SUBMIT TO THE<br><span class="gradient-text">INDIA GROWTH SYSTEM.</span></h1><p class="page-lede">This is not a contact form. It generates a live inquiry ticket, scores your India readiness, and maps the first operating priorities for your project.</p></div></section>
+
     <section class="section"><div class="container inquiry-layout">
-      <div class="terminal-box">
-        <div class="terminal-head"><span>founder_intake.form</span><span class="terminal-status">encrypted context</span></div>
-        <form class="inquiry-form" data-inquiry-form>
-          <div class="field-grid"><div class="field"><label for="founder-name">Your name</label><input id="founder-name" required placeholder="Founder name"></div><div class="field"><label for="founder-email">Work email</label><input id="founder-email" type="email" required placeholder="founder@protocol.xyz"></div></div>
-          <div class="field-grid"><div class="field"><label for="project-name">Project name</label><input id="project-name" required placeholder="Protocol name"></div><div class="field"><label for="project-stage">Current stage</label><select id="project-stage"><option>Pre-launch</option><option>Live product</option><option>Token launched</option><option>Scaling ecosystem</option></select></div></div>
-          <div class="field-grid"><div class="field"><label for="project-chain">Primary chain</label><select id="project-chain"><option>Ethereum</option><option>Solana</option><option>BNB Chain</option><option>Base</option><option>Polygon</option><option>Other</option></select></div><div class="field"><label for="target-users">6-month India target</label><input id="target-users" type="number" min="1" placeholder="100000"></div></div>
-          <div class="field"><label for="growth-layer">Most urgent growth layer</label><select id="growth-layer"><option>Full India market expansion</option><option>Community architecture</option><option>Influencer and KOL campaigns</option><option>Ambassador program</option><option>Partnership development</option><option>Growth consulting</option></select></div>
-          <div class="field"><label for="founder-context">What should we understand before the call?</label><textarea id="founder-context" rows="6" required placeholder="Share the product, current traction, goals, and the gap you want to close."></textarea></div>
-          <button class="neon-button" type="submit">Transmit Founder Inquiry</button>
+      <div class="terminal-box inquiry-terminal" id="inquiryTerminal">
+        <div class="terminal-topbar">
+          <span class="terminal-dot red"></span><span class="terminal-dot yellow"></span><span class="terminal-dot green"></span>
+          <span class="terminal-path">flexist@crypto:~/inquiry$ <span class="cursor">_</span></span>
+        </div>
+        <div class="inquiry-progress" data-inquiry-progress>
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">Step 1 / 7</span>
+        </div>
+
+        <form class="inquiry-steps" id="inquirySteps" data-inquiry-engine>
+          <section class="inquiry-step active" data-step="1">
+            <div class="step-label">01 // Project Identity</div>
+            <h2 class="step-heading">Tell us about the project.</h2>
+            <div class="field-grid">
+              <div class="field"><label for="projectName">Project name</label><input id="projectName" name="projectName" required placeholder="Protocol name"></div>
+              <div class="field"><label for="projectUrl">Website URL</label><input id="projectUrl" name="projectUrl" type="url" placeholder="https://project.xyz"></div>
+              <div class="field"><label for="projectChain">Blockchain</label><select id="projectChain" name="chain"><option value="">Select blockchain</option><option value="ethereum">Ethereum</option><option value="solana">Solana</option><option value="bnb">BNB Chain</option><option value="base">Base</option><option value="polygon">Polygon</option><option value="other">Other</option></select></div>
+              <div class="field"><label for="projectCategory">Category</label><select id="projectCategory" name="category"><option value="">Project category</option><option value="defi">DeFi</option><option value="gamefi">GameFi</option><option value="nft">NFT</option><option value="infra">Infrastructure</option><option value="wallet">Wallet</option><option value="exchange">Exchange / DEX</option><option value="other">Other</option></select></div>
+            </div>
+          </section>
+
+          <section class="inquiry-step" data-step="2">
+            <div class="step-label">02 // Stage & Funding</div>
+            <h2 class="step-heading">What stage is the project at?</h2>
+            <div class="option-grid">
+              <button class="option-card" type="button" data-field="stage" data-value="bootstrapped">Bootstrapped</button>
+              <button class="option-card" type="button" data-field="stage" data-value="preseed">Pre-seed</button>
+              <button class="option-card" type="button" data-field="stage" data-value="seed">Seed</button>
+              <button class="option-card" type="button" data-field="stage" data-value="seriesa">Series A</button>
+              <button class="option-card" type="button" data-field="stage" data-value="public">Token launched</button>
+              <button class="option-card" type="button" data-field="stage" data-value="scaling">Scaling ecosystem</button>
+            </div>
+            <div class="field spaced"><label for="launchStatus">Launch status</label><select id="launchStatus" name="launchStatus"><option value="">Launch status</option><option value="prelaunched">Not yet launched</option><option value="soft">Soft launch</option><option value="live">Live product</option></select></div>
+          </section>
+
+          <section class="inquiry-step" data-step="3">
+            <div class="step-label">03 // Current Community State</div>
+            <h2 class="step-heading">Where is your community today?</h2>
+            <div class="field-grid">
+              <div class="field"><label for="telegramSize">Telegram members</label><select id="telegramSize"><option value="0">No Telegram</option><option value="1">Under 500</option><option value="2">500 - 5K</option><option value="3">5K - 50K</option><option value="4">50K+</option></select></div>
+              <div class="field"><label for="discordSize">Discord members</label><select id="discordSize"><option value="0">No Discord</option><option value="1">Under 1K</option><option value="2">1K - 10K</option><option value="3">10K+</option></select></div>
+              <div class="field"><label for="twitterSize">Twitter / X followers</label><select id="twitterSize"><option value="0">No presence</option><option value="1">Under 1K</option><option value="2">1K - 10K</option><option value="3">10K - 100K</option><option value="4">100K+</option></select></div>
+              <div class="field"><label for="totalUsers">Users / holders</label><select id="totalUsers"><option value="0">Under 1,000</option><option value="1">1K - 10K</option><option value="2">10K - 100K</option><option value="3">100K+</option></select></div>
+            </div>
+          </section>
+
+          <section class="inquiry-step" data-step="4">
+            <div class="step-label">04 // India Goals</div>
+            <h2 class="step-heading">What does success in India look like?</h2>
+            <div class="field"><label for="indiaTarget">Target Indian users in 6 months</label><input id="indiaTarget" type="number" min="0" placeholder="100000"></div>
+            <div class="checkbox-group"><p class="field-label">Priority platforms</p><label><input type="checkbox" value="telegram" class="india-platform"> Telegram</label><label><input type="checkbox" value="youtube" class="india-platform"> YouTube</label><label><input type="checkbox" value="twitter" class="india-platform"> Twitter / X</label><label><input type="checkbox" value="discord" class="india-platform"> Discord</label></div>
+          </section>
+
+          <section class="inquiry-step" data-step="5">
+            <div class="step-label">05 // Budget & Timeline</div>
+            <h2 class="step-heading">What resources are available?</h2>
+            <div class="option-grid two-col">
+              <button class="option-card" type="button" data-field="budget" data-value="sub1k">Under $1K/mo</button>
+              <button class="option-card" type="button" data-field="budget" data-value="1to5k">$1K - $5K/mo</button>
+              <button class="option-card" type="button" data-field="budget" data-value="5to20k">$5K - $20K/mo</button>
+              <button class="option-card" type="button" data-field="budget" data-value="20kplus">$20K+/mo</button>
+            </div>
+            <div class="field spaced"><label for="launchUrgency">India launch timing</label><select id="launchUrgency"><option value="">India launch timing</option><option value="1month">Within 1 month</option><option value="3months">1 - 3 months</option><option value="6months">3 - 6 months</option><option value="flexible">Flexible</option></select></div>
+          </section>
+
+          <section class="inquiry-step" data-step="6">
+            <div class="step-label">06 // Growth Layers</div>
+            <h2 class="step-heading">Which Flexist layers do you need?</h2>
+            <div class="checkbox-grid">
+              <label><input type="checkbox" value="community" class="service-select"> Community Architecture</label>
+              <label><input type="checkbox" value="expansion" class="service-select"> India Market Expansion</label>
+              <label><input type="checkbox" value="kol" class="service-select"> Influencer / KOL Campaigns</label>
+              <label><input type="checkbox" value="ambassador" class="service-select"> Ambassador Program</label>
+              <label><input type="checkbox" value="partnerships" class="service-select"> Partnership Development</label>
+              <label><input type="checkbox" value="consulting" class="service-select"> Growth Consulting</label>
+            </div>
+          </section>
+
+          <section class="inquiry-step" data-step="7">
+            <div class="step-label">07 // Founder Contact</div>
+            <h2 class="step-heading">Where should the strategy thread go?</h2>
+            <div class="field-grid"><div class="field"><label for="founderName">Founder name</label><input id="founderName" required placeholder="Your name"></div><div class="field"><label for="founderEmail">Email</label><input id="founderEmail" type="email" required placeholder="founder@project.xyz"></div><div class="field"><label for="founderTelegram">Telegram</label><input id="founderTelegram" placeholder="@username"></div></div>
+            <div class="field"><label for="founderContext">Context</label><textarea id="founderContext" rows="5" placeholder="Share traction, launch goals, blockers, and the exact India outcome you want."></textarea></div>
+          </section>
+
+          <div class="step-nav"><button class="ghost-button" type="button" data-back>Back</button><button class="neon-button" type="button" data-next>Continue</button></div>
+          <p class="form-note" data-inquiry-note></p>
         </form>
-        <div class="success-panel" data-inquiry-success><strong>✓</strong><h2>Inquiry staged.</h2><p>Your project context is ready. Email <a class="gradient-text" href="mailto:FlexistCrypto@gmail.com">FlexistCrypto@gmail.com</a> to transmit the private thread directly.</p><a class="neon-button" href="mailto:FlexistCrypto@gmail.com?subject=Founder%20Inquiry%20-%20India%20Expansion">Open Email Terminal</a></div>
+
+        <section class="inquiry-ticket" id="inquiryTicket" hidden>
+          <div class="ticket-header"><span class="tag-chip signal">Inquiry Ticket</span><strong id="ticketId">FC-0000</strong></div>
+          <div class="ticket-score"><span id="scoreNumber">0/100</span><div class="score-gauge"><i id="scoreGaugeFill"></i></div></div>
+          <div class="ticket-grid">
+            <div><span>Project</span><strong id="ticketProject">-</strong></div>
+            <div><span>Chain</span><strong id="ticketChain">-</strong></div>
+            <div><span>Stage</span><strong id="ticketStage">-</strong></div>
+            <div><span>India Target</span><strong id="ticketTarget">-</strong></div>
+            <div><span>Budget</span><strong id="ticketBudget">-</strong></div>
+            <div><span>Services</span><strong id="ticketServices">-</strong></div>
+          </div>
+          <div class="recommendation-grid ticket-insights">
+            <article class="glass-card recommendation"><h4>Strengths</h4><ul id="strengthsList"></ul></article>
+            <article class="glass-card recommendation"><h4>Gaps</h4><ul id="gapsList"></ul></article>
+            <article class="glass-card recommendation"><h4>Next Actions</h4><ul id="actionsList"></ul></article>
+          </div>
+          <div class="button-row"><a class="neon-button" id="ticketEmail" href="mailto:FlexistCrypto@gmail.com">Send Ticket By Email</a><a class="ghost-button" href="contact">Open Contact Terminal</a></div>
+        </section>
       </div>
-      <aside class="inquiry-aside"><article class="glass-card"><span class="tag-chip signal">Step 01</span><h3>Transmit Context</h3><p>Share the project stage, target, and highest-priority operating gap.</p></article><article class="glass-card"><span class="tag-chip">Step 02</span><h3>Strategy Review</h3><p>Flexist Crypto maps the fastest path to useful India growth signals.</p></article><article class="glass-card"><span class="tag-chip">Step 03</span><h3>Deploy Framework</h3><p>Move from discussion into a scoped operating plan with clear next actions.</p></article></aside>
+
+      <aside class="inquiry-aside"><article class="glass-card"><span class="tag-chip signal">Output</span><h3>Readiness Score</h3><p>Calculated from community presence, budget, launch urgency, and growth-layer seriousness.</p></article><article class="glass-card"><span class="tag-chip">Ticket</span><h3>Founder Context</h3><p>Generates an FC ticket ID with project details and recommended action lanes.</p></article><article class="glass-card"><span class="tag-chip">Next</span><h3>Strategy Thread</h3><p>The email CTA carries your ticket details into a proper founder conversation.</p></article></aside>
     </div></section>
   </main>
   <div data-site-footer></div><script src="js/global.js"></script><script src="js/inquiry.js"></script>
