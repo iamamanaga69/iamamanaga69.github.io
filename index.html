@@ -3,144 +3,262 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { content: ["*"], theme: { extend: { colors: { crypto: '#10b981' } } } }
-  </script>
+  <meta name="description" content="Flexist Crypto is India growth infrastructure for Web3 projects: communities, KOL campaigns, ambassadors, partnerships, and market expansion.">
   <title>FLEXIST CRYPTO | India Growth Infrastructure for Web3</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/home.css">
 </head>
-<body class="bg-black text-white antialiased">
-  <div data-nav></div>
-  <main>
-    <section class="relative overflow-hidden px-4 py-20 sm:py-28">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,185,129,.22),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,.14),transparent_30%)]"></div>
-      <div class="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
-        <div>
-          <p class="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">India's Web3 Growth Operator</p>
-          <h1 class="max-w-5xl text-5xl font-black leading-[.94] tracking-tight sm:text-7xl lg:text-8xl">FLEXIST CRYPTO | <span class="text-emerald-400">India Growth Infrastructure for Web3</span></h1>
-          <h2 class="mt-8 text-2xl font-black leading-tight text-zinc-100 sm:text-4xl">Building Communities. Driving Adoption. Scaling Web3 Across India.</h2>
-          <p class="mt-6 max-w-3xl text-lg leading-8 text-zinc-300">From Telegram communities to influencer campaigns, ambassador programs to partnership networks, we are the growth infrastructure Web3 projects need to win India.</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <span class="rounded-full border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300">Community Growth</span>
-            <span class="rounded-full border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300">Partnerships</span>
-            <span class="rounded-full border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300">Influencer Campaigns</span>
-            <span class="rounded-full border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300">Ambassador Operations</span>
-            <span class="rounded-full border border-emerald-500/30 px-4 py-2 text-sm text-emerald-300">India Expansion</span>
+<body data-page="home">
+  <div data-site-nav></div>
+  <main id="main-content">
+    <section class="home-hero">
+      <canvas id="network-canvas" aria-hidden="true"></canvas>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="section-label">India's Web3 Growth Operator</span>
+          <h1 class="hero-title gradient-text">FLEXIST<br>CRYPTO</h1>
+          <h2 class="hero-tagline">Building Communities.<br>Driving Adoption.<br>Scaling Web3 Across India.</h2>
+          <p class="hero-copy">From Telegram communities to influencer campaigns, ambassador programs to partnership networks, we are the growth infrastructure Web3 projects need to win India.</p>
+          <div class="chip-row">
+            <span class="tag-chip">Community Growth</span>
+            <span class="tag-chip">Partnerships</span>
+            <span class="tag-chip">Influencer Campaigns</span>
+            <span class="tag-chip">Ambassador Operations</span>
+            <span class="tag-chip">India Expansion</span>
           </div>
-          <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <a class="rounded-full bg-emerald-500 px-5 py-4 text-center font-black text-black" href="experience">See Full Experience →</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="services">All Services</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="india-hub">Enter India Hub</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="#project-founder">I'm a Project Founder</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="influencers">I'm an Influencer → Work With Me</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="#book-call">Book Discovery Call</a>
+          <div class="button-row">
+            <a class="neon-button" href="inquiry">Start India Expansion <span>→</span></a>
+            <a class="ghost-button" href="contact">Schedule Strategy Call</a>
           </div>
         </div>
-        <div class="rounded-3xl border border-emerald-500/20 bg-zinc-950/70 p-4 shadow-2xl shadow-emerald-500/10">
-          <img src="assets/images/flexist-hero-operator.png" alt="Flexist Crypto operator" class="rounded-2xl">
-        </div>
+        <figure class="hero-brand-art">
+          <img src="assets/images/flexist-hero-operator.png" alt="Anime-inspired Flexist Crypto operator overlooking a neon Web3 city">
+          <figcaption>India node // operator online</figcaption>
+        </figure>
       </div>
-      <div id="book-call" class="relative mx-auto mt-16 max-w-4xl rounded-3xl border border-emerald-500/20 bg-zinc-950/80 p-4">
-        <!-- Calendly inline widget begin -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/flexist" style="min-width:320px;height:700px;"></div>
-        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <!-- Calendly inline widget end -->
+      <div class="scroll-cue">Initialize growth system</div>
+    </section>
+
+    <section class="metric-strip" aria-label="Flexist Crypto metrics">
+      <div class="container metric-grid">
+        <div class="stat-counter"><strong data-counter="years">0+</strong><span>Years In Crypto</span></div>
+        <div class="stat-counter"><strong data-counter="projects">0+</strong><span>Projects Operated</span></div>
+        <div class="stat-counter"><strong data-counter="members">0+</strong><span>Members Grown</span></div>
+        <div class="stat-counter"><strong data-counter="languages">0</strong><span>Languages Used</span></div>
+        <div class="stat-counter"><strong data-counter="loops">∞</strong><span>Growth Loops Built</span></div>
       </div>
     </section>
 
-    <section class="border-y border-emerald-500/20 bg-zinc-950 px-4 py-10">
-      <div class="mx-auto grid max-w-7xl gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <div class="rounded-2xl border border-zinc-800 p-6"><strong class="text-4xl text-emerald-400">5+</strong><p class="mt-2 text-sm uppercase tracking-[0.18em] text-zinc-500">Years In Crypto</p></div>
-        <div class="rounded-2xl border border-zinc-800 p-6"><strong class="text-4xl text-emerald-400">5+</strong><p class="mt-2 text-sm uppercase tracking-[0.18em] text-zinc-500">Projects Operated</p></div>
-        <div class="rounded-2xl border border-zinc-800 p-6"><strong class="text-4xl text-emerald-400">500+</strong><p class="mt-2 text-sm uppercase tracking-[0.18em] text-zinc-500">Members Grown</p></div>
-        <div class="rounded-2xl border border-zinc-800 p-6"><strong class="text-4xl text-emerald-400">4</strong><p class="mt-2 text-sm uppercase tracking-[0.18em] text-zinc-500">Languages Used</p></div>
-        <div class="rounded-2xl border border-zinc-800 p-6"><strong class="text-4xl text-emerald-400">∞</strong><p class="mt-2 text-sm uppercase tracking-[0.18em] text-zinc-500">Growth Loops Built</p></div>
-      </div>
-    </section>
-
-    <section id="project-founder" class="px-4 py-20">
-      <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr]">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">What Flexist Is</p>
-          <h2 class="text-4xl font-black leading-tight sm:text-6xl">Not a freelancer. <span class="text-emerald-400">A growth layer.</span></h2>
+    <section class="section">
+      <div class="container split-layout">
+        <div class="manifesto-copy reveal">
+          <span class="section-label">What Flexist Is</span>
+          <h2 class="section-title">Not a freelancer.<br><span class="gradient-text">A growth layer.</span></h2>
+          <p>Flexist Crypto was built from the ground up inside the crypto trenches. Not from a course, not from a YouTube video — from four years of actual operations inside live Web3 projects, navigating Telegram communities, sourcing collabs, running ambassador pipelines, and helping projects grow real user bases in India.</p>
+          <p>If you're a crypto project that wants users, not just wallet addresses — community members, not just Telegram joins — you need someone who understands how India's crypto culture actually works. That's what Flexist Crypto offers.</p>
         </div>
-        <div class="space-y-6 text-lg leading-9 text-zinc-300">
-          <p>Flexist Crypto was built from the ground up inside the crypto trenches. Not from a course, not from a YouTube video — from four years of actual operations inside live Web3 projects, navigating Telegram communities, sourcing collabs, running ambassador pipelines, and helping projects grow real user bases in India. If you're a crypto project that wants users, not just wallet addresses — community members, not just Telegram joins — you need someone who understands how India's crypto culture actually works. That's what Flexist Crypto offers.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-zinc-950 px-4 py-20">
-      <div class="mx-auto max-w-7xl">
-        <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Core Growth Stack</p>
-        <h2 class="max-w-4xl text-4xl font-black leading-tight sm:text-6xl">Built for the full India expansion cycle.</h2>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-zinc-400">Each service is designed as an operational layer. Deploy one where the gap is sharpest or combine them into a complete India growth system.</p>
-        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">Community Architecture</h3><p class="mt-4 leading-7 text-zinc-400">Telegram and Discord ecosystems designed for real conversations, trusted support, and retention.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">India Market Expansion</h3><p class="mt-4 leading-7 text-zinc-400">Full-stack market entry strategy shaped around how Indian crypto users actually discover and trust.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">Influencer & KOL Campaigns</h3><p class="mt-4 leading-7 text-zinc-400">Indian crypto YouTubers, X voices, educators, and regional creators aligned to campaign intent.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">Ambassador Programs</h3><p class="mt-4 leading-7 text-zinc-400">Recruitment, training, incentives, execution systems, and reporting for distributed operators.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">Partnership Operations</h3><p class="mt-4 leading-7 text-zinc-400">Cross-project collaborations, ecosystem relationships, campaign partners, and deal momentum.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><h3 class="text-2xl font-black">Growth Consulting</h3><p class="mt-4 leading-7 text-zinc-400">Positioning, launch sequencing, community diagnostics, and execution-ready operating roadmaps.</p></article>
+        <div class="terminal-box capability-console reveal">
+          <div class="terminal-head"><span>growth_stack.sys</span><span class="terminal-status">operational</span></div>
+          <div class="console-row"><span>community_architecture</span><i></i></div>
+          <div class="console-row"><span>kol_distribution</span><i></i></div>
+          <div class="console-row"><span>ambassador_engine</span><i></i></div>
+          <div class="console-row"><span>partnership_network</span><i></i></div>
+          <div class="console-row"><span>india_market_intelligence</span><i></i></div>
         </div>
       </div>
     </section>
 
-    <section class="px-4 py-20">
-      <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">India Opportunity Layer</p>
-          <h2 class="text-4xl font-black leading-tight sm:text-6xl">Why India Is Your Next <span class="text-emerald-400">100,000 Users.</span></h2>
-          <p class="mt-6 text-lg leading-8 text-zinc-300">India is not one audience. It is a distributed network of trading groups, regional creators, builders, students, and relentless early adopters. A winning strategy maps those nodes and activates them in the right sequence.</p>
+    <section class="section section-dark">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Core Growth Stack</span>
+          <h2 class="section-title">Built for the full India expansion cycle.</h2>
+          <p class="section-copy">Each service is designed as an operational layer. Deploy one where the gap is sharpest or combine them into a complete India growth system.</p>
         </div>
-        <div class="grid gap-4 sm:grid-cols-3">
-          <div class="rounded-3xl border border-emerald-500/20 bg-zinc-950 p-6"><strong class="text-3xl text-emerald-400">100M+</strong><p class="mt-2 text-zinc-400">Market Potential</p></div>
-          <div class="rounded-3xl border border-emerald-500/20 bg-zinc-950 p-6"><strong class="text-3xl text-emerald-400">Telegram</strong><p class="mt-2 text-zinc-400">Native</p></div>
-          <div class="rounded-3xl border border-emerald-500/20 bg-zinc-950 p-6"><strong class="text-3xl text-emerald-400">YouTube</strong><p class="mt-2 text-zinc-400">Led Discovery</p></div>
+        <div class="grid-3">
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18v-5m8 5V6m8 12V9M2 20h20"/></svg></div>
+            <h3>Community Architecture</h3>
+            <p>Telegram and Discord ecosystems designed for real conversations, trusted support, and retention.</p>
+            <a href="community">Learn More →</a>
+          </article>
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0c2.5-2.4 3.5-5.4 3-9-.4-3-1.4-6-3-9m0 18c-2.5-2.4-3.5-5.4-3-9 .4-3 1.4-6 3-9M3 12h18"/></svg></div>
+            <h3>India Market Expansion</h3>
+            <p>Full-stack market entry strategy shaped around how Indian crypto users actually discover and trust.</p>
+            <a href="india-hub">Learn More →</a>
+          </article>
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M4 17a3 3 0 1 0 0-6m4 6a7 7 0 1 0 0-6m4 6a11 11 0 1 0 0-6"/></svg></div>
+            <h3>Influencer & KOL Campaigns</h3>
+            <p>Indian crypto YouTubers, X voices, educators, and regional creators aligned to campaign intent.</p>
+            <a href="influencers">Learn More →</a>
+          </article>
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M8 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm8 2a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2 21c0-4 2.7-6 6-6s6 2 6 6m0 0c0-2.7 1.8-4 4-4s4 1.3 4 4"/></svg></div>
+            <h3>Ambassador Programs</h3>
+            <p>Recruitment, training, incentives, execution systems, and reporting for distributed operators.</p>
+            <a href="ambassadors">Learn More →</a>
+          </article>
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="m8 12 3 3 5-6M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg></div>
+            <h3>Partnership Operations</h3>
+            <p>Cross-project collaborations, ecosystem relationships, campaign partners, and deal momentum.</p>
+            <a href="partnerships">Learn More →</a>
+          </article>
+          <article class="glass-card hoverable service-card reveal">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v4m0 12v4M4.9 4.9l2.8 2.8m8.6 8.6 2.8 2.8M2 12h4m12 0h4M4.9 19.1l2.8-2.8m8.6-8.6 2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></div>
+            <h3>Growth Consulting</h3>
+            <p>Positioning, launch sequencing, community diagnostics, and execution-ready operating roadmaps.</p>
+            <a href="services#consulting">Learn More →</a>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="bg-zinc-950 px-4 py-20">
-      <div class="mx-auto max-w-7xl">
-        <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Operating Framework</p>
-        <h2 class="text-4xl font-black sm:text-6xl">From first call to full execution.</h2>
-        <div class="mt-10 grid gap-5 lg:grid-cols-3">
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><span class="text-emerald-400">01</span><h3 class="mt-4 text-2xl font-black">Discovery Call</h3><p class="mt-3 leading-7 text-zinc-400">We map your project's goals against India's growth landscape.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><span class="text-emerald-400">02</span><h3 class="mt-4 text-2xl font-black">Custom Growth Framework</h3><p class="mt-3 leading-7 text-zinc-400">We architect a strategy across communities, influencers, ambassadors, and partnerships.</p></article>
-          <article class="rounded-3xl border border-zinc-800 bg-black p-6"><span class="text-emerald-400">03</span><h3 class="mt-4 text-2xl font-black">Full Execution</h3><p class="mt-3 leading-7 text-zinc-400">We run it. You scale. India becomes your top acquisition channel.</p></article>
+    <section class="section india-showcase">
+      <div class="container split-layout">
+        <div class="reveal">
+          <span class="section-label">India Opportunity Layer</span>
+          <h2 class="section-title">Why India Is Your Next <span class="gradient-text">100,000 Users.</span></h2>
+          <p>India is not one audience. It is a distributed network of trading groups, regional creators, builders, students, and relentless early adopters. A winning strategy maps those nodes and activates them in the right sequence.</p>
+          <div class="chip-row">
+            <span class="tag-chip signal">100M+ Market Potential</span>
+            <span class="tag-chip">Telegram Native</span>
+            <span class="tag-chip">YouTube Led Discovery</span>
+          </div>
+          <a class="ghost-button" href="india-hub">Enter India Expansion Hub →</a>
         </div>
-      </div>
-    </section>
-
-    <section class="px-4 py-20">
-      <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_.9fr]">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Field Experience</p>
-          <h2 class="text-4xl font-black sm:text-6xl">Built inside live Web3 operations.</h2>
-          <div class="mt-8 grid gap-4">
-            <div class="rounded-2xl border border-zinc-800 p-5"><strong>FABWELT</strong><p class="mt-2 text-zinc-400">Moderated Telegram and Discord while resolving user questions with the wider operator team.</p></div>
-            <div class="rounded-2xl border border-zinc-800 p-5"><strong>RRG VENTURES</strong><p class="mt-2 text-zinc-400">Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></div>
-            <div class="rounded-2xl border border-zinc-800 p-5"><strong>UNIELON WALLET</strong><p class="mt-2 text-zinc-400">Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></div>
-            <div class="rounded-2xl border border-zinc-800 p-5"><strong>UXUY WALLET</strong><p class="mt-2 text-zinc-400">Promoted the project on X while supporting users across Telegram and Discord.</p></div>
-            <div class="rounded-2xl border border-zinc-800 p-5"><strong>MAESTRO BOTS</strong><p class="mt-2 text-zinc-400">Operating as Indian Ambassador, translating product momentum into local market trust.</p></div>
+        <div class="glass-card map-shell reveal">
+          <div class="terminal-head"><span>india_signal_map.svg</span><span class="terminal-status">live</span></div>
+          <div class="india-map" data-india-map>
+            <svg viewBox="0 0 260 330" aria-label="Stylized India opportunity map">
+              <path data-state="delhi" tabindex="0" d="M104 76 128 69l17 14-10 19-25 3-15-14Z"/>
+              <path data-state="maharashtra" tabindex="0" d="M57 174 122 161l24 28-25 35-56-12-19-21Z"/>
+              <path data-state="karnataka" tabindex="0" d="m82 223 48 2 12 55-36 26-26-33Z"/>
+              <path data-state="gujarat" tabindex="0" d="m30 134 56-13 30 35-59 18-31-20Z"/>
+              <path data-state="westbengal" tabindex="0" d="m174 144 36 14-13 49-29-17-8-28Z"/>
+              <path data-state="telangana" tabindex="0" d="m127 190 39-8 18 34-31 29-24-21Z"/>
+              <path data-state="tamilnadu" tabindex="0" d="m142 246 35 9-8 61-29 10-11-45Z"/>
+            </svg>
+            <div class="map-tooltip" data-map-tooltip></div>
           </div>
         </div>
-        <div>
-          <h3 class="mb-4 text-2xl font-black">[YOUR HUMAN COPY HERE ONLY]</h3>
-          <form action="https://formspree.io/f/xredwjao" method="POST" class="space-y-6 bg-zinc-900 p-6 rounded-xl">
-            <input type="text" name="name" placeholder="Your name" class="w-full p-3 bg-zinc-800" required>
-            <input type="email" name="email" placeholder="Email" class="w-full p-3 bg-zinc-800" required>
-            <select name="type" class="w-full p-3 bg-zinc-800"><option>Project Inquiry</option><option>Influencer Collab</option><option>Ambassador</option><option>Consulting</option><option>Other</option></select>
-            <textarea name="message" rows="4" placeholder="Tell me about your project or collab" class="w-full p-3 bg-zinc-800"></textarea>
-            <input type="hidden" name="_subject" value="flexist.in Enquiry">
-            <button type="submit" class="w-full bg-emerald-500 py-4 font-bold text-lg">SEND MESSAGE → Reaches Aman Instantly</button>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-label">Operating Framework</span>
+          <h2 class="section-title">From first call to full execution.</h2>
+        </div>
+        <div class="growth-flow">
+          <article class="glass-card flow-step reveal">
+            <span class="flow-index">01</span>
+            <h3>Discovery Call</h3>
+            <p>We map your project's goals against India's growth landscape.</p>
+          </article>
+          <article class="glass-card flow-step reveal">
+            <span class="flow-index">02</span>
+            <h3>Custom Growth Framework</h3>
+            <p>We architect a strategy across communities, influencers, ambassadors, and partnerships.</p>
+          </article>
+          <article class="glass-card flow-step reveal">
+            <span class="flow-index">03</span>
+            <h3>Full Execution</h3>
+            <p>We run it. You scale. India becomes your top acquisition channel.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Field Experience</span>
+          <h2 class="section-title">Built inside live Web3 operations.</h2>
+        </div>
+        <div class="timeline-preview">
+          <article class="glass-card milestone"><small>2020 — 2021</small><h3>FABWELT</h3><p>Moderated Telegram and Discord while resolving user questions with the wider operator team.</p></article>
+          <article class="glass-card milestone"><small>2021 — 2022</small><h3>RRG VENTURES</h3><p>Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></article>
+          <article class="glass-card milestone"><small>MAR 2022 — NOV 2023</small><h3>UNIELON WALLET</h3><p>Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></article>
+          <article class="glass-card milestone"><small>JUL 2023 — DEC 2024</small><h3>UXUY WALLET</h3><p>Promoted the project on X while supporting users across Telegram and Discord.</p></article>
+          <article class="glass-card milestone"><small>JUL 2024 — PRESENT</small><h3>MAESTRO BOTS</h3><p>Operating as Indian Ambassador, translating product momentum into local market trust.</p></article>
+        </div>
+        <div class="button-row"><a class="ghost-button" href="experience">View Full Experience →</a></div>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container">
+        <div class="glass-card readiness-mini reveal">
+          <div>
+            <span class="section-label">Readiness Signal</span>
+            <h2>How India-ready is your project?</h2>
+            <p>Run a fast protocol check, then use the full assessment for an execution map.</p>
+          </div>
+          <form class="readiness-form" data-mini-readiness>
+            <div class="field"><label for="project-name">Project name</label><input id="project-name" name="project" placeholder="Protocol name" required></div>
+            <div class="field"><label for="chain">Blockchain</label><select id="chain" name="chain"><option>Ethereum</option><option>Solana</option><option>BNB Chain</option><option>Base</option><option>Polygon</option><option>Other</option></select></div>
+            <button class="neon-button" type="submit">Check India Readiness</button>
+            <div class="loading-track" data-mini-track><span></span></div>
+            <div class="readiness-result" data-mini-result></div>
           </form>
         </div>
       </div>
     </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Operator Signals</span>
+          <h2 class="section-title">Trusted where execution matters.</h2>
+        </div>
+        <div class="carousel-viewport glass-card reveal">
+          <div class="carousel-track" data-carousel-track>
+            <article class="testimonial"><blockquote>“Flexist brought discipline to the daily community layer: fast support, clear communication, and the ability to keep users engaged when the pace changed.”</blockquote><cite>Project Operator // Fabwelt</cite></article>
+            <article class="testimonial"><blockquote>“Collaboration operations move quickly in crypto. Flexist understood how to source the right campaign connections and keep allocation conversations organized.”</blockquote><cite>Community Lead // RRG Ventures</cite></article>
+            <article class="testimonial"><blockquote>“The Unielon Telegram group gained more than numbers. It gained active members, stronger discussions, and an operator who treated momentum as a system.”</blockquote><cite>Core Team // Unielon Wallet</cite></article>
+          </div>
+        </div>
+        <div class="carousel-dots" aria-label="Testimonial carousel controls">
+          <button class="carousel-dot active" data-carousel-dot type="button" aria-label="Show testimonial 1"></button>
+          <button class="carousel-dot" data-carousel-dot type="button" aria-label="Show testimonial 2"></button>
+          <button class="carousel-dot" data-carousel-dot type="button" aria-label="Show testimonial 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <div class="logo-marquee" aria-label="Projects and ecosystems">
+      <div class="logo-track">
+        <span>Fabwelt</span><span>RRG Ventures</span><span>Unielon Wallet</span><span>UXUY Wallet</span><span>Maestro Bots</span><span>Undisclosed Project</span><span>India Web3 Network</span>
+        <span>Fabwelt</span><span>RRG Ventures</span><span>Unielon Wallet</span><span>UXUY Wallet</span><span>Maestro Bots</span><span>Undisclosed Project</span><span>India Web3 Network</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal">
+          <span class="section-label">Founder Entry Point</span>
+          <h2>Ready To Build Your India User Base?</h2>
+          <p>Every week without an India strategy is a week of lost users. Let's change that.</p>
+          <div class="button-row">
+            <a class="neon-button" href="inquiry">Open Founder Inquiry Portal</a>
+            <a class="ghost-button" href="india-hub">View India Expansion Hub</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <div data-footer></div>
-  <script src="shared-nav-footer.js"></script>
+  <div data-site-footer></div>
+  <script src="js/global.js"></script>
+  <script src="js/network-graph.js"></script>
+  <script src="js/counters.js"></script>
+  <script src="js/india-map.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

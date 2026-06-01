@@ -1,114 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { content: ["*"], theme: { extend: { colors: { crypto: '#10b981' } } } }
-  </script>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the Flexist Crypto India influencer and KOL network model across YouTube, X, Telegram, regional, and education channels.">
   <title>Influencer Network | Flexist Crypto</title>
+  <link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/components.css"><link rel="stylesheet" href="css/animations.css"><link rel="stylesheet" href="css/pages.css"><link rel="stylesheet" href="css/influencers.css">
 </head>
-<body class="bg-black text-white antialiased">
-  <div data-nav></div>
-  <main>
-    <section class="relative overflow-hidden px-4 py-16 sm:py-24">
-      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(16,185,129,.2),transparent_30%),radial-gradient(circle_at_20%_30%,rgba(59,130,246,.12),transparent_28%)]"></div>
-      <div class="relative mx-auto max-w-7xl">
-        <div class="mb-8 text-sm text-zinc-500"><a class="hover:text-emerald-400" href="./">Home</a> / <span class="text-emerald-400">Influencers</span></div>
-        <p class="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Creator Distribution Graph // Curated Access</p>
-        <h1 class="max-w-5xl text-5xl font-black leading-[.95] tracking-tight sm:text-7xl lg:text-8xl">INDIA KOL <span class="text-emerald-400">NETWORK.</span></h1>
-        <p class="mt-7 max-w-3xl text-xl leading-9 text-zinc-300">Build a creator mix around audience trust, platform behavior, language, category, and campaign intent. Directory entries are representative network profiles; specific connections are scoped privately.</p>
-        <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          <a class="rounded-full bg-emerald-500 px-5 py-4 text-center font-black text-black" href="experience">See Full Experience →</a>
-          <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="services">All Services</a>
-          <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="india-hub">Enter India Hub</a>
-          <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="#contact">I'm a Project Founder</a>
-          <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="#collab">I'm an Influencer → Work With Me</a>
-          <a class="rounded-full border border-zinc-700 px-5 py-4 text-center font-bold text-zinc-200 hover:border-emerald-400" href="#book-call">Book Discovery Call</a>
-        </div>
+<body data-page="influencers">
+  <div data-site-nav></div>
+  <main id="main-content">
+    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Creator Distribution Graph // Curated Access</p><h1 class="page-title">INDIA KOL<br><span class="gradient-text">NETWORK.</span></h1><p class="page-lede">Build a creator mix around audience trust, platform behavior, language, category, and campaign intent. Directory entries are representative network profiles; specific connections are scoped privately.</p></div></section>
+    <section class="section"><div class="container"><div class="directory-toolbar"><div class="field"><label for="directory-search">Search directory signals</label><input id="directory-search" data-directory-search placeholder="Search platform, niche, language..."></div><span class="directory-count" data-directory-count></span></div><div class="filter-row"><button class="filter-button active" type="button" data-filter="all">All</button><button class="filter-button" type="button" data-filter="youtube">YouTube</button><button class="filter-button" type="button" data-filter="x">Twitter / X</button><button class="filter-button" type="button" data-filter="telegram">Telegram</button><button class="filter-button" type="button" data-filter="regional">Regional</button><button class="filter-button" type="button" data-filter="educator">Educators</button><button class="filter-button" type="button" data-filter="community">Community Leaders</button><button class="filter-button" type="button" data-filter="campaign">Campaign Specialists</button></div>
+      <div class="influencer-grid">
+        <article class="glass-card influencer-card" data-categories="youtube educator"><div class="influencer-top"><span class="platform-code">YT // EDUCATOR</span><span class="audience">500K+</span></div><h3>Protocol Explainer</h3><p>Hindi and English deep-dive content for broad retail education.</p><div class="chip-row"><span class="tag-chip">General Crypto</span><span class="tag-chip">Hinglish</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="x campaign"><div class="influencer-top"><span class="platform-code">X // TRADER</span><span class="audience">100K+</span></div><h3>Market Signal Desk</h3><p>Fast-moving X distribution for trading tools, launches, and narratives.</p><div class="chip-row"><span class="tag-chip">DeFi</span><span class="tag-chip">English</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="telegram community"><div class="influencer-top"><span class="platform-code">TG // COMMUNITY</span><span class="audience">50K+</span></div><h3>Alpha Community</h3><p>Telegram-native discovery with strong retail conversation loops.</p><div class="chip-row"><span class="tag-chip">General Crypto</span><span class="tag-chip">Hinglish</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="youtube regional educator"><div class="influencer-top"><span class="platform-code">YT // REGIONAL</span><span class="audience">100K+</span></div><h3>South Chain Lens</h3><p>Regional-language tutorials and accessible product explainers.</p><div class="chip-row"><span class="tag-chip">L1 / L2</span><span class="tag-chip">Tamil</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="x educator"><div class="influencer-top"><span class="platform-code">X // BUILDER</span><span class="audience">25K+</span></div><h3>Builder Context</h3><p>Technical credibility for product narratives and ecosystem threads.</p><div class="chip-row"><span class="tag-chip">L1 / L2</span><span class="tag-chip">English</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="telegram campaign"><div class="influencer-top"><span class="platform-code">TG // CAMPAIGN</span><span class="audience">75K+</span></div><h3>Launch Relay</h3><p>High-speed campaign amplification with Telegram-first audiences.</p><div class="chip-row"><span class="tag-chip">Listings</span><span class="tag-chip">Hinglish</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="youtube educator"><div class="influencer-top"><span class="platform-code">YT // WALLET</span><span class="audience">250K+</span></div><h3>Wallet Walkthrough</h3><p>Product-led videos designed for activation, not just awareness.</p><div class="chip-row"><span class="tag-chip">Wallets</span><span class="tag-chip">Hindi</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="x community"><div class="influencer-top"><span class="platform-code">X // ECOSYSTEM</span><span class="audience">40K+</span></div><h3>DeFi Network Voice</h3><p>Credible community-facing threads and conversation-led distribution.</p><div class="chip-row"><span class="tag-chip">DeFi</span><span class="tag-chip">English</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="regional telegram community"><div class="influencer-top"><span class="platform-code">TG // REGIONAL</span><span class="audience">20K+</span></div><h3>Bengal Crypto Circle</h3><p>Regional community reach with tight feedback and support loops.</p><div class="chip-row"><span class="tag-chip">General Crypto</span><span class="tag-chip">Bengali</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="youtube campaign"><div class="influencer-top"><span class="platform-code">YT // GAMEFI</span><span class="audience">80K+</span></div><h3>GameFi Radar</h3><p>Visual campaign content for product discovery and onboarding.</p><div class="chip-row"><span class="tag-chip">GameFi</span><span class="tag-chip">Hinglish</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="x regional"><div class="influencer-top"><span class="platform-code">X // REGIONAL</span><span class="audience">15K+</span></div><h3>Gujarat Web3 Node</h3><p>Regional market conversations and community introductions.</p><div class="chip-row"><span class="tag-chip">General Crypto</span><span class="tag-chip">Gujarati</span></div><a href="inquiry">Connect Via Flexist →</a></article>
+        <article class="glass-card influencer-card" data-categories="telegram educator community"><div class="influencer-top"><span class="platform-code">TG // LEARNING</span><span class="audience">35K+</span></div><h3>Crypto Learning Desk</h3><p>Education-first Telegram audience with steady discussion quality.</p><div class="chip-row"><span class="tag-chip">Education</span><span class="tag-chip">Hindi</span></div><a href="inquiry">Connect Via Flexist →</a></article>
       </div>
-    </section>
-
-    <section id="collab" class="px-4 py-20">
-      <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr]">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Work With Flexist • Influencer / KOL / Ambassador Collaboration</p>
-          <h2 class="text-4xl font-black leading-tight sm:text-6xl">Influencer Collaboration Request</h2>
-          <p class="mt-6 text-lg leading-8 text-zinc-300">[YOUR HUMAN COPY HERE ONLY]</p>
-          <p class="mt-6 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5 font-bold text-emerald-200">All requests go directly to Aman • Reply guaranteed within 48 hours</p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a class="rounded-full border border-zinc-700 px-5 py-3 text-sm font-bold text-zinc-300 hover:border-emerald-400 hover:text-emerald-400" href="india-hub">Enter India Hub</a>
-            <a class="rounded-full border border-zinc-700 px-5 py-3 text-sm font-bold text-zinc-300 hover:border-emerald-400 hover:text-emerald-400" href="experience">See Full Experience</a>
-          </div>
-        </div>
-        <form action="https://formspree.io/f/xredwjao" method="POST" class="space-y-6 rounded-3xl border border-emerald-500/20 bg-zinc-900 p-6">
-          <input type="text" name="name" placeholder="Name" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4" required>
-          <input type="text" name="handle" placeholder="Handle / Platform" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4" required>
-          <input type="text" name="audience_size" placeholder="Audience Size" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4" required>
-          <input type="text" name="niche" placeholder="Niche" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4" required>
-          <select name="collab_type" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4"><option>Influencer Campaign</option><option>KOL Collaboration</option><option>Ambassador</option><option>Community Partnership</option><option>Other</option></select>
-          <textarea name="message" rows="5" placeholder="Message" class="w-full rounded-xl border border-zinc-800 bg-zinc-800 p-4"></textarea>
-          <input type="hidden" name="_subject" value="Influencer Collaboration Request">
-          <button type="submit" class="w-full rounded-xl bg-emerald-500 py-5 text-lg font-black text-black">SEND MESSAGE → Reaches Aman Instantly</button>
-        </form>
-      </div>
-    </section>
-
-    <section class="bg-zinc-950 px-4 py-20">
-      <div class="mx-auto max-w-7xl">
-        <div class="mb-8 grid gap-5 lg:grid-cols-[1fr_280px]">
-          <div>
-            <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Directory Signals</p>
-            <h2 class="text-4xl font-black sm:text-6xl">Representative network profiles.</h2>
-          </div>
-          <input data-directory-search class="h-14 rounded-2xl border border-zinc-800 bg-black px-4 text-zinc-200" placeholder="Search platform, niche, language...">
-        </div>
-        <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>YT // EDUCATOR</span><span>500K+</span></div><h3 class="mt-5 text-2xl font-black">Protocol Explainer</h3><p class="mt-3 leading-7 text-zinc-400">Hindi and English deep-dive content for broad retail education.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">General Crypto</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hinglish</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>X // TRADER</span><span>100K+</span></div><h3 class="mt-5 text-2xl font-black">Market Signal Desk</h3><p class="mt-3 leading-7 text-zinc-400">Fast-moving X distribution for trading tools, launches, and narratives.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">DeFi</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">English</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>TG // COMMUNITY</span><span>50K+</span></div><h3 class="mt-5 text-2xl font-black">Alpha Community</h3><p class="mt-3 leading-7 text-zinc-400">Telegram-native discovery with strong retail conversation loops.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">General Crypto</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hinglish</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>YT // REGIONAL</span><span>100K+</span></div><h3 class="mt-5 text-2xl font-black">South Chain Lens</h3><p class="mt-3 leading-7 text-zinc-400">Regional-language tutorials and accessible product explainers.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">L1 / L2</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Tamil</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>X // BUILDER</span><span>25K+</span></div><h3 class="mt-5 text-2xl font-black">Builder Context</h3><p class="mt-3 leading-7 text-zinc-400">Technical credibility for product narratives and ecosystem threads.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">L1 / L2</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">English</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>TG // CAMPAIGN</span><span>75K+</span></div><h3 class="mt-5 text-2xl font-black">Launch Relay</h3><p class="mt-3 leading-7 text-zinc-400">High-speed campaign amplification with Telegram-first audiences.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Listings</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hinglish</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>YT // WALLET</span><span>250K+</span></div><h3 class="mt-5 text-2xl font-black">Wallet Walkthrough</h3><p class="mt-3 leading-7 text-zinc-400">Product-led videos designed for activation, not just awareness.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Wallets</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hindi</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>X // ECOSYSTEM</span><span>40K+</span></div><h3 class="mt-5 text-2xl font-black">DeFi Network Voice</h3><p class="mt-3 leading-7 text-zinc-400">Credible community-facing threads and conversation-led distribution.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">DeFi</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">English</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>TG // REGIONAL</span><span>20K+</span></div><h3 class="mt-5 text-2xl font-black">Bengal Crypto Circle</h3><p class="mt-3 leading-7 text-zinc-400">Regional community reach with tight feedback and support loops.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">General Crypto</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Bengali</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>YT // GAMEFI</span><span>80K+</span></div><h3 class="mt-5 text-2xl font-black">GameFi Radar</h3><p class="mt-3 leading-7 text-zinc-400">Visual campaign content for product discovery and onboarding.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">GameFi</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hinglish</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>X // REGIONAL</span><span>15K+</span></div><h3 class="mt-5 text-2xl font-black">Gujarat Web3 Node</h3><p class="mt-3 leading-7 text-zinc-400">Regional market conversations and community introductions.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">General Crypto</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Gujarati</span></div></article>
-          <article data-influencer-card class="rounded-3xl border border-zinc-800 bg-black p-6"><div class="flex justify-between text-sm text-emerald-400"><span>TG // LEARNING</span><span>35K+</span></div><h3 class="mt-5 text-2xl font-black">Crypto Learning Desk</h3><p class="mt-3 leading-7 text-zinc-400">Education-first Telegram audience with steady discussion quality.</p><div class="mt-5 flex gap-2"><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Education</span><span class="rounded-full border border-zinc-800 px-3 py-1 text-xs text-zinc-400">Hindi</span></div></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="px-4 py-20">
-      <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
-        <div>
-          <p class="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-emerald-400">Private Campaign Mapping</p>
-          <h2 class="text-4xl font-black sm:text-6xl">Build the creator mix around your exact objective.</h2>
-          <p class="mt-6 text-lg leading-8 text-zinc-300">Profiles are representative by design. Open a founder inquiry to scope creators, channels, languages, and campaign sequencing privately.</p>
-        </div>
-        <form action="https://formspree.io/f/xredwjao" method="POST" class="space-y-6 bg-zinc-900 p-6 rounded-xl">
-          <input type="text" name="name" placeholder="Your name" class="w-full p-3 bg-zinc-800" required>
-          <input type="email" name="email" placeholder="Email" class="w-full p-3 bg-zinc-800" required>
-          <select name="type" class="w-full p-3 bg-zinc-800"><option>Project Inquiry</option><option>Influencer Collab</option><option>Ambassador</option><option>Consulting</option><option>Other</option></select>
-          <textarea name="message" rows="4" placeholder="Tell me about your project or collab" class="w-full p-3 bg-zinc-800"></textarea>
-          <input type="hidden" name="_subject" value="flexist.in Enquiry">
-          <button type="submit" class="w-full bg-emerald-500 py-4 font-bold text-lg">SEND MESSAGE → Reaches Aman Instantly</button>
-        </form>
-      </div>
-    </section>
-
-    <section id="book-call" class="px-4 pb-20">
-      <div class="mx-auto max-w-5xl rounded-3xl border border-emerald-500/20 bg-zinc-950 p-4">
-        <!-- Calendly inline widget begin -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/flexist" style="min-width:320px;height:700px;"></div>
-        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-        <!-- Calendly inline widget end -->
-      </div>
-    </section>
+    </div></section>
+    <section class="section section-dark"><div class="container"><div class="cta-block reveal"><span class="section-label">Private Campaign Mapping</span><h2>Build the creator mix around your exact objective.</h2><p>Profiles are representative by design. Open a founder inquiry to scope creators, channels, languages, and campaign sequencing privately.</p><div class="button-row"><a class="neon-button" href="inquiry">Plan KOL Campaign</a><a class="ghost-button" href="services#kol">Review Service Layer</a></div></div></div></section>
   </main>
-  <div data-footer></div>
-  <script src="shared-nav-footer.js"></script>
+  <div data-site-footer></div><script src="js/global.js"></script><script src="js/influencers.js"></script>
 </body>
 </html>

@@ -305,7 +305,7 @@ p {
 .nav-inner {
   align-items: center;
   display: flex;
-  gap: 28px;
+  gap: 16px;
   height: 100%;
   justify-content: space-between;
 }
@@ -321,29 +321,78 @@ p {
   letter-spacing: -0.05em;
 }
 
+.brand-premium {
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.12), rgba(0, 212, 255, 0.035));
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  border-radius: 999px;
+  box-shadow: 0 0 24px rgba(var(--network-node-rgb), 0.12);
+  gap: 11px;
+  padding: 7px 13px 7px 7px;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.brand-premium:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-1px);
+}
+
+.brand-mark {
+  display: inline-flex;
+  position: relative;
+}
+
+.brand-mark i {
+  background: var(--accent-green);
+  border: 2px solid var(--bg-primary);
+  border-radius: 50%;
+  bottom: 0;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.65);
+  height: 10px;
+  position: absolute;
+  right: -1px;
+  width: 10px;
+}
+
 .brand-avatar {
   border: 1px solid var(--border-glow);
   border-radius: 50%;
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.35);
   display: block;
-  height: 30px;
+  height: 34px;
   object-fit: cover;
-  width: 30px;
+  width: 34px;
+}
+
+.brand-copy {
+  display: grid;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.brand-copy small {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  margin-top: 4px;
+  text-transform: uppercase;
 }
 
 .nav-links {
   align-items: center;
   display: flex;
-  gap: 22px;
+  gap: 14px;
 }
 
 .nav-links a {
   color: var(--text-secondary);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.61rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: color 160ms ease;
+  white-space: nowrap;
 }
 
 .nav-links a.active,
@@ -575,7 +624,7 @@ html[data-theme="light"] .theme-icon-moon {
   top: 12px;
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1180px) {
   .nav-links {
     display: none;
   }
@@ -666,6 +715,14 @@ html[data-theme="light"] .theme-icon-moon {
   .theme-toggle {
     height: 34px;
     width: 34px;
+  }
+
+  .brand-premium {
+    padding-right: 10px;
+  }
+
+  .brand-copy small {
+    display: none;
   }
 
   .footer-grid {

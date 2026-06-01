@@ -4,11 +4,13 @@ const Flexist = (() => {
 
   const navItems = [
     ["home", "./", "Home"],
-    ["about", "about", "About"],
     ["services", "services", "Services"],
     ["india-hub", "india-hub", "India Hub"],
-    ["projects", "projects", "Projects"],
-    ["insights", "blog", "Insights"],
+    ["experience", "experience", "Experience"],
+    ["community", "community", "Community"],
+    ["influencers", "influencers", "Influencers"],
+    ["ambassadors", "ambassadors", "Ambassadors"],
+    ["partnerships", "partnerships", "Partnerships"],
     ["contact", "contact", "Contact"]
   ];
 
@@ -17,6 +19,10 @@ const Flexist = (() => {
     ["Founder", "founder"],
     ["Experience", "experience"],
     ["India Growth Services", "services"],
+    ["Community Architecture", "community"],
+    ["Influencer Network", "influencers"],
+    ["Ambassador Operations", "ambassadors"],
+    ["Partnership Network", "partnerships"],
     ["India Expansion Hub", "india-hub"],
     ["Founder Inquiry", "inquiry"]
   ];
@@ -67,9 +73,15 @@ const Flexist = (() => {
         <a class="skip-link" href="#main-content">Skip to content</a>
         <header class="site-nav">
           <div class="container nav-inner">
-            <a class="brand" href="./" aria-label="Flexist Crypto home">
-              <img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt="">
-              <span class="gradient-text">FLEXIST CRYPTO</span>
+            <a class="brand brand-premium" href="./" aria-label="Flexist Crypto home">
+              <span class="brand-mark">
+                <img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt="">
+                <i></i>
+              </span>
+              <span class="brand-copy">
+                <span class="gradient-text">FLEXIST CRYPTO</span>
+                <small>India Web3 Node</small>
+              </span>
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
               ${navItems.map(([key, href, label]) => `<a class="${route === key ? "active" : ""}" href="${href}">${label}</a>`).join("")}
@@ -98,7 +110,7 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand" href="./"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><span class="gradient-text">FLEXIST CRYPTO</span></a>
+              <a class="brand brand-premium" href="./"><span class="brand-mark"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><i></i></span><span class="brand-copy"><span class="gradient-text">FLEXIST CRYPTO</span><small>India Web3 Node</small></span></a>
               <p class="footer-copy">India growth infrastructure for Web3 projects ready to turn attention into durable adoption.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
