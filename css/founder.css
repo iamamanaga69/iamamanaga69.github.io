@@ -1,0 +1,44 @@
+.language-row {
+  padding: 18px 0;
+}
+
+.operator-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.founder-art-card {
+  border: 1px solid var(--border-glow);
+  border-radius: 14px;
+  box-shadow: var(--glow-blue);
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.founder-art-card::after {
+  background: linear-gradient(to top, rgba(2, 4, 8, 0.88), transparent 48%);
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.founder-art-card img {
+  aspect-ratio: 1.36;
+  object-fit: cover;
+  object-position: center 36%;
+  width: 100%;
+}
+
+.founder-art-card figcaption {
+  bottom: 14px;
+  color: #d9f7ff;
+  font-family: var(--font-mono);
+  font-size: 0.63rem;
+  left: 16px;
+  letter-spacing: 0.12em;
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 1;
+}

@@ -1,0 +1,13 @@
+.inquiry-form {
+  display: grid;
+  gap: 15px;
+  padding: 26px;
+}
+
+.terminal-box a {
+  transition: color 160ms ease;
+}
+
+.terminal-box a:hover {
+  color: var(--accent-cyan);
+}

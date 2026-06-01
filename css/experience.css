@@ -1,0 +1,131 @@
+.experience-timeline {
+  margin: 0 auto;
+  max-width: 930px;
+  padding-left: 54px;
+  position: relative;
+}
+
+.experience-timeline::before {
+  background: linear-gradient(var(--accent-cyan), rgba(0, 212, 255, 0.05));
+  content: "";
+  left: 15px;
+  position: absolute;
+  top: 9px;
+  bottom: 0;
+  width: 1px;
+}
+
+.timeline-entry {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.timeline-entry::before {
+  animation: pulse 2.2s ease-in-out infinite;
+  background: var(--bg-primary);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 50%;
+  content: "";
+  height: 15px;
+  left: -46px;
+  position: absolute;
+  top: 20px;
+  width: 15px;
+}
+
+.timeline-entry.active::before {
+  background: var(--accent-cyan);
+}
+
+.timeline-trigger {
+  align-items: center;
+  background: var(--ghost-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 7px;
+  color: inherit;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 190px 1fr 190px 20px;
+  padding: 18px;
+  text-align: left;
+  width: 100%;
+}
+
+.timeline-trigger time,
+.timeline-trigger span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.timeline-trigger strong {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+}
+
+.timeline-trigger i {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-style: normal;
+}
+
+.timeline-detail {
+  display: none;
+}
+
+.timeline-entry.active .timeline-detail {
+  animation: fade-rise 360ms var(--ease-out);
+  display: block;
+}
+
+.timeline-detail-inner {
+  border: 1px solid var(--border-subtle);
+  border-top: 0;
+  padding: 22px;
+}
+
+.timeline-detail-inner p,
+.timeline-detail-inner li {
+  color: var(--text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.75;
+}
+
+.achievement {
+  border-left: 2px solid var(--accent-cyan);
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin: 18px 0;
+  padding: 7px 12px;
+}
+
+@media (max-width: 700px) {
+  .experience-timeline {
+    padding-left: 36px;
+  }
+
+  .experience-timeline::before {
+    left: 8px;
+  }
+
+  .timeline-entry::before {
+    left: -34px;
+  }
+
+  .timeline-trigger {
+    grid-template-columns: 1fr 18px;
+  }
+
+  .timeline-trigger time,
+  .timeline-trigger span {
+    grid-column: 1;
+  }
+
+  .timeline-trigger i {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+}

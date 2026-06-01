@@ -1,0 +1,3 @@
+.service-block:first-child {
+  border-top-color: var(--border-glow);
+}
