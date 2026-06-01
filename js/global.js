@@ -2,29 +2,75 @@ const Flexist = (() => {
   const route = document.body.dataset.page || "home";
   const themeKey = "flexist-theme";
 
-  const navItems = [
-    ["home", "./", "Home"],
-    ["services", "services", "Services"],
-    ["india-hub", "india-hub", "India Hub"],
-    ["experience", "experience", "Experience"],
-    ["community", "community", "Community"],
-    ["influencers", "influencers", "Influencers"],
-    ["ambassadors", "ambassadors", "Ambassadors"],
-    ["partnerships", "partnerships", "Partnerships"],
-    ["contact", "contact", "Contact"]
+  const navGroups = [
+    { key: "home", href: "./", label: "Home" },
+    { key: "india-hub", href: "india-hub", label: "India Hub" },
+    {
+      key: "growth-stack",
+      href: "services",
+      label: "Growth Stack",
+      items: [
+        ["services", "services", "Services Overview", "Full India operating stack"],
+        ["community", "community", "Community", "Telegram and Discord architecture"],
+        ["influencers", "influencers", "Influencers", "Creator and KOL campaigns"],
+        ["ambassadors", "ambassadors", "Ambassadors", "Local operator programs"],
+        ["partnerships", "partnerships", "Partnerships", "Ecosystem relationship flow"]
+      ]
+    },
+    {
+      key: "proof",
+      href: "experience",
+      label: "Proof",
+      items: [
+        ["experience", "experience", "Experience", "Live Web3 operating history"],
+        ["projects", "projects", "Projects", "Ecosystems touched"],
+        ["case-studies", "case-studies", "Case Studies", "Growth work by scenario"],
+        ["testimonials", "testimonials", "Testimonials", "Operator signals"]
+      ]
+    },
+    {
+      key: "platform",
+      href: "about",
+      label: "Platform",
+      items: [
+        ["about", "about", "About Flexist", "Positioning and mission"],
+        ["founder", "founder", "Founder", "Aman Agarwal"],
+        ["insights", "blog", "Insights", "India growth notes"],
+        ["media-kit", "media-kit", "Media Kit", "Brand and press assets"],
+        ["contact", "contact", "Contact", "Direct communication routes"]
+      ]
+    }
   ];
 
-  const footerLinks = [
-    ["About Flexist", "about"],
-    ["Founder", "founder"],
-    ["Experience", "experience"],
-    ["India Growth Services", "services"],
-    ["Community Architecture", "community"],
-    ["Influencer Network", "influencers"],
-    ["Ambassador Operations", "ambassadors"],
-    ["Partnership Network", "partnerships"],
-    ["India Expansion Hub", "india-hub"],
-    ["Founder Inquiry", "inquiry"]
+  const footerGroups = [
+    {
+      title: "Founder Journey",
+      links: [
+        ["India Expansion Hub", "india-hub"],
+        ["Growth Services", "services"],
+        ["Readiness Assessment", "india-hub#assessment"],
+        ["Founder Inquiry", "inquiry"]
+      ]
+    },
+    {
+      title: "Growth Stack",
+      links: [
+        ["Community", "community"],
+        ["Influencers", "influencers"],
+        ["Ambassadors", "ambassadors"],
+        ["Partnerships", "partnerships"]
+      ]
+    },
+    {
+      title: "Proof & Platform",
+      links: [
+        ["About Flexist", "about"],
+        ["Founder", "founder"],
+        ["Experience", "experience"],
+        ["Projects", "projects"],
+        ["Contact", "contact"]
+      ]
+    }
   ];
 
   const socialItems = [
@@ -59,6 +105,24 @@ const Flexist = (() => {
     </a>`;
   }
 
+  function isActive(key, items = []) {
+    return route === key || items.some(([itemKey]) => itemKey === route);
+  }
+
+  function renderNavItem(item) {
+    if (!item.items) {
+      return `<a class="${route === item.key ? "active" : ""}" href="${item.href}">${item.label}</a>`;
+    }
+
+    const active = isActive(item.key, item.items);
+    return `<div class="nav-group ${active ? "active" : ""}">
+      <a class="nav-group-label ${active ? "active" : ""}" href="${item.href}">${item.label}</a>
+      <div class="nav-panel" aria-label="${item.label} links">
+        ${item.items.map(([key, href, label, description]) => `<a class="${route === key ? "active" : ""}" href="${href}"><strong>${label}</strong><small>${description}</small></a>`).join("")}
+      </div>
+    </div>`;
+  }
+
   function renderShell() {
     const nav = document.querySelector("[data-site-nav]");
     const footer = document.querySelector("[data-site-footer]");
@@ -84,7 +148,7 @@ const Flexist = (() => {
               </span>
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
-              ${navItems.map(([key, href, label]) => `<a class="${route === key ? "active" : ""}" href="${href}">${label}</a>`).join("")}
+              ${navGroups.map(renderNavItem).join("")}
               <a class="nav-mobile-cta" href="inquiry">Start Expansion</a>
             </nav>
             <div class="nav-actions">
@@ -95,7 +159,7 @@ const Flexist = (() => {
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3m0 14v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg>
               </button>
-              <a class="ghost-button" href="contact">Schedule Call</a>
+              <a class="ghost-button" href="inquiry">Founder Call</a>
               <a class="neon-button" href="inquiry">Start Expansion <span>&rarr;</span></a>
               <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -121,7 +185,9 @@ const Flexist = (() => {
             </div>
             <div>
               <h3 class="footer-title">Route Map</h3>
-              <div class="footer-links">${footerLinks.map(([label, href]) => `<a href="${href}">${label}</a>`).join("")}</div>
+              <div class="footer-map">
+                ${footerGroups.map((group) => `<div class="footer-group"><strong>${group.title}</strong>${group.links.map(([label, href]) => `<a href="${href}">${label}</a>`).join("")}</div>`).join("")}
+              </div>
             </div>
             <div>
               <h3 class="footer-title">Start Growing In India</h3>
