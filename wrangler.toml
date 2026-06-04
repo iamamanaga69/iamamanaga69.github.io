@@ -1,0 +1,14 @@
+name = "flexist-payment-verifier"
+main = "worker.js"
+compatibility_date = "2024-04-01"
+
+[[kv_namespaces]]
+binding = "VERIFIED_TXIDS"
+# Replace with the ID returned by running: wrangler kv:namespace create VERIFIED_TXIDS
+id = "YOUR_KV_NAMESPACE_ID"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "flexist-db"
+# Replace with the database_id returned by running: wrangler d1 create flexist-db
+database_id = "YOUR_D1_DATABASE_ID"

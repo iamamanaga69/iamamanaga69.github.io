@@ -1,9 +1,7 @@
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Content-Type": "application/json"
-};
+const ALLOWED_ORIGINS = [
+  "https://flexist.in",
+  "https://www.flexist.in"
+];
 
 const RPC_ENDPOINTS = {
   ethereum: "https://cloudflare-eth.com",
@@ -89,10 +87,32 @@ function generatePaymentId(planName, chainName) {
   return `${prefix}-${planShort}-${chainShort}-${timestampBase36}${randomSuffix}`;
 }
 
+// CORS helper to construct response headers dynamically
+function getCorsHeaders(origin) {
+  return {
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Content-Type": "application/json"
+  };
+}
+
 export default {
   async fetch(request, env, ctx) {
+    const origin = request.headers.get("Origin");
+
+    // Reject requests from non-whitelisted origins if Origin is present
+    if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      return new Response(JSON.stringify({ error: "Forbidden: Origin not allowed" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
+    const corsHeaders = origin ? getCorsHeaders(origin) : { "Content-Type": "application/json" };
+
     if (request.method === "OPTIONS") {
-      return new Response(null, { headers: CORS_HEADERS });
+      return new Response(null, { headers: corsHeaders });
     }
 
     const url = new URL(request.url);
@@ -107,7 +127,7 @@ export default {
     if (rateCount >= 5) {
       return new Response(JSON.stringify({ error: "Too many requests. Please try again in a minute." }), {
         status: 429,
-        headers: CORS_HEADERS
+        headers: corsHeaders
       });
     }
 
@@ -115,24 +135,24 @@ export default {
 
     // ── ROUTER ──
     if (url.pathname === "/verify-payment" && request.method === "POST") {
-      return handleVerifyPayment(request, env, ip);
+      return handleVerifyPayment(request, env, ip, corsHeaders);
     } else if (url.pathname === "/payment-status" && request.method === "GET") {
-      return handlePaymentStatus(url, env);
+      return handlePaymentStatus(url, env, corsHeaders);
     }
 
     return new Response(JSON.stringify({ error: "Not Found" }), {
       status: 404,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   }
 };
 
-async function handlePaymentStatus(url, env) {
+async function handlePaymentStatus(url, env, corsHeaders) {
   const txid = url.searchParams.get("txid");
   if (!txid) {
     return new Response(JSON.stringify({ error: "Missing txid parameter" }), {
       status: 400,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   }
 
@@ -144,34 +164,33 @@ async function handlePaymentStatus(url, env) {
     if (!results || results.length === 0) {
       return new Response(JSON.stringify({ error: "Payment not found" }), {
         status: 404,
-        headers: CORS_HEADERS
+        headers: corsHeaders
       });
     }
 
     return new Response(JSON.stringify({ payment: results[0] }), {
       status: 200,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: "Database error", details: err.message }), {
       status: 500,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   }
 }
 
-async function handleVerifyPayment(request, env, ip) {
+async function handleVerifyPayment(request, env, ip, corsHeaders) {
   let body;
   try {
     body = await request.json();
   } catch {
-    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
   }
 
   const {
     plan,
     paymentType,
-    expectedAmount,
     chain,
     token,
     txHash,
@@ -183,20 +202,25 @@ async function handleVerifyPayment(request, env, ip) {
   } = body;
 
   // Validate required fields
-  if (!plan || !paymentType || !expectedAmount || !chain || !token || !txHash || !name || !email || !telegram || !project || !turnstileToken) {
-    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: CORS_HEADERS });
+  if (!plan || !paymentType || !chain || !token || !txHash || !name || !email || !telegram || !project || !turnstileToken) {
+    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: corsHeaders });
   }
 
   const cleanTxHash = txHash.trim();
   const lowerChain = chain.toLowerCase();
   const upperToken = token.toUpperCase();
   const lowerPlan = plan.toLowerCase().replace(/\s+/g, "");
-  const lowerType = paymentType.toLowerCase();
+  const lowerType = paymentType.toLowerCase().trim();
 
-  // Validate pricing check
+  // Validate pricing check & calculate expected amount on server
   const pricingTier = PLAN_PRICING[lowerType];
-  if (!pricingTier || !pricingTier[lowerPlan] || expectedAmount < pricingTier[lowerPlan]) {
-    return new Response(JSON.stringify({ error: "Expected amount mismatch or invalid plan pricing configuration" }), { status: 400, headers: CORS_HEADERS });
+  if (!pricingTier) {
+    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+  }
+
+  const serverExpectedAmount = pricingTier[lowerPlan];
+  if (!serverExpectedAmount) {
+    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
   }
 
   // 1. Validate Turnstile Token
@@ -207,34 +231,34 @@ async function handleVerifyPayment(request, env, ip) {
   });
   const turnstileData = await turnstileRes.json();
   if (!turnstileData.success) {
-    return new Response(JSON.stringify({ error: "Security validation failed. Refresh page and try again." }), { status: 400, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Security validation failed. Refresh page and try again." }), { status: 400, headers: corsHeaders });
   }
 
   // 2. Double-Spend/Duplicate check via KV
   const kvKey = `tx:${cleanTxHash.toLowerCase()}`;
   const isDuplicate = await env.VERIFIED_TXIDS.get(kvKey);
   if (isDuplicate) {
-    return new Response(JSON.stringify({ error: "Transaction hash has already been registered." }), { status: 400, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Transaction hash has already been registered." }), { status: 400, headers: corsHeaders });
   }
 
   // 3. Verify Blockchain Transaction
   let verificationResult;
   try {
     if (["ethereum", "bnb", "polygon", "base", "arbitrum"].includes(lowerChain)) {
-      verificationResult = await verifyEVM(cleanTxHash, lowerChain, upperToken, expectedAmount, env);
+      verificationResult = await verifyEVM(cleanTxHash, lowerChain, upperToken, serverExpectedAmount, env);
     } else if (lowerChain === "solana") {
-      verificationResult = await verifySolana(cleanTxHash, upperToken, expectedAmount, env);
+      verificationResult = await verifySolana(cleanTxHash, upperToken, serverExpectedAmount, env);
     } else if (lowerChain === "tron") {
-      verificationResult = await verifyTron(cleanTxHash, upperToken, expectedAmount, env);
+      verificationResult = await verifyTron(cleanTxHash, upperToken, serverExpectedAmount, env);
     } else {
-      return new Response(JSON.stringify({ error: `Unsupported blockchain: ${chain}` }), { status: 400, headers: CORS_HEADERS });
+      return new Response(JSON.stringify({ error: `Unsupported blockchain: ${chain}` }), { status: 400, headers: corsHeaders });
     }
   } catch (err) {
-    return new Response(JSON.stringify({ error: "Blockchain verification failed", details: err.message }), { status: 400, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: "Blockchain verification failed", details: err.message }), { status: 400, headers: corsHeaders });
   }
 
   if (!verificationResult.verified) {
-    return new Response(JSON.stringify({ error: verificationResult.reason }), { status: 400, headers: CORS_HEADERS });
+    return new Response(JSON.stringify({ error: verificationResult.reason }), { status: 400, headers: corsHeaders });
   }
 
   // 4. Save to D1 & store in KV
@@ -246,7 +270,7 @@ async function handleVerifyPayment(request, env, ip) {
       paymentId,
       plan,
       paymentType,
-      expectedAmount,
+      serverExpectedAmount,
       verificationResult.actualAmount,
       chain,
       token,
@@ -263,12 +287,12 @@ async function handleVerifyPayment(request, env, ip) {
 
     return new Response(JSON.stringify({ success: true, paymentId, actualAmount: verificationResult.actualAmount }), {
       status: 200,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   } catch (err) {
     return new Response(JSON.stringify({ error: "Database registration failure", details: err.message }), {
       status: 500,
-      headers: CORS_HEADERS
+      headers: corsHeaders
     });
   }
 }
@@ -369,16 +393,15 @@ async function verifySolana(txHash, token, expectedAmount, env) {
   if (tx.meta?.err) return { verified: false, reason: "Solana transaction failed." };
 
   const targetWallet = env.SOLANA_WALLET;
+  const accounts = tx.transaction.message.accountKeys;
+  const walletIndex = accounts.indexOf(targetWallet);
+
+  if (walletIndex === -1) {
+    return { verified: false, reason: "Recipient wallet not involved in transaction." };
+  }
 
   if (token === "SOL") {
     // Verify Native SOL transfer
-    const accounts = tx.transaction.message.accountKeys;
-    const walletIndex = accounts.indexOf(targetWallet);
-
-    if (walletIndex === -1) {
-      return { verified: false, reason: "Recipient wallet not involved in transaction." };
-    }
-
     const preBalance = tx.meta.preBalances[walletIndex];
     const postBalance = tx.meta.postBalances[walletIndex];
     const actualSent = (postBalance - preBalance) / 1e9;
@@ -395,8 +418,8 @@ async function verifySolana(txHash, token, expectedAmount, env) {
     const preBalances = tx.meta.preTokenBalances || [];
     const postBalances = tx.meta.postTokenBalances || [];
 
-    const pre = preBalances.find(b => b.owner === targetWallet && b.mint === usdtMint);
-    const post = postBalances.find(b => b.owner === targetWallet && b.mint === usdtMint);
+    const pre = preBalances.find(b => (b.owner === targetWallet || b.accountIndex === walletIndex) && b.mint === usdtMint);
+    const post = postBalances.find(b => (b.owner === targetWallet || b.accountIndex === walletIndex) && b.mint === usdtMint);
 
     const preAmount = pre ? parseFloat(pre.uiTokenAmount.amount) : 0;
     const postAmount = post ? parseFloat(post.uiTokenAmount.amount) : 0;

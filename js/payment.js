@@ -2,12 +2,16 @@ const FlexistPayment = (() => {
   "use strict";
 
   const WALLETS = {
-    evm: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    ethereum: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    bnb: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    polygon: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    base: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    arbitrum: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
     solana: "GrpojUaB1pVpxEw6UmNGLWkMTPwhj3qorMM7CUeekvLV",
     tron: "TS3TSSFGtrUFPf7difKRMqP2rLH2MP9inA"
   };
 
-  const WORKER_URL = "https://flexist-payment-verifier.iamamanaga69.workers.dev";
+  const WORKER_URL = "https://flexist-payment-verifier.flexistcrypto.workers.dev";
   const STORAGE_KEY = "flexist_payments";
 
   const CHAINS = [
@@ -31,11 +35,8 @@ const FlexistPayment = (() => {
   };
 
   function getWalletAddress(chainId) {
-    if (!chainId) return WALLETS.evm;
-    const lower = chainId.toLowerCase();
-    if (lower === "solana") return WALLETS.solana;
-    if (lower === "tron") return WALLETS.tron;
-    return WALLETS.evm;
+    if (!chainId) return WALLETS.ethereum;
+    return WALLETS[chainId.toLowerCase()] || WALLETS.ethereum;
   }
 
   /* ── Helpers ─────────────────────────────────────────── */
@@ -340,34 +341,32 @@ const FlexistPayment = (() => {
         const fd = new FormData(form);
         const data = Object.fromEntries(fd.entries());
 
-        // Calculate expected plan amount
-        const pricing = {
-          onetime: {
-            "india entry": 500,
-            "india growth": 1200
-          },
-          monthly: {
-            "india entry": 350,
-            "india growth": 800,
-            "india partner": 1800
-          }
-        };
-        const lowerPlan = plan.toLowerCase().trim();
-        const lowerType = type.toLowerCase().trim();
-        const expectedAmt = pricing[lowerType]?.[lowerPlan] || parseFloat(amount || data.amount_sent);
+        // Hide any previous error message on submission retry
+        const existingError = form.querySelector(".form-error-msg");
+        if (existingError) existingError.hidden = true;
 
-        // Show loading
+        // Show loading state
         const submitBtn = form.querySelector("button[type='submit']");
         const originalText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying Payment...';
+        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying transaction on-chain...';
+
+        // Obtain Turnstile challenge token
+        let turnstileToken = "";
+        if (window.turnstile) {
+          turnstileToken = window.turnstile.getResponse();
+        }
+
+        if (!turnstileToken) {
+          // Fallback to checking the formdata input if Turnstile was rendered directly
+          turnstileToken = fd.get("cf-turnstile-response") || "";
+        }
 
         // Submit to Cloudflare Worker verifier endpoint
         try {
           const payload = {
             plan: plan,
             paymentType: type,
-            expectedAmount: expectedAmt,
             chain: data.chain,
             token: data.token,
             txHash: data.txid,
@@ -375,7 +374,7 @@ const FlexistPayment = (() => {
             email: data.email,
             telegram: data.telegram,
             project: data.project,
-            turnstileToken: fd.get("cf-turnstile-response")
+            turnstileToken: turnstileToken
           };
 
           const res = await fetch(`${WORKER_URL}/verify-payment`, {
@@ -389,7 +388,7 @@ const FlexistPayment = (() => {
             throw new Error(result.error || "Payment verification failed.");
           }
 
-          // Save transaction to local cache for history display (optional fallback)
+          // Save transaction to local cache for UI history logs (Optional local records)
           const txRecord = {
             paymentId: result.paymentId,
             name: data.name,
@@ -397,8 +396,7 @@ const FlexistPayment = (() => {
             telegram: data.telegram,
             projectName: data.project,
             plan: plan,
-            expected_amount: expectedAmt,
-            amount_sent: result.actualAmount || expectedAmt,
+            amount_sent: result.actualAmount || 0,
             chain: data.chain,
             token: data.token,
             txid: data.txid,
@@ -434,11 +432,28 @@ const FlexistPayment = (() => {
 
           // Redirect after delay
           setTimeout(() => {
-            window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}&paymentId=${encodeURIComponent(result.paymentId)}`;
-          }, 4500);
+            window.location.href = `thank-you.html?paymentId=${encodeURIComponent(result.paymentId)}`;
+          }, 3000);
 
         } catch (err) {
-          alert(`Verification Failed: ${err.message}`);
+          // Display error message directly on the page
+          let errorEl = form.querySelector(".form-error-msg");
+          if (!errorEl) {
+            errorEl = document.createElement("div");
+            errorEl.className = "form-error-msg";
+            errorEl.style.color = "var(--accent-red, #ff4a4a)";
+            errorEl.style.backgroundColor = "rgba(255, 74, 74, 0.1)";
+            errorEl.style.border = "1px solid rgba(255, 74, 74, 0.2)";
+            errorEl.style.padding = "12px";
+            errorEl.style.borderRadius = "6px";
+            errorEl.style.marginTop = "15px";
+            errorEl.style.fontSize = "0.9rem";
+            errorEl.style.textAlign = "center";
+            form.insertBefore(errorEl, form.querySelector(".pay-action-row"));
+          }
+          errorEl.textContent = `Verification Failed: ${err.message}`;
+          errorEl.hidden = false;
+
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
           if (window.turnstile) {
@@ -497,7 +512,7 @@ const FlexistPayment = (() => {
                 <code class="ref-code">${record.paymentId || "—"}</code>
               </td>
               <td data-label="Plan">${record.plan || "—"}</td>
-              <td data-label="Amount">$${record.expected_amount || record.amount_sent || "—"}</td>
+              <td data-label="Amount">$${record.amount_sent || "—"}</td>
               <td data-label="Chain/Token">
                 <span class="chain-badge">${record.token} (${record.chain})</span>
               </td>
@@ -568,7 +583,7 @@ const FlexistPayment = (() => {
   /* ═══════════════════════════════════════════════════════
      THANK YOU PAGE
      ═══════════════════════════════════════════════════════ */
-  function initThankYouPage() {
+  async function initThankYouPage() {
     const params = getParams();
     const planEl = document.getElementById("ty-plan");
     if (planEl && params.plan !== "Custom") {
@@ -578,14 +593,26 @@ const FlexistPayment = (() => {
     const txidEl = document.getElementById("ty-txid");
     const paymentIdEl = document.getElementById("ty-payment-id");
     const urlParams = new URLSearchParams(window.location.search);
-    const urlTxid = urlParams.get("txid");
     const urlPaymentId = urlParams.get("paymentId");
 
-    if ((txidEl && urlTxid) || (paymentIdEl && urlPaymentId)) {
-      if (txidEl) txidEl.textContent = urlTxid || "—";
-      if (paymentIdEl) paymentIdEl.textContent = urlPaymentId || "—";
+    if (urlPaymentId) {
+      if (paymentIdEl) paymentIdEl.textContent = urlPaymentId;
       const parent = document.querySelector("[data-ty-txid]");
       if (parent) parent.hidden = false;
+
+      // Query database via Worker dynamically using the paymentId to resolve details
+      try {
+        const res = await fetch(`${WORKER_URL}/payment-status?txid=${encodeURIComponent(urlPaymentId)}`);
+        const result = await res.json();
+        if (res.ok && result.payment) {
+          if (txidEl) txidEl.textContent = result.payment.tx_hash || "—";
+          if (planEl && result.payment.plan) {
+            planEl.textContent = result.payment.plan;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch payment details for thank you page status", err);
+      }
     }
   }
 
@@ -599,5 +626,5 @@ const FlexistPayment = (() => {
 
   document.addEventListener("DOMContentLoaded", init);
 
-  return { init, CHAINS, WALLET, findPayment, generatePaymentId };
+  return { init, CHAINS, WALLETS, findPayment, generatePaymentId };
 })();
