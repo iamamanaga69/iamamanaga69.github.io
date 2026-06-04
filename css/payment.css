@@ -529,10 +529,14 @@ body {
   top: -1px;
 }
 
-.qr-frame canvas,
+.qr-frame canvas {
+  display: none !important;
+}
+
 .qr-frame img {
   border-radius: 6px;
-  display: block !important;
+  display: block;
+  margin: 0 auto;
 }
 
 .qr-label {
