@@ -23,208 +23,205 @@ document.addEventListener("DOMContentLoaded", () => {
     renderState(stateButtons[0]);
   }
 
-  const form = document.querySelector("[data-assessment]");
-  if (!form) return;
+  const form = document.getElementById("assessment-form");
+  const result = document.getElementById("assessment-result");
 
-  const steps = Array.from(form.querySelectorAll(".assessment-step"));
-  const progress = form.querySelector("[data-progress-line]");
-  const progressText = form.querySelector("[data-progress-text]");
-  const back = form.querySelector("[data-assessment-back]");
-  const next = form.querySelector("[data-assessment-next]");
-  const result = document.querySelector("[data-assessment-result]");
-  const summary = document.querySelector("[data-result-summary]");
-  const strengthsList = document.querySelector("[data-strengths]");
-  const gapsList = document.querySelector("[data-gaps]");
-  const stackList = document.querySelector("[data-stack]");
-  const leadScore = document.querySelector("[data-lead-score]");
-  const leadMessage = document.querySelector("[data-lead-message]");
-  const leadForm = document.querySelector("[data-lab-lead]");
-  const leadNote = document.querySelector("[data-lab-lead-note]");
-  let current = 0;
-  let latestScore = 0;
-  let latestInsights = null;
-  const answers = {};
-
-  function render() {
-    steps.forEach((step, index) => step.classList.toggle("active", index === current));
-    progress.style.transform = `scaleX(${(current + 1) / steps.length})`;
-    progressText.textContent = `Step ${current + 1} / ${steps.length}`;
-    back.hidden = current === 0;
-    next.textContent = current === steps.length - 1 ? "Generate Score" : "Continue";
-  }
-
-  function capture() {
-    const step = steps[current];
-    const key = step.dataset.key;
-    const input = step.querySelector("input");
-    const selected = Array.from(step.querySelectorAll(".option-button.selected")).map((button) => button.dataset.value);
-    answers[key] = input ? input.value : selected;
-    return input ? Boolean(input.value) : selected.length > 0;
-  }
-
-  function pick(key) {
-    const value = answers[key];
-    return Array.isArray(value) ? value[0] : value;
-  }
-
-  function list(key) {
-    const value = answers[key];
-    return Array.isArray(value) ? value : [];
-  }
-
-  function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-  }
-
-  function calculateScore() {
-    const userPoints = { "<1k": 2, "1k-10k": 9, "10k-100k": 16, "100k+": 22 };
-    const telegramPoints = { "<500": 2, "500-5k": 10, "5k-50k": 18, "50k+": 24 };
-    const budgetPoints = { "<1k": 2, "1k-5k": 8, "5k-20k": 16, "20k+": 22 };
-    const launchPoints = { "<1m": 9, "1-3m": 12, "3-6m": 9, flexible: 5 };
-    const target = Number(answers.target || 0);
-    const goals = list("goals");
-    let score = 8;
-
-    score += pick("chain") ? 5 : 0;
-    score += userPoints[pick("users")] || 0;
-    score += telegramPoints[pick("telegram")] || 0;
-    score += budgetPoints[pick("budget")] || 0;
-    score += launchPoints[pick("launch")] || 0;
-    score += clamp(goals.length * 4, 0, 16);
-    score += target >= 100000 ? 8 : target >= 25000 ? 6 : target >= 5000 ? 4 : 1;
-
-    return clamp(Math.round(score), 12, 96);
-  }
-
-  function addUnique(items, fallback) {
-    const clean = items.filter(Boolean);
-    while (clean.length < 3 && fallback.length) {
-      const item = fallback.shift();
-      if (!clean.includes(item)) clean.push(item);
-    }
-    return clean.slice(0, 3);
-  }
-
-  function buildInsights(score) {
-    const goals = list("goals");
-    const target = Number(answers.target || 0);
-    const strengths = [];
-    const gaps = [];
-    const stack = [];
-
-    if (pick("telegram") === "5k-50k" || pick("telegram") === "50k+") strengths.push("Telegram already has enough activity to support AMAs, moderation, and launch moments.");
-    else gaps.push("Telegram needs a stronger trust layer before heavy campaign spend.");
-
-    if (pick("users") === "10k-100k" || pick("users") === "100k+") strengths.push("Existing traction gives Indian creators and ambassadors something real to validate.");
-    else gaps.push("The India launch should start with trust-building before aggressive user targets.");
-
-    if (pick("budget") === "5k-20k" || pick("budget") === "20k+") strengths.push("Budget can support connected creator, community, and ambassador work.");
-    else gaps.push("Budget is tight for multiple channels, so clear order matters more than volume.");
-
-    if (pick("launch") === "1-3m") strengths.push("The launch window is realistic for campaign prep and community warm-up.");
-    if (pick("launch") === "<1m") gaps.push("The India launch window is short, so execution needs a fast triage plan.");
-    if (pick("launch") === "flexible") gaps.push("A sharper launch milestone will make community and creator work easier to coordinate.");
-
-    if (goals.includes("community")) stack.push("Community Architecture");
-    if (goals.includes("kol")) stack.push("Influencer and KOL Campaigns");
-    if (goals.includes("ambassadors")) stack.push("Ambassador Program Operations");
-    if (goals.includes("partnerships") || goals.includes("listings")) stack.push("Partnership Development");
-    if (goals.includes("acquisition")) stack.push("India Market Expansion Strategy");
-    if (!stack.length) stack.push("Growth Consulting");
-
-    if (target >= 100000 && score < 70) gaps.push("The 100K+ India target needs a larger distribution engine than the current inputs suggest.");
-    if (goals.length >= 3) strengths.push("Your goals give enough context to design a connected India growth system.");
-
-    return {
-      summary:
-        score >= 75
-          ? "Your India setup has strong signals. The next move is clear execution: community ownership, creator timing, ambassador tasks, and weekly reporting."
-          : score >= 50
-            ? "Your project has useful signals, but the India plan needs stronger order before bigger spend."
-            : "Your project is early for India expansion. Start with community trust, Telegram discipline, and a focused launch plan.",
-      strengths: addUnique(strengths, ["India expansion intent is clear.", "The selected goals create a usable growth brief.", "There is enough context to map the first sprint."]),
-      gaps: addUnique(gaps, ["Creator fit still needs validation.", "Regional community opportunities need mapping.", "A clearer reporting rhythm should be defined before launch."]),
-      stack: addUnique(stack, ["India Market Expansion Strategy", "Community Architecture", "Growth Consulting"])
-    };
-  }
-
-  function renderList(target, items) {
-    if (!target) return;
-    target.innerHTML = items.map((item) => `<li>${item}</li>`).join("");
-  }
-
-  function syncLeadFields() {
-    if (leadScore) leadScore.value = String(latestScore);
-    if (leadMessage) {
-      leadMessage.value = [
-        `FlexistLabs India Check score: ${latestScore}%`,
-        `Summary: ${latestInsights?.summary || ""}`,
-        `Answers: ${JSON.stringify(answers)}`
-      ].join("\n");
-    }
-  }
-
-  form.querySelectorAll(".option-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      const step = button.closest(".assessment-step");
-      if (!step.dataset.multi) {
-        step.querySelectorAll(".option-button").forEach((item) => item.classList.remove("selected"));
-      }
-      button.classList.toggle("selected");
-    });
-  });
-
-  back.addEventListener("click", () => {
-    current = Math.max(0, current - 1);
-    render();
-  });
-
-  next.addEventListener("click", () => {
-    if (!capture()) {
-      next.textContent = "Select an option";
-      return;
-    }
-
-    if (current < steps.length - 1) {
-      current += 1;
-      render();
-      return;
-    }
-
-    latestScore = calculateScore();
-    latestInsights = buildInsights(latestScore);
-    form.hidden = true;
-    result.classList.add("visible");
-    result.querySelector("[data-gauge]").style.setProperty("--score", latestScore);
-    result.querySelector("[data-score]").textContent = latestScore;
-    if (summary) summary.textContent = latestInsights.summary;
-    renderList(strengthsList, latestInsights.strengths);
-    renderList(gapsList, latestInsights.gaps);
-    renderList(stackList, latestInsights.stack);
-    syncLeadFields();
-  });
-
-  if (leadForm) {
-    leadForm.addEventListener("submit", async (event) => {
+  if (form && result) {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      syncLeadFields();
-      if (leadNote) leadNote.textContent = "Sending your India Check...";
 
+      // Get values
+      const q1 = parseInt(form.elements["q1"].value || "0");
+      const q2 = parseInt(form.elements["q2"].value || "0");
+      const q3 = parseInt(form.elements["q3"].value || "0");
+      const q4 = parseInt(form.elements["q4"].value || "0");
+      const q5 = parseInt(form.elements["q5"].value || "0");
+
+      const score = q1 + q2 + q3 + q4 + q5;
+      
+      // Update hidden inputs for Web3Forms email submission
+      const scoreHidden = document.getElementById("score-hidden");
+      const tierHidden = document.getElementById("tier-hidden");
+      if (scoreHidden) scoreHidden.value = String(score);
+      
+      let tier = "Early Stage";
+      if (score >= 40) tier = "India Ready";
+      else if (score >= 20) tier = "Needs Optimization";
+      if (tierHidden) tierHidden.value = tier;
+
+      // Show loading feedback on submit button
+      const submitBtn = form.querySelector(".assessment-submit");
+      if (submitBtn) {
+        submitBtn.textContent = "Calculating & Submitting...";
+        submitBtn.disabled = true;
+      }
+
+      // Submit to Web3Forms in background
       try {
-        const response = await fetch(leadForm.action, {
+        const formData = new FormData(form);
+        await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          body: new FormData(leadForm),
-          headers: { Accept: "application/json" }
+          body: formData,
+          headers: {
+            "Accept": "application/json"
+          }
         });
+      } catch (err) {
+        console.error("Submission error:", err);
+      }
 
-        if (!response.ok) throw new Error("Lead form failed");
-        leadForm.reset();
-        if (leadNote) leadNote.textContent = "Sent. FLEXIST will receive your India Check by email.";
-      } catch (error) {
-        if (leadNote) leadNote.textContent = "Could not send here. Please email FlexistCrypto@gmail.com directly.";
+      // Hide form and show results
+      form.hidden = true;
+      result.hidden = false;
+      result.classList.add("visible");
+
+      // Animate score SVG circle
+      // 2 * PI * r = 2 * 3.14159 * 52 = 326.7
+      const arc = document.getElementById("score-arc");
+      if (arc) {
+        const maxOffset = 326.7;
+        const offset = maxOffset - (score / 50) * maxOffset;
+        
+        // Force repaint
+        arc.getBoundingClientRect();
+        arc.style.strokeDashoffset = offset;
+      }
+
+      // Counter animation for value
+      const scoreVal = document.getElementById("score-value");
+      if (scoreVal) {
+        let count = 0;
+        const duration = 1000; // 1s
+        const stepTime = Math.abs(Math.floor(duration / (score || 1)));
+        if (score > 0) {
+          const timer = setInterval(() => {
+            count++;
+            scoreVal.textContent = count;
+            if (count >= score) {
+              clearInterval(timer);
+            }
+          }, stepTime);
+        } else {
+          scoreVal.textContent = "0";
+        }
+      }
+
+      // Set Tier tag and message
+      const tierTag = document.getElementById("score-tier");
+      const scoreMsg = document.getElementById("score-message");
+      if (tierTag) {
+        tierTag.textContent = tier;
+        tierTag.className = "tag-chip signal";
+        if (score >= 40) {
+          tierTag.classList.add("tier-ready");
+        } else if (score >= 20) {
+          tierTag.classList.add("tier-optimization");
+        } else {
+          tierTag.classList.add("tier-early");
+        }
+      }
+      
+      if (scoreMsg) {
+        if (score >= 40) {
+          scoreMsg.textContent = "Your project has strong local foundations. You are ready to launch scale campaigns and capture high-velocity growth.";
+        } else if (score >= 20) {
+          scoreMsg.textContent = "You have established initial signals, but the growth loops are fragmented. Strengthen your community rhythm and content playbooks before scaling paid outreach.";
+        } else {
+          scoreMsg.textContent = "Your local foundations are empty. Focus on setting up Telegram moderation, recruiting primary ambassadors, and launching small creator tests.";
+        }
+      }
+
+      // Generate breakdown logs
+      const breakdownContent = document.getElementById("breakdown-content");
+      if (breakdownContent) {
+        breakdownContent.innerHTML = "";
+        
+        const logs = [];
+        logs.push({ type: "info", text: `[init] Initializing India Readiness Audit...` });
+        logs.push({ type: "info", text: `[eval] Scanning operational indicators...` });
+
+        // Q1 Log
+        if (q1 === 10) {
+          logs.push({ type: "success", text: `[pass] Community: Active Indian community hub is ready for event-led activation.` });
+        } else if (q1 === 5) {
+          logs.push({ type: "warning", text: `[warn] Community: Early signals detected, but active engagement loops are required.` });
+        } else {
+          logs.push({ type: "error", text: `[fail] Community: No localized community hub; high friction for regional trust building.` });
+        }
+
+        // Q2 Log
+        if (q2 === 10) {
+          logs.push({ type: "success", text: `[pass] Creators: Stable creator network exists to drive recurring retail waves.` });
+        } else if (q2 === 5) {
+          logs.push({ type: "warning", text: `[warn] Creators: Creator contact established, but single-pulse campaigns need alignment.` });
+        } else {
+          logs.push({ type: "error", text: `[fail] Creators: No creator distribution makes initial discovery difficult.` });
+        }
+
+        // Q3 Log
+        if (q3 === 10) {
+          logs.push({ type: "success", text: `[pass] Advocacy: Active ambassador team extends localized moderation muscle.` });
+        } else if (q3 === 5) {
+          logs.push({ type: "warning", text: `[warn] Advocacy: Strategy in planning. Establish task tracking to filter noise.` });
+        } else {
+          logs.push({ type: "error", text: `[fail] Advocacy: Lack of advocates makes moderation and local support resource-heavy.` });
+        }
+
+        // Q4 Log
+        if (q4 === 10) {
+          logs.push({ type: "success", text: `[pass] Localization: Dedicated Hinglish content maximizes regional conversion.` });
+        } else if (q4 === 5) {
+          logs.push({ type: "warning", text: `[warn] Localization: Basic translation active. Focus on native Hinglish rewrites.` });
+        } else {
+          logs.push({ type: "error", text: `[fail] Localization: English-only content fails to connect with 70%+ of retail users.` });
+        }
+
+        // Q5 Log
+        if (q5 === 10) {
+          logs.push({ type: "success", text: `[pass] Metrics: Granular India dashboard provides clean optimization loops.` });
+        } else if (q5 === 5) {
+          logs.push({ type: "warning", text: `[warn] Metrics: Basic geo-tracking active. Dedicated dashboard recommended.` });
+        } else {
+          logs.push({ type: "error", text: `[fail] Metrics: Lumping metrics in global hides actual CPA and regional drop-offs.` });
+        }
+
+        logs.push({ type: "info", text: `[done] Assessment completed. Score: ${score}/50 (${tier}).` });
+
+        // Animate log typing/printing effect
+        logs.forEach((log, index) => {
+          setTimeout(() => {
+            const div = document.createElement("div");
+            div.className = `log-line log-${log.type}`;
+            div.textContent = log.text;
+            breakdownContent.appendChild(div);
+          }, index * 150);
+        });
       }
     });
-  }
 
-  render();
+    // Retake button handler
+    const retakeBtn = document.getElementById("retake-btn");
+    if (retakeBtn) {
+      retakeBtn.addEventListener("click", () => {
+        form.reset();
+        
+        // Reset submit button state
+        const submitBtn = form.querySelector(".assessment-submit");
+        if (submitBtn) {
+          submitBtn.textContent = "Calculate My India Readiness →";
+          submitBtn.disabled = false;
+        }
+        
+        form.hidden = false;
+        result.hidden = true;
+        result.classList.remove("visible");
+        
+        // Reset circle dashoffset
+        const arc = document.getElementById("score-arc");
+        if (arc) {
+          arc.style.strokeDashoffset = "326.7";
+        }
+      });
+    }
+  }
 });

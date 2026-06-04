@@ -214,176 +214,342 @@
   padding: 24px;
 }
 
-.assessment {
-  padding: 30px;
+/* ---------- Interactive Assessment Form ---------- */
+.assessment-wrapper {
+  max-width: 840px;
+  margin: 0 auto;
 }
 
-.assessment-progress {
-  align-items: center;
+.assessment-form {
+  padding: 40px;
+  background: var(--terminal-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  margin-top: 24px;
+}
+
+.assessment-question {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+}
+
+.assessment-question:last-of-type {
+  border-bottom: none;
+  padding-bottom: 8px;
+  margin-bottom: 0;
+}
+
+.question-header {
   display: flex;
-  gap: 14px;
-  margin-bottom: 28px;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
 }
 
-.assessment-progress span {
-  color: var(--accent-cyan);
-  flex: 0 0 auto;
+.question-number {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-}
-
-.progress-line {
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
   background: rgba(0, 212, 255, 0.08);
-  border-radius: 99px;
-  height: 5px;
-  overflow: hidden;
-  width: 100%;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 500;
 }
 
-.progress-line i {
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
-  border-radius: inherit;
-  display: block;
-  height: 100%;
-  transform: scaleX(0.14);
-  transform-origin: left;
-  transition: transform 320ms var(--ease-out);
+.question-header h3 {
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.25;
 }
 
-.assessment-step {
-  display: none;
-}
-
-.assessment-step.active {
-  animation: fade-rise 320ms var(--ease-out);
-  display: block;
-}
-
-.assessment-step h3 {
-  font-size: clamp(1.45rem, 3vw, 2.1rem);
+.question-context {
+  font-size: 0.9rem;
+  color: var(--text-muted);
   margin-bottom: 22px;
+  line-height: 1.5;
 }
 
-.option-grid {
+.radio-group {
   display: grid;
-  gap: 10px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
-.option-button {
+.radio-option {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 16px;
   background: var(--ghost-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  min-height: 54px;
-  padding: 10px;
-  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms var(--ease-out);
 }
 
-.option-button:hover,
-.option-button.selected {
-  background: rgba(0, 102, 255, 0.15);
+.radio-option:hover {
   border-color: var(--accent-cyan);
-  color: var(--text-primary);
+  background: rgba(0, 212, 255, 0.04);
   transform: translateY(-1px);
 }
 
-.assessment-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  margin-top: 28px;
+.radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
+.radio-mark {
+  flex-shrink: 0;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-subtle);
+  border-radius: 50%;
+  margin-top: 3px;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.radio-option:hover .radio-mark {
+  border-color: var(--accent-cyan);
+}
+
+.radio-option input[type="radio"]:checked ~ .radio-mark {
+  border-color: var(--accent-cyan);
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.radio-option input[type="radio"]:checked ~ .radio-mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: var(--bg-primary);
+  border-radius: 50%;
+}
+
+.radio-option:has(input[type="radio"]:checked) {
+  border-color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.08);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.15);
+}
+
+.radio-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.radio-label strong {
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.radio-label small {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Email & Project fields */
+.assessment-email {
+  display: grid;
+  gap: 20px;
+}
+
+.assessment-email .field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.assessment-email .field label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.assessment-email input[type="email"],
+.assessment-email input[type="text"] {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  width: 100%;
+}
+
+.assessment-email input[type="email"]:focus,
+.assessment-email input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.assessment-submit {
+  display: block;
+  margin: 36px auto 0;
+  min-width: 260px;
+}
+
+/* ---------- Assessment Results ---------- */
 .assessment-result {
   display: none;
+  padding: 40px;
 }
 
 .assessment-result.visible {
-  animation: fade-rise 420ms var(--ease-out);
+  animation: fade-rise 420ms var(--ease-out) forwards;
   display: block;
 }
 
-.gauge-wrap {
-  align-items: center;
-  border: 1px solid var(--border-subtle);
-  border-radius: 50%;
+.score-display {
   display: flex;
-  height: 184px;
+  align-items: center;
   justify-content: center;
-  margin: 0 auto 30px;
+  gap: 48px;
+  margin: 32px 0;
+}
+
+.score-ring {
   position: relative;
-  width: 184px;
+  width: 136px;
+  height: 136px;
+  flex-shrink: 0;
 }
 
-.gauge-wrap::before {
-  background: conic-gradient(var(--accent-cyan) calc(var(--score) * 1%), rgba(0, 212, 255, 0.08) 0);
-  border-radius: 50%;
-  content: "";
-  inset: 8px;
-  mask: radial-gradient(transparent 62%, #000 64%);
+.score-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.score-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.04);
+  stroke-width: 7;
+}
+
+.score-fill {
+  fill: none;
+  stroke: var(--accent-cyan);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: 326.7;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.1, 1, 0.1, 1);
+}
+
+.score-number {
   position: absolute;
-}
-
-.gauge-wrap strong {
-  color: var(--accent-green);
-  font-family: var(--font-display);
-  font-size: 3.25rem;
-  letter-spacing: -0.12em;
-}
-
-.result-summary {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  margin: -10px auto 26px;
-  max-width: 760px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
 }
 
-.recommendation-grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.score-number span {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+  line-height: 1;
 }
 
-.recommendation {
-  padding: 18px;
-}
-
-.recommendation h4 {
-  color: var(--accent-cyan);
+.score-number small {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  margin: 0 0 12px;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--text-muted);
 }
 
-.recommendation ul {
+.score-meta {
+  max-width: 380px;
+}
+
+.score-meta .tag-chip {
+  margin-bottom: 12px;
+}
+
+.tag-chip.tier-ready {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.tag-chip.tier-optimization {
+  background: rgba(255, 209, 102, 0.1);
+  border-color: #ffd166;
+  color: #ffd166;
+}
+
+.tag-chip.tier-early {
+  background: rgba(0, 102, 255, 0.1);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.score-meta p {
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  font-size: 0.86rem;
-  line-height: 1.75;
-  margin: 0;
-  padding-left: 18px;
-}
-
-.assessment-lead-form {
-  align-items: end;
-  border-top: 1px solid var(--border-subtle);
-  display: grid;
-  gap: 14px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  margin-top: 24px;
-  padding-top: 24px;
-}
-
-.assessment-lead-form .form-note {
-  grid-column: 1 / -1;
+  line-height: 1.55;
   margin: 0;
 }
 
+.result-breakdown {
+  margin-top: 32px;
+}
+
+#breakdown-content {
+  padding: 22px 24px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.65;
+  min-height: 140px;
+}
+
+.log-line {
+  margin-bottom: 8px;
+}
+
+.log-line:last-child {
+  margin-bottom: 0;
+}
+
+.log-success {
+  color: var(--accent-green);
+}
+
+.log-warning {
+  color: #ffd166;
+}
+
+.log-info {
+  color: var(--accent-cyan);
+}
+
+.log-error {
+  color: #ff4d6d;
+}
+
+/* ---------- Responsive Styles ---------- */
 @media (max-width: 980px) {
   .lab-hero-grid,
   .state-map-grid,
@@ -391,28 +557,40 @@
     grid-template-columns: 1fr;
   }
 
-  .lab-stage-grid,
-  .recommendation-grid {
+  .lab-stage-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .radio-group {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .score-display {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .score-meta {
+    max-width: 100%;
+  }
+
+  .assessment-form,
+  .assessment-result {
+    padding: 24px;
   }
 }
 
 @media (max-width: 720px) {
   .journey-step,
-  .channel-row,
-  .assessment-lead-form {
+  .channel-row {
     grid-template-columns: 1fr;
   }
 
   .channel-row b {
     text-align: left;
-  }
-
-  .option-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .assessment {
-    padding: 22px;
   }
 }
