@@ -4,7 +4,7 @@ const Flexist = (() => {
 
   const navGroups = [
     { key: "home", href: "./", label: "Home" },
-    { key: "india-hub", href: "flexistlabs", label: "FlexistLabs" },
+    { key: "flexistlabs", href: "flexistlabs.html", label: "FlexistLabs" },
     {
       key: "growth-stack",
       href: "services",
@@ -15,6 +15,18 @@ const Flexist = (() => {
         ["influencers", "influencers", "Influencers", "Creator and KOL campaigns"],
         ["ambassadors", "ambassadors", "Ambassadors", "Local ambassador programs"],
         ["partnerships", "partnerships", "Partnerships", "Useful project relationships"]
+      ]
+    },
+    {
+      key: "plans",
+      href: "plans",
+      label: "Plans",
+      items: [
+        ["plans", "plans", "Compare Plans", "Bundled India growth packages"],
+        ["india-entry", "plans/india-entry.html", "India Entry", "Pre-launch essentials"],
+        ["india-growth", "plans/india-growth.html", "India Growth", "Full community and campaigns"],
+        ["india-partner", "plans/india-partner.html", "India Partner", "Total India ownership"],
+        ["payment", "payment", "Make Payment", "Secure crypto payment"]
       ]
     },
     {
@@ -46,9 +58,9 @@ const Flexist = (() => {
     {
       title: "Founder Journey",
       links: [
-        ["FlexistLabs", "flexistlabs"],
+        ["FlexistLabs", "flexistlabs.html"],
         ["Growth Services", "services"],
-        ["India Check", "flexistlabs#assessment"],
+        ["Plans & Pricing", "plans"],
         ["Founder Inquiry", "inquiry"]
       ]
     },
