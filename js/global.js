@@ -12,8 +12,8 @@ const Flexist = (() => {
     if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#") || href.startsWith("tel:")) {
       return href;
     }
-    if (href === "./") {
-      return isSubfolder ? "../" : "./";
+    if (href === "./" || href === "/") {
+      return "/";
     }
     return basePrefix + href;
   }

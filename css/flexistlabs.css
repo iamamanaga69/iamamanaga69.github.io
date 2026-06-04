@@ -549,6 +549,143 @@
   color: #ff4d6d;
 }
 
+/* ---------- Playbook / Strategic Framework ---------- */
+.framework-timeline {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 48px;
+}
+
+.framework-phase {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  height: 100%;
+}
+
+.phase-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.phase-number {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.framework-phase h3 {
+  font-size: 1.45rem;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+}
+
+.framework-phase > p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.phase-deliverables {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.phase-deliverables li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.deliverable-icon {
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.phase-deliverables li strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.phase-deliverables li small {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.phase-duration {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.framework-connector {
+  margin-top: 56px;
+  position: relative;
+}
+
+.connector-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-green));
+  border-radius: 99px;
+  position: relative;
+}
+
+.connector-line::before,
+.connector-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+.connector-line::before {
+  left: 0;
+}
+
+.connector-line::after {
+  right: 0;
+}
+
+.connector-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 0 4px;
+}
+
+.connector-labels span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 /* ---------- Responsive Styles ---------- */
 @media (max-width: 980px) {
   .lab-hero-grid,
@@ -559,6 +696,15 @@
 
   .lab-stage-grid {
     grid-template-columns: 1fr;
+  }
+
+  .framework-timeline {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .framework-connector {
+    display: none;
   }
 }
 
