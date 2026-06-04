@@ -122,6 +122,8 @@ const FlexistPayment = (() => {
     const { plan, type, amount } = getParams();
     let selectedChain = null;
     let currentStep = 1;
+    let verifiedPaymentId = "";
+    let verifiedActualAmount = 0;
 
     // Populate order summary
     const planEl = document.getElementById("order-plan");
@@ -134,6 +136,25 @@ const FlexistPayment = (() => {
     // Hero subtitle
     const heroSub = document.getElementById("pay-hero-plan");
     if (heroSub) heroSub.textContent = plan !== "Custom" ? `Plan: ${plan}` : "";
+
+    // Checkout Path toggle logic
+    const pathAutomated = document.getElementById("path-automated");
+    const pathPrivate = document.getElementById("path-private");
+    if (pathAutomated && pathPrivate) {
+      pathAutomated.addEventListener("click", () => {
+        pathPrivate.classList.remove("active");
+        pathAutomated.classList.add("active");
+      });
+      pathPrivate.addEventListener("click", () => {
+        pathAutomated.classList.remove("active");
+        pathPrivate.classList.add("active");
+        // Optional timeout to revert active state back to web checkout after navigation
+        setTimeout(() => {
+          pathPrivate.classList.remove("active");
+          pathAutomated.classList.add("active");
+        }, 1000);
+      });
+    }
 
     // Render chain cards
     const chainGrid = document.getElementById("chain-grid");
@@ -173,7 +194,6 @@ const FlexistPayment = (() => {
 
     const txidInput = document.getElementById("form-txid");
     const txidFeedback = document.getElementById("txid-feedback");
-    const submitBtn = document.getElementById("btn-submit");
 
     function checkTxid() {
       if (!txidInput) return;
@@ -183,7 +203,6 @@ const FlexistPayment = (() => {
       if (!val) {
         txidInput.classList.remove("is-valid", "is-invalid");
         if (txidFeedback) txidFeedback.textContent = "";
-        if (submitBtn) submitBtn.disabled = false;
         return;
       }
 
@@ -195,7 +214,6 @@ const FlexistPayment = (() => {
           txidFeedback.textContent = "✓ Valid transaction hash format";
           txidFeedback.className = "txid-feedback valid";
         }
-        if (submitBtn) submitBtn.disabled = false;
       } else {
         txidInput.classList.remove("is-valid");
         txidInput.classList.add("is-invalid");
@@ -207,7 +225,6 @@ const FlexistPayment = (() => {
           txidFeedback.textContent = "Invalid format. Expected " + expectedFormat;
           txidFeedback.className = "txid-feedback invalid";
         }
-        if (submitBtn) submitBtn.disabled = true;
       }
     }
 
@@ -280,6 +297,10 @@ const FlexistPayment = (() => {
         const amountInput = document.getElementById("form-amount");
         if (amountInput && amount !== "0") amountInput.value = amount;
 
+        // Reset stage state in case of step back-and-forth
+        document.getElementById("form-part-verification").style.display = "block";
+        document.getElementById("form-part-details").style.display = "none";
+
         checkTxid();
       }
 
@@ -331,50 +352,85 @@ const FlexistPayment = (() => {
       });
     });
 
-    // Confirmation form submission
     const form = document.getElementById("pay-form");
-    if (form) {
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+
+    function showFormError(msg) {
+      if (!form) return;
+      let errorEl = form.querySelector(".form-error-msg");
+      if (!errorEl) {
+        errorEl = document.createElement("div");
+        errorEl.className = "form-error-msg";
+        errorEl.style.color = "var(--accent-red, #ff4a4a)";
+        errorEl.style.backgroundColor = "rgba(255, 74, 74, 0.1)";
+        errorEl.style.border = "1px solid rgba(255, 74, 74, 0.2)";
+        errorEl.style.padding = "12px";
+        errorEl.style.borderRadius = "6px";
+        errorEl.style.marginTop = "15px";
+        errorEl.style.fontSize = "0.9rem";
+        errorEl.style.textAlign = "center";
+        
+        // Insert right above action buttons
+        const actionRow = form.querySelector(".pay-action-row") || form.querySelector("#form-part-verification .pay-action-row") || form.querySelector("#form-part-details .pay-action-row");
+        if (actionRow) {
+          actionRow.parentNode.insertBefore(errorEl, actionRow);
+        } else {
+          form.appendChild(errorEl);
+        }
+      }
+      errorEl.textContent = msg;
+      errorEl.hidden = false;
+    }
+
+    // Stage 1: Verify Transaction Hash Click Handler
+    const verifyHashBtn = document.getElementById("btn-verify-hash");
+    if (verifyHashBtn && form) {
+      verifyHashBtn.addEventListener("click", async () => {
+        // Hide previous errors
+        const existingError = form.querySelector(".form-error-msg");
+        if (existingError) existingError.hidden = true;
 
         const fd = new FormData(form);
         const data = Object.fromEntries(fd.entries());
 
-        // Hide any previous error message on submission retry
-        const existingError = form.querySelector(".form-error-msg");
-        if (existingError) existingError.hidden = true;
+        const chain = data.chain;
+        const token = data.token;
+        const amountSent = data.amount_sent;
+        const txid = data.txid;
 
-        // Show loading state
-        const submitBtn = form.querySelector("button[type='submit']");
-        const originalText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying transaction on-chain...';
+        if (!chain || !token || !amountSent || !txid) {
+          alert("Please fill in all transaction fields: Chain, Token, Amount, and TxID.");
+          return;
+        }
+
+        const isValid = validateTxid(txid, chain);
+        if (!isValid) {
+          alert("Transaction ID format is invalid for the selected chain.");
+          return;
+        }
 
         // Obtain Turnstile challenge token and perform explicit validation
         const turnstileToken = turnstile.getResponse();
         if (!turnstileToken) {
           alert("Please complete verification");
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
           return;
         }
 
-        // Submit to Cloudflare Worker verifier endpoint
+        // Show verification loader state
+        const originalText = verifyHashBtn.innerHTML;
+        verifyHashBtn.disabled = true;
+        verifyHashBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying transaction on-chain...';
+
         try {
           const payload = {
             plan: plan,
             paymentType: type,
-            chain: data.chain,
-            token: data.token,
-            txHash: data.txid,
-            name: data.name,
-            email: data.email,
-            telegram: data.telegram,
-            project: data.project,
+            chain: chain,
+            token: token,
+            txHash: txid,
             turnstileToken: turnstileToken
           };
 
-          const res = await fetch(`${WORKER_URL}/verify-payment`, {
+          const res = await fetch(`${WORKER_URL}/verify-hash`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
@@ -382,18 +438,102 @@ const FlexistPayment = (() => {
 
           const result = await res.json();
           if (!res.ok) {
-            throw new Error(result.error || "Payment verification failed.");
+            throw new Error(result.error || "Transaction hash verification failed.");
+          }
+
+          // Save references returned from verifier D1 registration
+          verifiedPaymentId = result.paymentId;
+          verifiedActualAmount = result.actualAmount || amountSent;
+
+          // Transition to Stage 2: onboarding details form
+          document.getElementById("form-part-verification").style.display = "none";
+          document.getElementById("form-part-details").style.display = "block";
+
+          const successBadge = document.getElementById("details-success-badge");
+          if (successBadge) {
+            successBadge.innerHTML = `<span>✓</span> <strong>Transaction verified successfully! (Detected: ${verifiedActualAmount} ${token.toUpperCase()})</strong>`;
+          }
+
+          // Reset verify button state
+          verifyHashBtn.disabled = false;
+          verifyHashBtn.innerHTML = originalText;
+
+        } catch (err) {
+          showFormError(`Verification Failed: ${err.message}`);
+          verifyHashBtn.disabled = false;
+          verifyHashBtn.innerHTML = originalText;
+          if (window.turnstile) {
+            window.turnstile.reset();
+          }
+        }
+      });
+    }
+
+    // Step Back from Details to Verification Handler
+    const backVerificationBtn = document.getElementById("btn-back-verification");
+    if (backVerificationBtn) {
+      backVerificationBtn.addEventListener("click", () => {
+        document.getElementById("form-part-details").style.display = "none";
+        document.getElementById("form-part-verification").style.display = "block";
+        
+        // Hide previous errors
+        if (form) {
+          const existingError = form.querySelector(".form-error-msg");
+          if (existingError) existingError.hidden = true;
+        }
+
+        if (window.turnstile) {
+          window.turnstile.reset();
+        }
+      });
+    }
+
+    // Stage 2: Complete Onboarding Form Submission Handler
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const fd = new FormData(form);
+        const data = Object.fromEntries(fd.entries());
+
+        // Hide previous errors
+        const existingError = form.querySelector(".form-error-msg");
+        if (existingError) existingError.hidden = true;
+
+        const submitBtn = document.getElementById("btn-submit");
+        const originalText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Registering onboarding details...';
+
+        try {
+          const payload = {
+            paymentId: verifiedPaymentId,
+            name: data.name,
+            email: data.email,
+            telegram: data.telegram,
+            project: data.project
+          };
+
+          const res = await fetch(`${WORKER_URL}/complete-onboarding`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await res.json();
+          if (!res.ok) {
+            throw new Error(result.error || "Onboarding completion failed.");
           }
 
           // Save transaction to local cache for UI history logs (Optional local records)
           const txRecord = {
-            paymentId: result.paymentId,
+            paymentId: verifiedPaymentId,
             name: data.name,
             email: data.email,
             telegram: data.telegram,
             projectName: data.project,
             plan: plan,
-            amount_sent: result.actualAmount || 0,
+            amount_sent: verifiedActualAmount,
             chain: data.chain,
             token: data.token,
             txid: data.txid,
@@ -402,7 +542,7 @@ const FlexistPayment = (() => {
           };
           savePayment(txRecord);
 
-          // Show success screen
+          // Show success state
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
 
@@ -416,7 +556,7 @@ const FlexistPayment = (() => {
             if (txEl) {
               txEl.innerHTML = `
                 <strong>Payment Reference ID:</strong><br/>
-                <code style="font-size:1.15rem;color:var(--accent-cyan);font-family:var(--font-mono);">${result.paymentId}</code><br/><br/>
+                <code style="font-size:1.15rem;color:var(--accent-cyan);font-family:var(--font-mono);">${verifiedPaymentId}</code><br/><br/>
                 <strong>Transaction Hash (TxID):</strong><br/>
                 <code style="font-size:0.85rem;color:var(--text-secondary);font-family:var(--font-mono);">${data.txid || "—"}</code>
               `;
@@ -427,35 +567,15 @@ const FlexistPayment = (() => {
           document.querySelectorAll(".pay-step").forEach(el => el.classList.add("completed"));
           document.querySelectorAll(".pay-step-line").forEach(el => el.classList.add("filled"));
 
-          // Redirect after delay
+          // Redirect to thank you page
           setTimeout(() => {
-            window.location.href = `thank-you.html?paymentId=${encodeURIComponent(result.paymentId)}`;
+            window.location.href = `thank-you.html?paymentId=${encodeURIComponent(verifiedPaymentId)}`;
           }, 3000);
 
         } catch (err) {
-          // Display error message directly on the page
-          let errorEl = form.querySelector(".form-error-msg");
-          if (!errorEl) {
-            errorEl = document.createElement("div");
-            errorEl.className = "form-error-msg";
-            errorEl.style.color = "var(--accent-red, #ff4a4a)";
-            errorEl.style.backgroundColor = "rgba(255, 74, 74, 0.1)";
-            errorEl.style.border = "1px solid rgba(255, 74, 74, 0.2)";
-            errorEl.style.padding = "12px";
-            errorEl.style.borderRadius = "6px";
-            errorEl.style.marginTop = "15px";
-            errorEl.style.fontSize = "0.9rem";
-            errorEl.style.textAlign = "center";
-            form.insertBefore(errorEl, form.querySelector(".pay-action-row"));
-          }
-          errorEl.textContent = `Verification Failed: ${err.message}`;
-          errorEl.hidden = false;
-
+          showFormError(`Onboarding Submission Failed: ${err.message}`);
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
-          if (window.turnstile) {
-            window.turnstile.reset();
-          }
         }
       });
     }

@@ -286,10 +286,10 @@ const Flexist = (() => {
       if (!window.Calendly) return;
       window.Calendly.initBadgeWidget({
         url: "https://calendly.com/flexistcrypto/30min",
-        text: "Schedule time with me",
+        text: "Book Call",
         color: "#0069ff",
         textColor: "#ffffff",
-        branding: true
+        branding: false
       });
     });
     document.body.appendChild(script);

@@ -136,6 +136,10 @@ export default {
     // ── ROUTER ──
     if (url.pathname === "/verify-payment" && request.method === "POST") {
       return handleVerifyPayment(request, env, ip, corsHeaders);
+    } else if (url.pathname === "/verify-hash" && request.method === "POST") {
+      return handleVerifyHash(request, env, ip, corsHeaders);
+    } else if (url.pathname === "/complete-onboarding" && request.method === "POST") {
+      return handleCompleteOnboarding(request, env, corsHeaders);
     } else if (url.pathname === "/payment-status" && request.method === "GET") {
       return handlePaymentStatus(url, env, corsHeaders);
     }
@@ -180,6 +184,165 @@ async function handlePaymentStatus(url, env, corsHeaders) {
   }
 }
 
+// ── Step 3A: verify on-chain hash and pre-insert database log
+async function handleVerifyHash(request, env, ip, corsHeaders) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
+  }
+
+  const {
+    plan,
+    paymentType,
+    chain,
+    token,
+    txHash,
+    turnstileToken
+  } = body;
+
+  // Validate required fields
+  if (!plan || !paymentType || !chain || !token || !txHash || !turnstileToken) {
+    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: corsHeaders });
+  }
+
+  const cleanTxHash = txHash.trim();
+  const lowerChain = chain.toLowerCase();
+  const upperToken = token.toUpperCase();
+  const lowerPlan = plan.toLowerCase().replace(/\s+/g, "");
+  const lowerType = paymentType.toLowerCase().trim();
+
+  // Validate pricing check & calculate expected amount on server
+  const pricingTier = PLAN_PRICING[lowerType];
+  if (!pricingTier) {
+    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+  }
+
+  const serverExpectedAmount = pricingTier[lowerPlan];
+  if (!serverExpectedAmount) {
+    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+  }
+
+  // 1. Validate Turnstile Token
+  const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `secret=${encodeURIComponent(env.TURNSTILE_SECRET_KEY)}&response=${encodeURIComponent(turnstileToken)}&remoteip=${ip}`
+  });
+  const turnstileData = await turnstileRes.json();
+  if (!turnstileData.success) {
+    return new Response(JSON.stringify({ error: "Security validation failed. Refresh page and try again." }), { status: 400, headers: corsHeaders });
+  }
+
+  // 2. Double-Spend/Duplicate check via KV
+  const kvKey = `tx:${cleanTxHash.toLowerCase()}`;
+  const isDuplicate = await env.VERIFIED_TXIDS.get(kvKey);
+  if (isDuplicate) {
+    return new Response(JSON.stringify({ error: "Transaction hash has already been registered." }), { status: 400, headers: corsHeaders });
+  }
+
+  // 3. Verify Blockchain Transaction
+  let verificationResult;
+  try {
+    if (["ethereum", "bnb", "polygon", "base", "arbitrum"].includes(lowerChain)) {
+      verificationResult = await verifyEVM(cleanTxHash, lowerChain, upperToken, serverExpectedAmount, env);
+    } else if (lowerChain === "solana") {
+      verificationResult = await verifySolana(cleanTxHash, upperToken, serverExpectedAmount, env);
+    } else if (lowerChain === "tron") {
+      verificationResult = await verifyTron(cleanTxHash, upperToken, serverExpectedAmount, env);
+    } else {
+      return new Response(JSON.stringify({ error: `Unsupported blockchain: ${chain}` }), { status: 400, headers: corsHeaders });
+    }
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Blockchain verification failed", details: err.message }), { status: 400, headers: corsHeaders });
+  }
+
+  if (!verificationResult.verified) {
+    return new Response(JSON.stringify({ error: verificationResult.reason }), { status: 400, headers: corsHeaders });
+  }
+
+  // 4. Save to D1 with 'pending_onboarding' status & store in KV
+  const paymentId = generatePaymentId(plan, chain);
+  try {
+    await env.DB.prepare(
+      "INSERT INTO payments (id, plan, payment_type, expected_amount, actual_amount, chain, token, tx_hash, name, email, telegram, project, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, '', '', '', '', 'pending_onboarding')"
+    ).bind(
+      paymentId,
+      plan,
+      paymentType,
+      serverExpectedAmount,
+      verificationResult.actualAmount,
+      chain,
+      token,
+      cleanTxHash
+    ).run();
+
+    // Cache verified transaction hash in KV to prevent double spend
+    await env.VERIFIED_TXIDS.put(kvKey, "verified");
+
+    return new Response(JSON.stringify({ success: true, paymentId, actualAmount: verificationResult.actualAmount }), {
+      status: 200,
+      headers: corsHeaders
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Database registration failure", details: err.message }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+// ── Step 3B: update database record with user contact/project details
+async function handleCompleteOnboarding(request, env, corsHeaders) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
+  }
+
+  const {
+    paymentId,
+    name,
+    email,
+    telegram,
+    project
+  } = body;
+
+  // Validate required fields
+  if (!paymentId || !name || !email || !telegram || !project) {
+    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: corsHeaders });
+  }
+
+  try {
+    const dbRes = await env.DB.prepare(
+      "UPDATE payments SET name = ?, email = ?, telegram = ?, project = ?, status = 'verified' WHERE id = ?"
+    ).bind(
+      name.trim(),
+      email.trim(),
+      telegram.trim(),
+      project.trim(),
+      paymentId
+    ).run();
+
+    if (dbRes.meta?.changes === 0) {
+      return new Response(JSON.stringify({ error: "Payment reference not found." }), { status: 404, headers: corsHeaders });
+    }
+
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: corsHeaders
+    });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Database update failure", details: err.message }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+// ── Legacy verify-payment fallback (processes all inputs at once)
 async function handleVerifyPayment(request, env, ip, corsHeaders) {
   let body;
   try {
@@ -265,7 +428,7 @@ async function handleVerifyPayment(request, env, ip, corsHeaders) {
   const paymentId = generatePaymentId(plan, chain);
   try {
     await env.DB.prepare(
-      "INSERT INTO payments (id, plan, payment_type, expected_amount, actual_amount, chain, token, tx_hash, name, email, telegram, project, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO payments (id, plan, payment_type, expected_amount, actual_amount, chain, token, tx_hash, name, email, telegram, project, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'verified')"
     ).bind(
       paymentId,
       plan,
@@ -275,11 +438,10 @@ async function handleVerifyPayment(request, env, ip, corsHeaders) {
       chain,
       token,
       cleanTxHash,
-      name,
-      email,
-      telegram,
-      project,
-      "verified"
+      name.trim(),
+      email.trim(),
+      telegram.trim(),
+      project.trim()
     ).run();
 
     // Cache verified transaction hash in KV to prevent double spend

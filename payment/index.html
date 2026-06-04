@@ -63,6 +63,27 @@
               </h2>
               <p class="pay-panel-sub">Choose the blockchain network you'll use to send payment. All chains lead to the same FLEXIST wallet.</p>
 
+              <!-- Checkout Path Selector -->
+              <div class="checkout-paths">
+                <!-- Path A: Automated Web Checkout -->
+                <div class="path-card active" id="path-automated">
+                  <div class="path-card-title">
+                    <span>⚡</span>
+                    <strong>Instant Web Checkout</strong>
+                  </div>
+                  <p class="path-card-desc">Pay automatically with major cryptocurrencies and verify transaction instantly on-chain.</p>
+                </div>
+                
+                <!-- Path B: Private Telegram Coordination -->
+                <a href="https://t.me/FlexistCrypto" target="_blank" class="path-card" id="path-private">
+                  <div class="path-card-title">
+                    <span>💬</span>
+                    <strong>Deal Privately (Telegram)</strong>
+                  </div>
+                  <p class="path-card-desc">Coordinate privately with @FlexistCrypto, customize terms, or pay with other methods.</p>
+                </a>
+              </div>
+
               <div class="chain-grid" id="chain-grid">
                 <!-- Rendered by JS -->
               </div>
@@ -113,83 +134,113 @@
                 <span class="step-num">3</span>
                 Confirm Your Payment
               </h2>
-              <p class="pay-panel-sub">Fill in your details so we can verify and activate your plan. All fields are required.</p>
 
               <form class="pay-form" id="pay-form">
-                <input type="hidden" name="access_key" value="8188cc9d-3ea6-45ee-b6a4-bde1a146e6a0">
-                <input type="hidden" name="subject" value="FLEXIST Crypto Payment Confirmation">
-                <input type="hidden" name="from_name" value="FLEXIST Payment System">
+                <!-- PART A: VERIFY TRANSACTION HASH -->
+                <div id="form-part-verification">
+                  <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your transaction details to verify your payment directly on-chain first.</p>
 
-                <div class="form-row">
-                  <div class="field">
-                    <label>Full Name <span class="required">*</span></label>
-                    <input type="text" name="name" required placeholder="Your name">
+                  <!-- Redesigned Verification Tip Alert -->
+                  <div class="verification-advice-box">
+                    <strong>🔒 SECURED PAYMENT VERIFICATION</strong>
+                    <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10–15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
                   </div>
-                  <div class="field">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" name="email" required placeholder="you@project.xyz">
+
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Chain Used <span class="required">*</span></label>
+                      <select name="chain" id="form-chain" required>
+                        <option value="">Select chain</option>
+                        <option value="ethereum">Ethereum</option>
+                        <option value="bnb">BNB Chain</option>
+                        <option value="polygon">Polygon</option>
+                        <option value="solana">Solana</option>
+                        <option value="base">Base</option>
+                        <option value="arbitrum">Arbitrum</option>
+                        <option value="tron">TRON</option>
+                      </select>
+                    </div>
+                    <div class="field">
+                      <label>Token Sent <span class="required">*</span></label>
+                      <select name="token" id="form-token" required>
+                        <option value="">Select token</option>
+                        <option value="USDT">USDT</option>
+                        <option value="ETH">ETH</option>
+                        <option value="BNB">BNB</option>
+                        <option value="POL">POL</option>
+                        <option value="SOL">SOL</option>
+                        <option value="TRX">TRX</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Amount Sent (USD) <span class="required">*</span></label>
+                      <input type="number" name="amount_sent" id="form-amount" required placeholder="500" min="1" step="any">
+                    </div>
+                    <div class="field">
+                      <label>Transaction ID (TxID) <span class="required">*</span></label>
+                      <input type="text" name="txid" id="form-txid" required placeholder="0x... or transaction hash">
+                      <span class="txid-feedback" id="txid-feedback"></span>
+                    </div>
+                  </div>
+
+                  <!-- Turnstile Security Challenge -->
+                  <div class="form-row" style="margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: center;">
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAADem-VgyP4W5SlpV" data-theme="dark"></div>
+                  </div>
+
+                  <!-- Step 3 Part A Support Link -->
+                  <div class="verification-support-link">
+                    Having issues verifying? Message us on Telegram for support: <a href="https://t.me/FlexistCrypto" target="_blank">@FlexistCrypto</a>
+                  </div>
+
+                  <div class="pay-action-row" style="margin-top: 24px;">
+                    <button class="ghost-button" type="button" data-back="2">← Back</button>
+                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash →</button>
                   </div>
                 </div>
 
-                <div class="form-row">
-                  <div class="field">
-                    <label>Telegram Handle <span class="required">*</span></label>
-                    <input type="text" name="telegram" required placeholder="@yourtelegram">
+                <!-- PART B: ONBOARDING DETAILS -->
+                <div id="form-part-details" style="display: none;">
+                  <div class="verify-success-badge" id="details-success-badge" style="background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.88rem; color: var(--accent-green); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <span>✓</span> <strong>Transaction verified successfully!</strong>
                   </div>
-                  <div class="field">
-                    <label>Project Name <span class="required">*</span></label>
-                    <input type="text" name="project" required placeholder="Your project">
-                  </div>
-                </div>
 
-                <div class="form-row">
-                  <div class="field">
-                    <label>Chain Used <span class="required">*</span></label>
-                    <select name="chain" id="form-chain" required>
-                      <option value="">Select chain</option>
-                      <option value="ethereum">Ethereum</option>
-                      <option value="bnb">BNB Chain</option>
-                      <option value="polygon">Polygon</option>
-                      <option value="solana">Solana</option>
-                      <option value="base">Base</option>
-                      <option value="arbitrum">Arbitrum</option>
-                      <option value="tron">TRON</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label>Token Sent <span class="required">*</span></label>
-                    <select name="token" id="form-token" required>
-                      <option value="">Select token</option>
-                      <option value="USDT">USDT</option>
-                      <option value="ETH">ETH</option>
-                      <option value="BNB">BNB</option>
-                      <option value="POL">POL</option>
-                      <option value="SOL">SOL</option>
-                      <option value="TRX">TRX</option>
-                    </select>
-                  </div>
-                </div>
+                  <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your project details to link your verified payment and activate onboarding.</p>
 
-                <div class="form-row">
-                  <div class="field">
-                    <label>Amount Sent (USD) <span class="required">*</span></label>
-                    <input type="number" name="amount_sent" id="form-amount" required placeholder="500" min="1" step="any">
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Full Name <span class="required">*</span></label>
+                      <input type="text" name="name" id="form-name" required placeholder="Your name">
+                    </div>
+                    <div class="field">
+                      <label>Email <span class="required">*</span></label>
+                      <input type="email" name="email" id="form-email" required placeholder="you@project.xyz">
+                    </div>
                   </div>
-                  <div class="field">
-                    <label>Transaction ID (TxID) <span class="required">*</span></label>
-                    <input type="text" name="txid" id="form-txid" required placeholder="0x... or transaction hash">
-                    <span class="txid-feedback" id="txid-feedback"></span>
+
+                  <div class="form-row">
+                    <div class="field">
+                      <label>Telegram Handle <span class="required">*</span></label>
+                      <input type="text" name="telegram" id="form-telegram" required placeholder="@yourtelegram">
+                    </div>
+                    <div class="field">
+                      <label>Project Name <span class="required">*</span></label>
+                      <input type="text" name="project" id="form-project" required placeholder="Your project">
+                    </div>
                   </div>
-                </div>
 
-                <!-- Turnstile Security Challenge -->
-                <div class="form-row" style="margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: center;">
-                  <div class="cf-turnstile" data-sitekey="0x4AAAAAADem-VgyP4W5SlpV" data-theme="dark"></div>
-                </div>
+                  <!-- Step 3 Part B Support Link -->
+                  <div class="verification-support-link">
+                    Having issues submitting details? Contact us on Telegram: <a href="https://t.me/FlexistCrypto" target="_blank">@FlexistCrypto</a>
+                  </div>
 
-                <div class="pay-action-row">
-                  <button class="ghost-button" type="button" data-back="2">← Back</button>
-                  <button class="neon-button" type="submit" id="btn-submit">Submit Confirmation →</button>
+                  <div class="pay-action-row" style="margin-top: 24px;">
+                    <button class="ghost-button" type="button" id="btn-back-verification">← Re-verify</button>
+                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate →</button>
+                  </div>
                 </div>
               </form>
             </div>
