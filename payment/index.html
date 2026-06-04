@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Complete your crypto payment to FLEXIST. Multi-chain support: Ethereum, BNB Chain, Polygon, Solana, Base, Arbitrum, TRON.">
+  <title>Payment | FLEXIST CRYPTO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/payment.css">
+</head>
+<body data-page="payment">
+  <div data-site-nav></div>
+
+  <main id="main-content">
+
+    <!-- ═══ HERO ═══ -->
+    <section class="page-hero">
+      <div class="container page-hero-content">
+        <span class="page-kicker">// secure crypto payment</span>
+        <h1 class="page-title">Complete Your <span class="gradient-text">Payment</span></h1>
+        <p class="page-lede" id="pay-hero-plan"></p>
+      </div>
+    </section>
+
+    <!-- ═══ PAYMENT FLOW ═══ -->
+    <section class="section">
+      <div class="container">
+
+        <!-- Order Summary -->
+        <div class="order-summary reveal">
+          <div class="order-summary-row">
+            <span class="order-label">Plan</span>
+            <span class="order-value" id="order-plan">—</span>
+          </div>
+          <div class="order-summary-row">
+            <span class="order-label">Type</span>
+            <span class="order-value" id="order-type">—</span>
+          </div>
+          <div class="order-summary-row">
+            <span class="order-label">Amount</span>
+            <span class="order-value amount" id="order-amount">—</span>
+          </div>
+        </div>
+
+        <!-- Step Indicator -->
+        <div class="pay-steps reveal">
+          <div class="pay-step active" data-step="1">
+            <span class="pay-step-dot">1</span>
+            <span class="pay-step-label">Select Chain</span>
+          </div>
+          <div class="pay-step-line" data-after="1"></div>
+          <div class="pay-step" data-step="2">
+            <span class="pay-step-dot">2</span>
+            <span class="pay-step-label">Send Payment</span>
+          </div>
+          <div class="pay-step-line" data-after="2"></div>
+          <div class="pay-step" data-step="3">
+            <span class="pay-step-dot">3</span>
+            <span class="pay-step-label">Confirm</span>
+          </div>
+        </div>
+
+        <!-- ── STEP 1: Select Chain ── -->
+        <div class="pay-panel reveal" id="step-1">
+          <h2 class="pay-panel-title">
+            <span class="step-num">1</span>
+            Select Your Network
+          </h2>
+          <p class="pay-panel-sub">Choose the blockchain network you'll use to send payment. All chains lead to the same FLEXIST wallet.</p>
+
+          <div class="chain-grid" id="chain-grid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- ── STEP 2: Send Payment ── -->
+        <div class="pay-panel" id="step-2" hidden>
+          <h2 class="pay-panel-title">
+            <span class="step-num">2</span>
+            Send Your Payment
+          </h2>
+          <p class="pay-panel-sub">Send the exact amount to the wallet address below using your selected network.</p>
+
+          <!-- Wallet Address Terminal -->
+          <div class="wallet-display">
+            <div class="wallet-head">
+              <span class="wallet-head-label">Wallet Address</span>
+              <span class="wallet-head-chain" id="wallet-chain">● Network</span>
+            </div>
+            <div class="wallet-body">
+              <code class="wallet-address" id="wallet-addr">—</code>
+              <button class="copy-btn" type="button" id="copy-wallet">⧉ Copy</button>
+            </div>
+          </div>
+
+          <!-- QR Code -->
+          <div class="qr-frame">
+            <span class="qr-label">Scan to pay</span>
+            <div id="qr-container"></div>
+          </div>
+
+          <!-- Network Warning -->
+          <div class="network-warning">
+            <strong>⚠ Network Warning</strong>
+            <p>Only send tokens on the <strong id="warning-chain">—</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
+          </div>
+
+          <!-- Action Row -->
+          <div class="pay-action-row">
+            <button class="ghost-button" type="button" data-back="1">← Back</button>
+            <button class="btn-sent" type="button" id="btn-sent">I Have Sent the Payment →</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: Confirm ── -->
+        <div class="pay-panel" id="step-3" hidden>
+          <h2 class="pay-panel-title">
+            <span class="step-num">3</span>
+            Confirm Your Payment
+          </h2>
+          <p class="pay-panel-sub">Fill in your details so we can verify and activate your plan. All fields are required.</p>
+
+          <form class="pay-form" id="pay-form">
+            <input type="hidden" name="access_key" value="8188cc9d-3ea6-45ee-b6a4-bde1a146e6a0">
+            <input type="hidden" name="subject" value="FLEXIST Crypto Payment Confirmation">
+            <input type="hidden" name="from_name" value="FLEXIST Payment System">
+
+            <div class="form-row">
+              <div class="field">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" name="name" required placeholder="Your name">
+              </div>
+              <div class="field">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" name="email" required placeholder="you@project.xyz">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label>Telegram Handle <span class="required">*</span></label>
+                <input type="text" name="telegram" required placeholder="@yourtelegram">
+              </div>
+              <div class="field">
+                <label>Project Name <span class="required">*</span></label>
+                <input type="text" name="project" required placeholder="Your project">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label>Chain Used <span class="required">*</span></label>
+                <select name="chain" id="form-chain" required>
+                  <option value="">Select chain</option>
+                  <option value="ethereum">Ethereum</option>
+                  <option value="bnb">BNB Chain</option>
+                  <option value="polygon">Polygon</option>
+                  <option value="solana">Solana</option>
+                  <option value="base">Base</option>
+                  <option value="arbitrum">Arbitrum</option>
+                  <option value="tron">TRON</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Token Sent <span class="required">*</span></label>
+                <select name="token" id="form-token" required>
+                  <option value="">Select token</option>
+                  <option value="USDT">USDT</option>
+                  <option value="ETH">ETH</option>
+                  <option value="BNB">BNB</option>
+                  <option value="POL">POL</option>
+                  <option value="SOL">SOL</option>
+                  <option value="TRX">TRX</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label>Amount Sent (USD) <span class="required">*</span></label>
+                <input type="number" name="amount_sent" id="form-amount" required placeholder="500" min="1" step="any">
+              </div>
+              <div class="field">
+                <label>Transaction ID (TxID) <span class="required">*</span></label>
+                <input type="text" name="txid" required placeholder="0x... or transaction hash">
+              </div>
+            </div>
+
+            <div class="pay-action-row">
+              <button class="ghost-button" type="button" data-back="2">← Back</button>
+              <button class="neon-button" type="submit">Submit Confirmation →</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- ── SUCCESS STATE ── -->
+        <div class="pay-success" id="pay-success" hidden>
+          <div class="success-checkmark">✓</div>
+          <h2 class="success-title">Payment Submitted</h2>
+          <p class="success-copy">Your confirmation has been received. FLEXIST will verify your transaction within 12 hours and begin onboarding.</p>
+          <div class="success-txid" id="success-txid">—</div>
+          <p style="color: var(--text-muted); font-size: 0.82rem;">Redirecting to next steps...</p>
+        </div>
+
+        <!-- ═══ SECURITY NOTICE ═══ -->
+        <div class="security-notice reveal">
+          <div class="security-item">
+            <div class="security-icon">🔒</div>
+            <div>
+              <strong>Encrypted Submission</strong>
+              <p>Payment details are submitted via secure Web3Forms API and stored locally for your records.</p>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">🛡</div>
+            <div>
+              <strong>Verified Wallet</strong>
+              <p>Always confirm the wallet address matches: 0xB980...4E25. Never trust third-party links.</p>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-icon">⚡</div>
+            <div>
+              <strong>Fast Verification</strong>
+              <p>Payments are verified within 12 hours. Check status anytime on the status tracker page.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div data-site-footer></div>
+  <script src="../js/global.js"></script>
+  <script src="../js/payment.js"></script>
+</body>
+</html>

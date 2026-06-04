@@ -15,6 +15,11 @@
     { "source": "/media-kit", "destination": "/media-kit.html" },
     { "source": "/testimonials", "destination": "/testimonials.html" },
     { "source": "/inquiry", "destination": "/inquiry.html" },
-    { "source": "/contact", "destination": "/contact.html" }
+    { "source": "/contact", "destination": "/contact.html" },
+    { "source": "/plans", "destination": "/plans/index.html" },
+    { "source": "/payment", "destination": "/payment/index.html" },
+    { "source": "/onboarding", "destination": "/onboarding/welcome.html" },
+    { "source": "/onboarding/portal", "destination": "/onboarding/portal.html" },
+    { "source": "/onboarding/brief", "destination": "/onboarding/brief.html" }
   ]
 }

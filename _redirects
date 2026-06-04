@@ -31,3 +31,8 @@
 /testimonials.html  /testimonials        301
 /inquiry.html       /inquiry             301
 /contact.html       /contact             301
+/plans              /plans/index.html    200
+/payment            /payment/index.html  200
+/onboarding         /onboarding/welcome.html 200
+/onboarding/portal  /onboarding/portal.html 200
+/onboarding/brief   /onboarding/brief.html 200

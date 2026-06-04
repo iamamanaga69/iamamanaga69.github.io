@@ -4,17 +4,17 @@ const Flexist = (() => {
 
   const navGroups = [
     { key: "home", href: "./", label: "Home" },
-    { key: "india-hub", href: "india-hub", label: "India Hub" },
+    { key: "india-hub", href: "flexistlabs", label: "FlexistLabs" },
     {
       key: "growth-stack",
       href: "services",
-      label: "Growth Stack",
+      label: "Services",
       items: [
-        ["services", "services", "Services Overview", "Full India operating stack"],
+        ["services", "services", "Services Overview", "Complete India growth support"],
         ["community", "community", "Community", "Telegram and Discord architecture"],
         ["influencers", "influencers", "Influencers", "Creator and KOL campaigns"],
-        ["ambassadors", "ambassadors", "Ambassadors", "Local operator programs"],
-        ["partnerships", "partnerships", "Partnerships", "Ecosystem relationship flow"]
+        ["ambassadors", "ambassadors", "Ambassadors", "Local ambassador programs"],
+        ["partnerships", "partnerships", "Partnerships", "Useful project relationships"]
       ]
     },
     {
@@ -22,19 +22,19 @@ const Flexist = (() => {
       href: "experience",
       label: "Proof",
       items: [
-        ["experience", "experience", "Experience", "Live Web3 operating history"],
+        ["experience", "experience", "Experience", "Real Web3 project work"],
         ["projects", "projects", "Projects", "Ecosystems touched"],
         ["case-studies", "case-studies", "Case Studies", "Growth work by scenario"],
-        ["testimonials", "testimonials", "Testimonials", "Operator signals"]
+        ["testimonials", "testimonials", "Testimonials", "Project feedback"]
       ]
     },
     {
       key: "platform",
       href: "about",
-      label: "Platform",
+      label: "About",
       items: [
-        ["about", "about", "About Flexist", "Positioning and mission"],
-        ["founder", "founder", "Founder", "Aman Agarwal"],
+        ["about", "about", "About FLEXIST", "Positioning and mission"],
+        ["founder", "founder", "Behind FLEXIST", "Founder story without public identity"],
         ["insights", "blog", "Insights", "India growth notes"],
         ["media-kit", "media-kit", "Media Kit", "Brand and press assets"],
         ["contact", "contact", "Contact", "Direct communication routes"]
@@ -46,14 +46,14 @@ const Flexist = (() => {
     {
       title: "Founder Journey",
       links: [
-        ["India Expansion Hub", "india-hub"],
+        ["FlexistLabs", "flexistlabs"],
         ["Growth Services", "services"],
-        ["Readiness Assessment", "india-hub#assessment"],
+        ["India Check", "flexistlabs#assessment"],
         ["Founder Inquiry", "inquiry"]
       ]
     },
     {
-      title: "Growth Stack",
+      title: "Services",
       links: [
         ["Community", "community"],
         ["Influencers", "influencers"],
@@ -64,8 +64,8 @@ const Flexist = (() => {
     {
       title: "Proof & Platform",
       links: [
-        ["About Flexist", "about"],
-        ["Founder", "founder"],
+        ["About FLEXIST", "about"],
+        ["Behind FLEXIST", "founder"],
         ["Experience", "experience"],
         ["Projects", "projects"],
         ["Contact", "contact"]
@@ -137,14 +137,14 @@ const Flexist = (() => {
         <a class="skip-link" href="#main-content">Skip to content</a>
         <header class="site-nav">
           <div class="container nav-inner">
-            <a class="brand brand-premium" href="./" aria-label="Flexist Crypto home">
+            <a class="brand brand-premium" href="./" aria-label="FLEXIST home">
               <span class="brand-mark">
                 <img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt="">
                 <i></i>
               </span>
               <span class="brand-copy">
-                <span class="gradient-text">FLEXIST CRYPTO</span>
-                <small>India Web3 Node</small>
+                <span class="wordmark gradient-text">FLEXIST</span>
+                <small>Web3 India Labs</small>
               </span>
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
@@ -159,7 +159,7 @@ const Flexist = (() => {
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3m0 14v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg>
               </button>
-              <a class="ghost-button" href="inquiry">Founder Call</a>
+              <a class="ghost-button" href="inquiry">Book Call</a>
               <a class="neon-button" href="inquiry">Start Expansion <span>&rarr;</span></a>
               <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -174,8 +174,8 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand brand-premium" href="./"><span class="brand-mark"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><i></i></span><span class="brand-copy"><span class="gradient-text">FLEXIST CRYPTO</span><small>India Web3 Node</small></span></a>
-              <p class="footer-copy">India growth infrastructure for Web3 projects ready to turn attention into durable adoption.</p>
+              <a class="brand brand-premium" href="./"><span class="brand-mark"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
+              <p class="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
                 <a class="social-icon" href="mailto:FlexistCrypto@gmail.com" aria-label="Email">
@@ -193,15 +193,15 @@ const Flexist = (() => {
               <h3 class="footer-title">Start Growing In India</h3>
               <p class="footer-copy">Receive focused Web3 growth notes and India market signals.</p>
               <form class="subscribe-form" data-subscribe-form>
-                <input type="email" aria-label="Email address" placeholder="founder@protocol.xyz" required>
+                <input type="email" aria-label="Email address" placeholder="founder@project.xyz" required>
                 <button type="submit">Join</button>
               </form>
               <div class="form-note" data-subscribe-note></div>
             </div>
           </div>
           <div class="container footer-bottom">
-            <span>&copy; ${new Date().getFullYear()} Flexist Crypto</span>
-            <span>Built for Web3 founders // India node online</span>
+            <span>&copy; ${new Date().getFullYear()} FLEXIST</span>
+            <span>Built for Web3 founders growing in India</span>
           </div>
         </footer>`;
     }
@@ -263,8 +263,32 @@ const Flexist = (() => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       form.reset();
-      document.querySelector("[data-subscribe-note]").textContent = "Signal received. Welcome to the node.";
+      document.querySelector("[data-subscribe-note]").textContent = "Thanks. You are on the update list.";
     });
+  }
+
+  function loadCalendlyBadge() {
+    if (window.Calendly || document.querySelector("[data-calendly-widget]")) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    document.head.appendChild(link);
+
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.dataset.calendlyWidget = "true";
+    script.addEventListener("load", () => {
+      if (!window.Calendly) return;
+      window.Calendly.initBadgeWidget({
+        url: "https://calendly.com/flexistcrypto/30min",
+        text: "Schedule time with me",
+        color: "#0069ff",
+        textColor: "#ffffff",
+        branding: true
+      });
+    });
+    document.body.appendChild(script);
   }
 
   function init() {
@@ -275,6 +299,7 @@ const Flexist = (() => {
     bindReveals();
     bindAccordions();
     bindSubscribe();
+    loadCalendlyBadge();
   }
 
   return { init };

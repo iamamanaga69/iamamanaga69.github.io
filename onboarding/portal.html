@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Your FLEXIST client portal — track your plan status, brief submission, and onboarding checklist.">
+  <title>Your Portal | FLEXIST CRYPTO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/onboarding.css">
+</head>
+<body data-page="onboarding">
+  <div data-site-nav></div>
+
+  <main id="main-content">
+    <!-- ═══ Hero ═══ -->
+    <section class="portal-hero">
+      <div class="container" style="position:relative;z-index:1">
+        <span class="page-kicker">// client portal</span>
+        <h1 class="page-title gradient-text" style="font-size:clamp(2.8rem,7vw,5.5rem)">Your FLEXIST<br>Portal.</h1>
+        <p class="page-lede">Track your plan status, review your brief, and stay on top of your India growth onboarding.</p>
+      </div>
+    </section>
+
+    <!-- ═══ Status Cards ═══ -->
+    <section class="section" style="padding-top:24px">
+      <div class="container">
+        <div class="portal-grid reveal">
+          <!-- Plan Status Card -->
+          <div class="status-card">
+            <div class="status-head">
+              <h3>Plan Status</h3>
+              <div class="status-indicator">
+                <span class="status-dot pending"></span>
+                <span>Active</span>
+              </div>
+            </div>
+            <div class="status-body" data-portal-plan>
+              <p class="empty-state">Loading…</p>
+            </div>
+          </div>
+
+          <!-- Brief Status Card -->
+          <div class="status-card">
+            <div class="status-head">
+              <h3>Brief Status</h3>
+              <div class="status-indicator">
+                <span class="status-dot pending"></span>
+                <span>Submitted</span>
+              </div>
+            </div>
+            <div class="status-body" data-portal-brief>
+              <p class="empty-state">Loading…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Onboarding Checklist ═══ -->
+    <section class="section">
+      <div class="container" style="max-width:720px">
+        <div class="section-header reveal">
+          <span class="section-label">Onboarding Checklist</span>
+          <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">Your Setup Progress</h2>
+        </div>
+
+        <div class="progress-bar reveal">
+          <div class="progress-fill" data-progress-fill style="width:0%"></div>
+        </div>
+        <p class="progress-label" data-progress-label>0 / 8 complete</p>
+
+        <ul class="checklist reveal" data-checklist>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk1" data-key="payment_complete">
+            <label for="chk1">Complete payment on-chain</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk2" data-key="brief_submitted">
+            <label for="chk2">Submit your project brief</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk3" data-key="telegram_joined">
+            <label for="chk3">Join @FlexistCrypto on Telegram</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk4" data-key="kickoff_scheduled">
+            <label for="chk4">Schedule onboarding kickoff call</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk5" data-key="brand_assets">
+            <label for="chk5">Share brand assets (logo, colors, guidelines)</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk6" data-key="community_access">
+            <label for="chk6">Provide admin access to community channels</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk7" data-key="kol_preferences">
+            <label for="chk7">Review and approve KOL shortlist</label>
+          </li>
+          <li class="checklist-item">
+            <input type="checkbox" id="chk8" data-key="strategy_approved">
+            <label for="chk8">Approve growth strategy document</label>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══ Resources ═══ -->
+    <section class="section section-dark">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-label">Resources</span>
+          <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">Helpful Links</h2>
+        </div>
+
+        <div class="resource-grid reveal">
+          <a class="resource-card" href="brief.html">
+            <h4>📋 Project Brief</h4>
+            <p>Submit or update your project details so we can customize your India strategy.</p>
+            <span class="resource-link">Submit Brief →</span>
+          </a>
+          <a class="resource-card" href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer">
+            <h4>💬 Telegram</h4>
+            <p>Direct message @FlexistCrypto for urgent questions or real-time coordination.</p>
+            <span class="resource-link">Open Telegram →</span>
+          </a>
+          <a class="resource-card" href="https://calendly.com/flexistcrypto/30min" target="_blank" rel="noreferrer">
+            <h4>📅 Schedule Call</h4>
+            <p>Book a strategy call or kickoff session at a time that works for you.</p>
+            <span class="resource-link">Book Now →</span>
+          </a>
+          <a class="resource-card" href="../plans/index.html">
+            <h4>📊 Plan Details</h4>
+            <p>Review what's included in your plan and compare with other tiers.</p>
+            <span class="resource-link">View Plans →</span>
+          </a>
+          <a class="resource-card" href="../services">
+            <h4>⚡ Services</h4>
+            <p>Explore individual services you can add to your plan at any time.</p>
+            <span class="resource-link">Browse Services →</span>
+          </a>
+          <a class="resource-card" href="mailto:FlexistCrypto@gmail.com">
+            <h4>✉️ Email</h4>
+            <p>Send formal requests, documents, or brand assets via email.</p>
+            <span class="resource-link">Send Email →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Bottom CTA ═══ -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal" style="text-align:center">
+          <h2>Questions?</h2>
+          <p>Your FLEXIST growth partner is always available. Reach out on Telegram for the fastest response.</p>
+          <div class="button-row" style="justify-content:center">
+            <a class="neon-button" href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer">Message on Telegram →</a>
+            <a class="ghost-button" href="mailto:FlexistCrypto@gmail.com">Send Email →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-site-footer></div>
+  <script src="../js/global.js"></script>
+  <script src="../js/onboarding.js"></script>
+</body>
+</html>
