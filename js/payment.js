@@ -1,7 +1,7 @@
 const FlexistPayment = (() => {
   "use strict";
 
-  const WALLETS = {
+  const WALLET_ADDRESSES = {
     ethereum: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
     bnb: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
     polygon: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
@@ -34,9 +34,8 @@ const FlexistPayment = (() => {
     tron: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2L2 22h20L12 2zm-1 5.3L17.7 18H6.3l4.7-10.7z" fill="currentColor"/></svg>`
   };
 
-  function getWalletAddress(chainId) {
-    if (!chainId) return WALLETS.ethereum;
-    return WALLETS[chainId.toLowerCase()] || WALLETS.ethereum;
+  function getWalletAddress(chain) {
+    return WALLET_ADDRESSES[chain.toLowerCase()];
   }
 
   /* ── Helpers ─────────────────────────────────────────── */
@@ -291,7 +290,7 @@ const FlexistPayment = (() => {
     const copyBtn = document.getElementById("copy-wallet");
     if (copyBtn) {
       copyBtn.addEventListener("click", async () => {
-        const activeWallet = getWalletAddress(selectedChain ? selectedChain.id : null);
+        const activeWallet = getWalletAddress(selectedChain ? selectedChain.id : "ethereum");
         try {
           await navigator.clipboard.writeText(activeWallet);
           copyBtn.classList.add("copied");
@@ -351,15 +350,13 @@ const FlexistPayment = (() => {
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying transaction on-chain...';
 
-        // Obtain Turnstile challenge token
-        let turnstileToken = "";
-        if (window.turnstile) {
-          turnstileToken = window.turnstile.getResponse();
-        }
-
+        // Obtain Turnstile challenge token and perform explicit validation
+        const turnstileToken = turnstile.getResponse();
         if (!turnstileToken) {
-          // Fallback to checking the formdata input if Turnstile was rendered directly
-          turnstileToken = fd.get("cf-turnstile-response") || "";
+          alert("Please complete verification");
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          return;
         }
 
         // Submit to Cloudflare Worker verifier endpoint
@@ -626,5 +623,5 @@ const FlexistPayment = (() => {
 
   document.addEventListener("DOMContentLoaded", init);
 
-  return { init, CHAINS, WALLETS, findPayment, generatePaymentId };
+  return { init, CHAINS, WALLET_ADDRESSES, findPayment, generatePaymentId };
 })();
