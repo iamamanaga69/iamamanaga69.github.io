@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════════════════════════
-   FLEXIST CRYPTO — Payment System JavaScript
-   Chain selection, QR generation, Web3Forms + localStorage
-   ═══════════════════════════════════════════════════════════ */
-
 const FlexistPayment = (() => {
   "use strict";
 
@@ -11,14 +6,24 @@ const FlexistPayment = (() => {
   const STORAGE_KEY = "flexist_payments";
 
   const CHAINS = [
-    { id: "ethereum", name: "Ethereum", letter: "Ξ", color: "#627EEA", tokens: ["ETH", "USDT"] },
-    { id: "bnb",      name: "BNB Chain", letter: "B", color: "#F0B90B", tokens: ["BNB", "USDT"] },
-    { id: "polygon",  name: "Polygon",   letter: "P", color: "#8247E5", tokens: ["POL", "USDT"] },
-    { id: "solana",   name: "Solana",    letter: "S", color: "#14F195", tokens: ["SOL", "USDT"] },
-    { id: "base",     name: "Base",      letter: "B", color: "#0052FF", tokens: ["ETH", "USDT"] },
-    { id: "arbitrum", name: "Arbitrum",   letter: "A", color: "#28A0F0", tokens: ["ETH", "USDT"] },
-    { id: "tron",     name: "TRON",      letter: "T", color: "#FF0013", tokens: ["TRX", "USDT"] }
+    { id: "ethereum", name: "Ethereum", color: "#627EEA", tokens: ["ETH", "USDT"] },
+    { id: "bnb",      name: "BNB Chain", color: "#F0B90B", tokens: ["BNB", "USDT"] },
+    { id: "polygon",  name: "Polygon",   color: "#8247E5", tokens: ["POL", "USDT"] },
+    { id: "solana",   name: "Solana",    color: "#14F195", tokens: ["SOL", "USDT"] },
+    { id: "base",     name: "Base",      color: "#0052FF", tokens: ["ETH", "USDT"] },
+    { id: "arbitrum", name: "Arbitrum",   color: "#28A0F0", tokens: ["ETH", "USDT"] },
+    { id: "tron",     name: "TRON",      color: "#FF0013", tokens: ["TRX", "USDT"] }
   ];
+
+  const CHAIN_ICONS = {
+    ethereum: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M11.944 17.854L4.72 13.59l7.224-4.264 7.22 4.264-7.22 4.264zm0-16.744L4.72 5.374l7.224 4.264 7.22-4.264-7.22-4.264zM4.72 6.55l7.224 4.264v7.915L4.72 14.464V6.55zm14.444 0v7.915l-7.22 4.264V10.814l7.22-4.264z" fill="currentColor"/></svg>`,
+    bnb: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2l3.464 2v4L12 6 8.536 8v-4zm0 20l-3.464-2v-4L12 18l3.464-2v4zm8-8l2-3.464h-4l-2 3.464 2 3.464zm-16 0l-2-3.464h4l2 3.464-2 3.464zM12 9.5l2.165 1.25v2.5L12 14.5l-2.165-1.25v-2.5z" fill="currentColor"/></svg>`,
+    polygon: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2.69l5.63 3.25v6.5L12 15.69l-5.63-3.25v-6.5zm0 18.62l-5.63-3.25v-6.5L12 14.81l5.63-3.25v6.5z" fill="currentColor"/></svg>`,
+    solana: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M3.73 5.4H20.27L17 8.67H.46L3.73 5.4ZM.46 11.23H17L20.27 14.5H3.73L.46 11.23ZM3.73 17.07H20.27L17 20.33H.46L3.73 17.07Z" fill="currentColor"/></svg>`,
+    base: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>`,
+    arbitrum: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2L2 19.33h20L12 2zm0 6l5 8.67H7L12 8z" fill="currentColor"/></svg>`,
+    tron: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2L2 22h20L12 2zm-1 5.3L17.7 18H6.3l4.7-10.7z" fill="currentColor"/></svg>`
+  };
 
   /* ── Helpers ─────────────────────────────────────────── */
   function getParams() {
@@ -43,6 +48,19 @@ const FlexistPayment = (() => {
 
   function formatType(t) {
     return t === "monthly" ? "Monthly Retainer" : "One-Time Payment";
+  }
+
+  function validateTxid(txid, chainId) {
+    if (!txid) return false;
+    const cleanTxid = txid.trim();
+    if (["ethereum", "bnb", "polygon", "base", "arbitrum"].includes(chainId)) {
+      return /^0x[0-9a-fA-F]{64}$/.test(cleanTxid);
+    } else if (chainId === "solana") {
+      return /^[1-9A-HJ-NP-Za-km-z]{87,88}$/.test(cleanTxid);
+    } else if (chainId === "tron") {
+      return /^[0-9a-fA-F]{64}$/.test(cleanTxid);
+    }
+    return cleanTxid.length > 20;
   }
 
   /* ── QR Code Loader ──────────────────────────────────── */
@@ -95,7 +113,7 @@ const FlexistPayment = (() => {
     if (chainGrid) {
       chainGrid.innerHTML = CHAINS.map(c => `
         <div class="chain-card" data-chain="${c.id}" style="--chain-color: ${c.color}">
-          <div class="chain-icon">${c.letter}</div>
+          <div class="chain-icon">${CHAIN_ICONS[c.id] || c.name.charAt(0)}</div>
           <span class="chain-name">${c.name}</span>
           <span class="chain-tokens">${c.tokens.join(" · ")}</span>
         </div>
@@ -125,6 +143,50 @@ const FlexistPayment = (() => {
       3: document.getElementById("step-3")
     };
     const successPanel = document.getElementById("pay-success");
+
+    const txidInput = document.getElementById("form-txid");
+    const txidFeedback = document.getElementById("txid-feedback");
+    const submitBtn = document.getElementById("btn-submit");
+
+    function checkTxid() {
+      if (!txidInput) return;
+      const val = txidInput.value.trim();
+      const chainId = selectedChain ? selectedChain.id : "";
+      
+      if (!val) {
+        txidInput.classList.remove("is-valid", "is-invalid");
+        if (txidFeedback) txidFeedback.textContent = "";
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+      }
+
+      const isValid = validateTxid(val, chainId);
+      if (isValid) {
+        txidInput.classList.remove("is-invalid");
+        txidInput.classList.add("is-valid");
+        if (txidFeedback) {
+          txidFeedback.textContent = "✓ Valid transaction hash format";
+          txidFeedback.className = "txid-feedback valid";
+        }
+        if (submitBtn) submitBtn.disabled = false;
+      } else {
+        txidInput.classList.remove("is-valid");
+        txidInput.classList.add("is-invalid");
+        if (txidFeedback) {
+          let expectedFormat = "transaction hash";
+          if (chainId === "solana") expectedFormat = "Solana signature (87-88 chars)";
+          else if (["ethereum", "bnb", "polygon", "base", "arbitrum"].includes(chainId)) expectedFormat = "EVM hash (66 chars starting with 0x)";
+          else if (chainId === "tron") expectedFormat = "TRON hash (64 hex chars)";
+          txidFeedback.textContent = "Invalid format. Expected " + expectedFormat;
+          txidFeedback.className = "txid-feedback invalid";
+        }
+        if (submitBtn) submitBtn.disabled = true;
+      }
+    }
+
+    if (txidInput) {
+      txidInput.addEventListener("input", checkTxid);
+    }
 
     function goToStep(step) {
       currentStep = step;
@@ -189,6 +251,8 @@ const FlexistPayment = (() => {
 
         const amountInput = document.getElementById("form-amount");
         if (amountInput && amount !== "0") amountInput.value = amount;
+
+        checkTxid();
       }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
