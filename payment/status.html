@@ -98,6 +98,38 @@
           </div>
         </div>
 
+        <!-- Local History List -->
+        <div class="history-section reveal" style="margin-top: 40px; margin-bottom: 20px;">
+          <div class="section-label">Local History</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 16px;">Previous Payments on this Device</h3>
+          
+          <div class="history-security-alert">
+            <strong>⚠ Browser Storage Notice</strong>
+            <p>This history is stored locally in your browser's <code>localStorage</code>. It is device-specific and will be cleared if you clear cookies or browser data. Please save your <strong>Payment Reference ID</strong> for receipts.</p>
+          </div>
+
+          <div class="history-table-container glass-card" id="history-container">
+            <table class="history-table" id="history-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Reference ID</th>
+                  <th>Plan</th>
+                  <th>Amount</th>
+                  <th>Chain / Token</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="history-rows">
+                <!-- Loaded dynamically by JS -->
+              </tbody>
+            </table>
+            <div id="no-history-msg" class="no-history-message" style="display: none; padding: 24px; text-align: center; color: var(--text-secondary);">
+              No payment submissions found on this device.
+            </div>
+          </div>
+        </div>
+
         <!-- Expected Timeline -->
         <div class="glass-card reveal" style="padding: 32px; margin-top: 20px;">
           <div class="section-label">Expected Timeline</div>

@@ -35,15 +35,29 @@ const FlexistPayment = (() => {
     };
   }
 
+  function generatePaymentId(planName, chainName) {
+    const prefix = "FLX";
+    const planShort = (planName || "CSM").slice(0, 3).toUpperCase();
+    const chainShort = (chainName || "ETH").slice(0, 3).toUpperCase();
+    const timestampBase36 = Date.now().toString(36).toUpperCase().slice(-5);
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `${prefix}-${planShort}-${chainShort}-${timestampBase36}${randomSuffix}`;
+  }
+
   function savePayment(record) {
     const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    all.push(record);
+    all.unshift(record);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
   }
 
-  function findPayment(txid) {
+  function findPayment(query) {
+    if (!query) return null;
+    const cleanQuery = query.trim().toLowerCase();
     const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    return all.find(r => r.txid && r.txid.toLowerCase() === txid.toLowerCase()) || null;
+    return all.find(r => 
+      (r.txid && r.txid.toLowerCase() === cleanQuery) || 
+      (r.paymentId && r.paymentId.toLowerCase() === cleanQuery)
+    ) || null;
   }
 
   function formatType(t) {
@@ -320,6 +334,9 @@ const FlexistPayment = (() => {
         data.timestamp = new Date().toISOString();
         data.status = "pending";
 
+        const paymentId = generatePaymentId(plan, data.chain);
+        data.paymentId = paymentId;
+
         // Save to localStorage
         savePayment(data);
 
@@ -333,7 +350,7 @@ const FlexistPayment = (() => {
         try {
           const w3fd = new FormData();
           w3fd.append("access_key", WEB3FORMS_KEY);
-          w3fd.append("subject", `FLEXIST Payment: ${plan} — $${amount}`);
+          w3fd.append("subject", `FLEXIST Payment: ${plan} — $${amount} [ID: ${paymentId}]`);
           w3fd.append("from_name", "FLEXIST Payment System");
           for (const [key, val] of Object.entries(data)) {
             w3fd.append(key, val);
@@ -358,7 +375,14 @@ const FlexistPayment = (() => {
         if (successPanel) {
           successPanel.hidden = false;
           const txEl = document.getElementById("success-txid");
-          if (txEl) txEl.textContent = data.txid || "—";
+          if (txEl) {
+            txEl.innerHTML = `
+              <strong>Payment Reference ID:</strong><br/>
+              <code style="font-size:1.15rem;color:var(--accent-cyan);font-family:var(--font-mono);">${paymentId}</code><br/><br/>
+              <strong>Transaction Hash (TxID):</strong><br/>
+              <code style="font-size:0.85rem;color:var(--text-secondary);font-family:var(--font-mono);">${data.txid || "—"}</code>
+            `;
+          }
         }
 
         // Update steps to all completed
@@ -367,8 +391,8 @@ const FlexistPayment = (() => {
 
         // Redirect after delay
         setTimeout(() => {
-          window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}`;
-        }, 3500);
+          window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}&paymentId=${encodeURIComponent(paymentId)}`;
+        }, 4500);
       });
     }
 
@@ -386,6 +410,55 @@ const FlexistPayment = (() => {
     const loadingDiv = document.getElementById("status-loading");
 
     if (!searchForm) return;
+
+    // Load and render payment history table
+    const historyRows = document.getElementById("history-rows");
+    const noHistoryMsg = document.getElementById("no-history-msg");
+    const historyTable = document.getElementById("history-table");
+
+    function renderHistory() {
+      if (!historyRows) return;
+      const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      
+      if (all.length === 0) {
+        if (historyTable) historyTable.style.display = "none";
+        if (noHistoryMsg) noHistoryMsg.style.display = "block";
+      } else {
+        if (historyTable) historyTable.style.display = "table";
+        if (noHistoryMsg) noHistoryMsg.style.display = "none";
+        
+        historyRows.innerHTML = all.map(record => {
+          const dateObj = new Date(record.timestamp);
+          const dateStr = dateObj.toLocaleDateString(undefined, { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+          });
+          
+          const statusClass = record.status || "pending";
+          const statusLabel = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
+          
+          return `
+            <tr>
+              <td data-label="Date">${dateStr}</td>
+              <td data-label="Reference ID">
+                <code class="ref-code">${record.paymentId || "—"}</code>
+              </td>
+              <td data-label="Plan">${record.plan || "—"}</td>
+              <td data-label="Amount">$${record.expected_amount || record.amount_sent || "—"}</td>
+              <td data-label="Chain/Token">
+                <span class="chain-badge">${record.token} (${record.chain})</span>
+              </td>
+              <td data-label="Status">
+                <span class="status-badge ${statusClass}">${statusLabel}</span>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+    }
+
+    renderHistory();
 
     searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -408,7 +481,7 @@ const FlexistPayment = (() => {
         } else {
           if (emptyDiv) {
             emptyDiv.hidden = false;
-            emptyDiv.textContent = `No payment found for TxID: ${txid.substring(0, 16)}...`;
+            emptyDiv.textContent = `No payment found matching: ${txid}`;
           }
         }
       }, 1200);
@@ -445,10 +518,16 @@ const FlexistPayment = (() => {
     }
 
     const txidEl = document.getElementById("ty-txid");
-    const urlTxid = new URLSearchParams(window.location.search).get("txid");
-    if (txidEl && urlTxid) {
-      txidEl.textContent = urlTxid;
-      txidEl.closest("[data-ty-txid]").hidden = false;
+    const paymentIdEl = document.getElementById("ty-payment-id");
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlTxid = urlParams.get("txid");
+    const urlPaymentId = urlParams.get("paymentId");
+
+    if ((txidEl && urlTxid) || (paymentIdEl && urlPaymentId)) {
+      if (txidEl) txidEl.textContent = urlTxid || "—";
+      if (paymentIdEl) paymentIdEl.textContent = urlPaymentId || "—";
+      const parent = document.querySelector("[data-ty-txid]");
+      if (parent) parent.hidden = false;
     }
   }
 
@@ -462,5 +541,5 @@ const FlexistPayment = (() => {
 
   document.addEventListener("DOMContentLoaded", init);
 
-  return { init, CHAINS, WALLET, findPayment };
+  return { init, CHAINS, WALLET, findPayment, generatePaymentId };
 })();

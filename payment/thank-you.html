@@ -31,9 +31,12 @@
 
         <!-- TxID display (shown if available) -->
         <div data-ty-txid hidden style="margin-top: 24px;">
-          <div class="terminal-box" style="display: inline-block; padding: 14px 22px;">
-            <span style="color: var(--text-muted); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;">Transaction ID</span>
-            <div style="color: var(--accent-cyan); font-size: 0.82rem; margin-top: 6px; word-break: break-all;" id="ty-txid">—</div>
+          <div class="terminal-box" style="display: inline-block; padding: 18px 24px; text-align: left;">
+            <span style="color: var(--text-muted); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px;">Payment Reference ID</span>
+            <div style="color: var(--accent-cyan); font-size: 1.1rem; font-family: var(--font-mono); font-weight: 600; margin-bottom: 12px; word-break: break-all;" id="ty-payment-id">—</div>
+            
+            <span style="color: var(--text-muted); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 4px;">On-Chain TxID / Hash</span>
+            <div style="color: var(--text-secondary); font-size: 0.8rem; font-family: var(--font-mono); word-break: break-all;" id="ty-txid">—</div>
           </div>
         </div>
       </div>

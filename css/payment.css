@@ -1285,3 +1285,104 @@ body {
     font-size: 1.1rem;
   }
 }
+
+/* ── Payment History Styles ──────────────────────────────── */
+.history-security-alert {
+  background: rgba(255, 87, 116, 0.05);
+  border: 1px solid rgba(255, 87, 116, 0.15);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.history-security-alert strong {
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.history-table-container {
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.history-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+  text-align: left;
+}
+
+.history-table th {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  padding: 14px;
+  text-transform: uppercase;
+}
+
+.history-table td {
+  border-bottom: 1px solid rgba(0, 180, 255, 0.04);
+  padding: 18px 14px;
+  vertical-align: middle;
+}
+
+.ref-code {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+}
+
+.no-history-message {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  padding: 40px;
+  text-align: center;
+}
+
+/* Responsive Table Stack */
+@media screen and (max-width: 768px) {
+  .history-table, .history-table thead, .history-table tbody, .history-table th, .history-table td, .history-table tr {
+    display: block;
+  }
+  
+  .history-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .history-table tr {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 10px;
+  }
+  
+  .history-table td {
+    border: none;
+    border-bottom: 1px solid rgba(0, 180, 255, 0.04);
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+  
+  .history-table td:last-child {
+    border-bottom: 0;
+  }
+  
+  .history-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+}
