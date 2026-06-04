@@ -1,8 +1,13 @@
 const FlexistPayment = (() => {
   "use strict";
 
-  const WALLET = "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25";
-  const WEB3FORMS_KEY = "8188cc9d-3ea6-45ee-b6a4-bde1a146e6a0";
+  const WALLETS = {
+    evm: "0xB9807eBBb24b6E08A2ba4b87685542A3e6e14E25",
+    solana: "GrpojUaB1pVpxEw6UmNGLWkMTPwhj3qorMM7CUeekvLV",
+    tron: "TS3TSSFGtrUFPf7difKRMqP2rLH2MP9inA"
+  };
+
+  const WORKER_URL = "https://flexist-payment-verifier.iamamanaga69.workers.dev";
   const STORAGE_KEY = "flexist_payments";
 
   const CHAINS = [
@@ -24,6 +29,14 @@ const FlexistPayment = (() => {
     arbitrum: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2L2 19.33h20L12 2zm0 6l5 8.67H7L12 8z" fill="currentColor"/></svg>`,
     tron: `<svg viewBox="0 0 24 24" class="chain-icon-svg"><path d="M12 2L2 22h20L12 2zm-1 5.3L17.7 18H6.3l4.7-10.7z" fill="currentColor"/></svg>`
   };
+
+  function getWalletAddress(chainId) {
+    if (!chainId) return WALLETS.evm;
+    const lower = chainId.toLowerCase();
+    if (lower === "solana") return WALLETS.solana;
+    if (lower === "tron") return WALLETS.tron;
+    return WALLETS.evm;
+  }
 
   /* ── Helpers ─────────────────────────────────────────── */
   function getParams() {
@@ -235,11 +248,12 @@ const FlexistPayment = (() => {
 
       // Setup step 2 content
       if (step === 2 && selectedChain) {
+        const activeWallet = getWalletAddress(selectedChain.id);
         const chainLabel = document.getElementById("wallet-chain");
         if (chainLabel) chainLabel.textContent = `● ${selectedChain.name} Network`;
 
         const addrEl = document.getElementById("wallet-addr");
-        if (addrEl) addrEl.textContent = WALLET;
+        if (addrEl) addrEl.textContent = activeWallet;
 
         const warningChain = document.getElementById("warning-chain");
         if (warningChain) warningChain.textContent = selectedChain.name;
@@ -247,7 +261,7 @@ const FlexistPayment = (() => {
         // Generate QR
         loadQRLibrary().then(() => {
           const qrContainer = document.getElementById("qr-container");
-          generateQR(qrContainer, WALLET);
+          generateQR(qrContainer, activeWallet);
         }).catch(() => {});
       }
 
@@ -276,8 +290,9 @@ const FlexistPayment = (() => {
     const copyBtn = document.getElementById("copy-wallet");
     if (copyBtn) {
       copyBtn.addEventListener("click", async () => {
+        const activeWallet = getWalletAddress(selectedChain ? selectedChain.id : null);
         try {
-          await navigator.clipboard.writeText(WALLET);
+          await navigator.clipboard.writeText(activeWallet);
           copyBtn.classList.add("copied");
           copyBtn.innerHTML = "✓ Copied";
           setTimeout(() => {
@@ -287,7 +302,7 @@ const FlexistPayment = (() => {
         } catch {
           // Fallback
           const ta = document.createElement("textarea");
-          ta.value = WALLET;
+          ta.value = activeWallet;
           document.body.appendChild(ta);
           ta.select();
           document.execCommand("copy");
@@ -325,74 +340,111 @@ const FlexistPayment = (() => {
         const fd = new FormData(form);
         const data = Object.fromEntries(fd.entries());
 
-        // Add metadata
-        data.plan = plan;
-        data.payment_type = type;
-        data.expected_amount = amount;
-        data.wallet_address = WALLET;
-        data.chain = selectedChain ? selectedChain.name : data.chain;
-        data.timestamp = new Date().toISOString();
-        data.status = "pending";
-
-        const paymentId = generatePaymentId(plan, data.chain);
-        data.paymentId = paymentId;
-
-        // Save to localStorage
-        savePayment(data);
+        // Calculate expected plan amount
+        const pricing = {
+          onetime: {
+            "india entry": 500,
+            "india growth": 1200
+          },
+          monthly: {
+            "india entry": 350,
+            "india growth": 800,
+            "india partner": 1800
+          }
+        };
+        const lowerPlan = plan.toLowerCase().trim();
+        const lowerType = type.toLowerCase().trim();
+        const expectedAmt = pricing[lowerType]?.[lowerPlan] || parseFloat(amount || data.amount_sent);
 
         // Show loading
         const submitBtn = form.querySelector("button[type='submit']");
         const originalText = submitBtn.innerHTML;
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Submitting...';
+        submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Verifying Payment...';
 
-        // Submit to Web3Forms
+        // Submit to Cloudflare Worker verifier endpoint
         try {
-          const w3fd = new FormData();
-          w3fd.append("access_key", WEB3FORMS_KEY);
-          w3fd.append("subject", `FLEXIST Payment: ${plan} — $${amount} [ID: ${paymentId}]`);
-          w3fd.append("from_name", "FLEXIST Payment System");
-          for (const [key, val] of Object.entries(data)) {
-            w3fd.append(key, val);
-          }
+          const payload = {
+            plan: plan,
+            paymentType: type,
+            expectedAmount: expectedAmt,
+            chain: data.chain,
+            token: data.token,
+            txHash: data.txid,
+            name: data.name,
+            email: data.email,
+            telegram: data.telegram,
+            project: data.project,
+            turnstileToken: fd.get("cf-turnstile-response")
+          };
 
-          await fetch("https://api.web3forms.com/submit", {
+          const res = await fetch(`${WORKER_URL}/verify-payment`, {
             method: "POST",
-            body: w3fd
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
           });
-        } catch {
-          // Fail silently — data is saved in localStorage
-        }
 
-        // Show success
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalText;
+          const result = await res.json();
+          if (!res.ok) {
+            throw new Error(result.error || "Payment verification failed.");
+          }
 
-        for (const panel of Object.values(panels)) {
-          if (panel) panel.hidden = true;
-        }
+          // Save transaction to local cache for history display (optional fallback)
+          const txRecord = {
+            paymentId: result.paymentId,
+            name: data.name,
+            email: data.email,
+            telegram: data.telegram,
+            projectName: data.project,
+            plan: plan,
+            expected_amount: expectedAmt,
+            amount_sent: result.actualAmount || expectedAmt,
+            chain: data.chain,
+            token: data.token,
+            txid: data.txid,
+            timestamp: new Date().toISOString(),
+            status: "verified"
+          };
+          savePayment(txRecord);
 
-        if (successPanel) {
-          successPanel.hidden = false;
-          const txEl = document.getElementById("success-txid");
-          if (txEl) {
-            txEl.innerHTML = `
-              <strong>Payment Reference ID:</strong><br/>
-              <code style="font-size:1.15rem;color:var(--accent-cyan);font-family:var(--font-mono);">${paymentId}</code><br/><br/>
-              <strong>Transaction Hash (TxID):</strong><br/>
-              <code style="font-size:0.85rem;color:var(--text-secondary);font-family:var(--font-mono);">${data.txid || "—"}</code>
-            `;
+          // Show success screen
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+
+          for (const panel of Object.values(panels)) {
+            if (panel) panel.hidden = true;
+          }
+
+          if (successPanel) {
+            successPanel.hidden = false;
+            const txEl = document.getElementById("success-txid");
+            if (txEl) {
+              txEl.innerHTML = `
+                <strong>Payment Reference ID:</strong><br/>
+                <code style="font-size:1.15rem;color:var(--accent-cyan);font-family:var(--font-mono);">${result.paymentId}</code><br/><br/>
+                <strong>Transaction Hash (TxID):</strong><br/>
+                <code style="font-size:0.85rem;color:var(--text-secondary);font-family:var(--font-mono);">${data.txid || "—"}</code>
+              `;
+            }
+          }
+
+          // Update steps to all completed
+          document.querySelectorAll(".pay-step").forEach(el => el.classList.add("completed"));
+          document.querySelectorAll(".pay-step-line").forEach(el => el.classList.add("filled"));
+
+          // Redirect after delay
+          setTimeout(() => {
+            window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}&paymentId=${encodeURIComponent(result.paymentId)}`;
+          }, 4500);
+
+        } catch (err) {
+          alert(`Verification Failed: ${err.message}`);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+          if (window.turnstile) {
+            window.turnstile.reset();
           }
         }
-
-        // Update steps to all completed
-        document.querySelectorAll(".pay-step").forEach(el => el.classList.add("completed"));
-        document.querySelectorAll(".pay-step-line").forEach(el => el.classList.add("filled"));
-
-        // Redirect after delay
-        setTimeout(() => {
-          window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}&paymentId=${encodeURIComponent(paymentId)}`;
-        }, 4500);
       });
     }
 
@@ -460,7 +512,7 @@ const FlexistPayment = (() => {
 
     renderHistory();
 
-    searchForm.addEventListener("submit", (e) => {
+    searchForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const input = document.getElementById("status-txid");
       const txid = (input.value || "").trim();
@@ -471,20 +523,24 @@ const FlexistPayment = (() => {
       if (emptyDiv) emptyDiv.hidden = true;
       if (loadingDiv) loadingDiv.hidden = false;
 
-      // Simulate lookup delay
-      setTimeout(() => {
+      try {
+        const res = await fetch(`${WORKER_URL}/payment-status?txid=${encodeURIComponent(txid)}`);
+        const result = await res.json();
+        
         if (loadingDiv) loadingDiv.hidden = true;
-
-        const record = findPayment(txid);
-        if (record) {
-          showStatusResult(record);
-        } else {
-          if (emptyDiv) {
-            emptyDiv.hidden = false;
-            emptyDiv.textContent = `No payment found matching: ${txid}`;
-          }
+        
+        if (!res.ok || !result.payment) {
+          throw new Error(result.error || "Payment record not found.");
         }
-      }, 1200);
+        
+        showStatusResult(result.payment);
+      } catch (err) {
+        if (loadingDiv) loadingDiv.hidden = true;
+        if (emptyDiv) {
+          emptyDiv.hidden = false;
+          emptyDiv.textContent = `Search failed: ${err.message}`;
+        }
+      }
     });
 
     function showStatusResult(record) {
@@ -501,9 +557,11 @@ const FlexistPayment = (() => {
       document.getElementById("res-plan").textContent = record.plan || "—";
       document.getElementById("res-chain").textContent = record.chain || "—";
       document.getElementById("res-token").textContent = record.token || "—";
-      document.getElementById("res-amount").textContent = record.expected_amount ? "$" + record.expected_amount : "—";
-      document.getElementById("res-txid").textContent = record.txid || "—";
-      document.getElementById("res-date").textContent = record.timestamp ? new Date(record.timestamp).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
+      document.getElementById("res-amount").textContent = record.actual_amount ? "$" + record.actual_amount : (record.expected_amount ? "$" + record.expected_amount : "—");
+      document.getElementById("res-txid").textContent = record.tx_hash || record.txid || "—";
+      
+      const rawDate = record.created_at || record.timestamp;
+      document.getElementById("res-date").textContent = rawDate ? new Date(rawDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "—";
     }
   }
 

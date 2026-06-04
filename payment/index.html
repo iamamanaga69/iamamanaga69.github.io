@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/pages.css">
   <link rel="stylesheet" href="../css/payment.css">
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body data-page="payment">
   <div data-site-nav></div>
@@ -179,6 +180,11 @@
                     <input type="text" name="txid" id="form-txid" required placeholder="0x... or transaction hash">
                     <span class="txid-feedback" id="txid-feedback"></span>
                   </div>
+                </div>
+
+                <!-- Turnstile Security Challenge -->
+                <div class="form-row" style="margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: center;">
+                  <div class="cf-turnstile" data-sitekey="0x4AAAAAAAxgfC1nB50V56hR" data-theme="dark"></div>
                 </div>
 
                 <div class="pay-action-row">
