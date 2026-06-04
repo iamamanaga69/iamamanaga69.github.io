@@ -29,10 +29,12 @@ const IndiaMap = (() => {
     });
 
     show(paths[0]);
-    window.setInterval(() => {
-      index = (index + 1) % paths.length;
-      show(paths[index]);
-    }, 1800);
+    if (!window.prefersReducedMotion) {
+      window.setInterval(() => {
+        index = (index + 1) % paths.length;
+        show(paths[index]);
+      }, 1800);
+    }
   }
 
   return { init, signals };

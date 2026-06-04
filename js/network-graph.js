@@ -23,7 +23,7 @@ const NetworkGraph = (() => {
       canvas.width = width * ratio;
       canvas.height = height * ratio;
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
-      const count = Math.min(88, Math.max(34, Math.floor(width / 18)));
+      const count = window.isLowEnd ? 14 : Math.min(88, Math.max(34, Math.floor(width / 18)));
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -66,7 +66,9 @@ const NetworkGraph = (() => {
           }
         });
       });
-      requestAnimationFrame(tick);
+      if (!window.prefersReducedMotion) {
+        requestAnimationFrame(tick);
+      }
     }
 
     canvas.addEventListener("pointermove", (event) => {

@@ -43,6 +43,35 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ---------- Performance Mode (Low-End / Battery Saver) ---------- */
+.performance-mode {
+  --bg-glass: var(--bg-card);
+  --nav-surface: var(--bg-primary);
+  --menu-surface: var(--bg-primary);
+  --glass-start: var(--bg-card);
+  --glass-end: var(--bg-card);
+  --terminal-surface: var(--bg-secondary);
+  --glow-blue: none !important;
+  --glow-cyan: none !important;
+}
+
+.performance-mode .site-nav.scrolled,
+.performance-mode .nav-panel,
+.performance-mode .nav-links.open,
+.performance-mode .glass-card,
+.performance-mode .glass-card::after,
+.performance-mode .brand-premium,
+.performance-mode .brand-premium img,
+.performance-mode .neon-button,
+.performance-mode .neon-button:hover,
+.performance-mode .glass-card.hoverable:hover {
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+}
+
 html[data-theme="light"] {
   color-scheme: light;
   --bg-primary: #f6f9ff;

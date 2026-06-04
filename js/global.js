@@ -1,3 +1,21 @@
+// Automatically detect and set performance mode for low-end hardware or prefers-reduced-motion
+(() => {
+  const memory = navigator.deviceMemory;
+  const cores = navigator.hardwareConcurrency;
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  const isLowMemory = memory !== undefined && memory <= 4;
+  const isLowCPU = cores !== undefined && cores < 4;
+  
+  if (isLowMemory || isLowCPU || prefersReducedMotion) {
+    document.documentElement.classList.add("performance-mode");
+    window.isLowEnd = true;
+  } else {
+    window.isLowEnd = false;
+  }
+  window.prefersReducedMotion = prefersReducedMotion;
+})();
+
 const Flexist = (() => {
   const route = document.body.dataset.page || "home";
   const themeKey = "flexist-theme";

@@ -39,6 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const distance = event.changedTouches[0].clientX - startX;
       if (Math.abs(distance) > 45) setSlide(active + (distance < 0 ? 1 : -1));
     }, { passive: true });
-    window.setInterval(() => setSlide(active + 1), 5200);
+    if (!window.prefersReducedMotion) {
+      window.setInterval(() => setSlide(active + 1), 5200);
+    }
   }
 });
