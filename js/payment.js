@@ -367,7 +367,7 @@ const FlexistPayment = (() => {
 
         // Redirect after delay
         setTimeout(() => {
-          window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}`;
+          window.location.href = `thank-you?plan=${encodeURIComponent(plan)}&txid=${encodeURIComponent(data.txid || "")}`;
         }, 3500);
       });
     }

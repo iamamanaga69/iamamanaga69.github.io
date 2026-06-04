@@ -114,7 +114,7 @@
 
       /* Redirect to portal after 3 seconds */
       setTimeout(() => {
-        window.location.href = "portal.html";
+        window.location.href = "portal";
       }, 3000);
     });
   }
@@ -135,7 +135,7 @@
           <div class="receipt-row"><span class="receipt-label">Amount</span><span class="receipt-value">${last.amount ? "$" + last.amount : "—"}</span></div>
           <div class="receipt-row"><span class="receipt-label">Status</span><span class="receipt-value" style="color:var(--accent-green)">${last.status || "Pending"}</span></div>`;
       } else {
-        planContainer.innerHTML = '<p class="empty-state">No active plan found. <a href="../plans/index.html" style="color:var(--accent-cyan)">Choose a plan →</a></p>';
+        planContainer.innerHTML = '<p class="empty-state">No active plan found. <a href="../plans/" style="color:var(--accent-cyan)">Choose a plan →</a></p>';
       }
     }
 
@@ -150,7 +150,7 @@
           <div class="receipt-row"><span class="receipt-label">Goals</span><span class="receipt-value" style="max-width:220px;text-align:right">${last.goals || "—"}</span></div>
           <div class="receipt-row"><span class="receipt-label">Submitted</span><span class="receipt-value">${last.timestamp ? new Date(last.timestamp).toLocaleDateString() : "—"}</span></div>`;
       } else {
-        briefContainer.innerHTML = '<p class="empty-state">No brief submitted yet. <a href="brief.html" style="color:var(--accent-cyan)">Submit brief →</a></p>';
+        briefContainer.innerHTML = '<p class="empty-state">No brief submitted yet. <a href="brief" style="color:var(--accent-cyan)">Submit brief →</a></p>';
       }
     }
 

@@ -4,8 +4,7 @@ const Flexist = (() => {
 
   const isSubfolder = window.location.pathname.includes("/plans/") || 
                       window.location.pathname.includes("/payment/") || 
-                      window.location.pathname.includes("/onboarding/") || 
-                      window.location.pathname.includes("/services/");
+                      window.location.pathname.includes("/onboarding/");
   const basePrefix = isSubfolder ? "../" : "";
 
   function resolveUrl(href) {
@@ -14,90 +13,48 @@ const Flexist = (() => {
       return href;
     }
     if (href === "./") {
-      return isSubfolder ? "../index.html" : "./";
+      return isSubfolder ? "../" : "./";
     }
     return basePrefix + href;
   }
 
   const navGroups = [
     { key: "home", href: "./", label: "Home" },
-    { key: "flexistlabs", href: "flexistlabs.html", label: "FlexistLabs" },
-    {
-      key: "growth-stack",
-      href: "services.html",
-      label: "Services",
-      items: [
-        ["services", "services.html", "Services Overview", "Complete India growth support"],
-        ["community", "community.html", "Community", "Telegram and Discord architecture"],
-        ["influencers", "influencers.html", "Influencers", "Creator and KOL campaigns"],
-        ["ambassadors", "ambassadors.html", "Ambassadors", "Local ambassador programs"],
-        ["partnerships", "partnerships.html", "Partnerships", "Useful project relationships"]
-      ]
-    },
+    { key: "flexistlabs", href: "flexistlabs", label: "FlexistLabs" },
+    { key: "services", href: "services", label: "Services" },
     {
       key: "plans",
-      href: "plans/index.html",
+      href: "plans/",
       label: "Plans",
       items: [
-        ["plans", "plans/index.html", "Compare Plans", "Bundled India growth packages"],
-        ["india-entry", "plans/india-entry.html", "India Entry", "Pre-launch essentials"],
-        ["india-growth", "plans/india-growth.html", "India Growth", "Full community and campaigns"],
-        ["india-partner", "plans/india-partner.html", "India Partner", "Total India ownership"],
-        ["payment", "payment/index.html", "Make Payment", "Secure crypto payment"]
+        ["plans", "plans/", "Compare Plans", "Bundled India growth packages"],
+        ["india-entry", "plans/india-entry", "India Entry", "Pre-launch essentials"],
+        ["india-growth", "plans/india-growth", "India Growth", "Full community and campaigns"],
+        ["india-partner", "plans/india-partner", "India Partner", "Total India ownership"],
+        ["payment", "payment/", "Make Payment", "Secure crypto payment"]
       ]
     },
-    {
-      key: "proof",
-      href: "experience.html",
-      label: "Proof",
-      items: [
-        ["experience", "experience.html", "Experience", "Real Web3 project work"],
-        ["projects", "projects.html", "Projects", "Ecosystems touched"],
-        ["case-studies", "case-studies.html", "Case Studies", "Growth work by scenario"],
-        ["testimonials", "testimonials.html", "Testimonials", "Project feedback"]
-      ]
-    },
-    {
-      key: "platform",
-      href: "about.html",
-      label: "About",
-      items: [
-        ["about", "about.html", "About FLEXIST", "Positioning and mission"],
-        ["founder", "founder.html", "Behind FLEXIST", "Founder story without public identity"],
-        ["insights", "blog.html", "Insights", "India growth notes"],
-        ["media-kit", "media-kit.html", "Media Kit", "Brand and press assets"],
-        ["contact", "contact.html", "Contact", "Direct communication routes"]
-      ]
-    }
+    { key: "experience", href: "experience", label: "Experience" },
+    { key: "about", href: "about", label: "About" },
+    { key: "contact", href: "contact", label: "Contact" }
   ];
 
   const footerGroups = [
     {
       title: "Founder Journey",
       links: [
-        ["FlexistLabs", "flexistlabs.html"],
-        ["Growth Services", "services.html"],
-        ["Plans & Pricing", "plans/index.html"],
-        ["Founder Inquiry", "inquiry.html"]
+        ["FlexistLabs", "flexistlabs"],
+        ["Growth Services", "services"],
+        ["Plans & Pricing", "plans/"],
+        ["Founder Inquiry", "inquiry"]
       ]
     },
     {
-      title: "Services",
+      title: "Platform",
       links: [
-        ["Community", "community.html"],
-        ["Influencers", "influencers.html"],
-        ["Ambassadors", "ambassadors.html"],
-        ["Partnerships", "partnerships.html"]
-      ]
-    },
-    {
-      title: "Proof & Platform",
-      links: [
-        ["About FLEXIST", "about.html"],
-        ["Behind FLEXIST", "founder.html"],
-        ["Experience", "experience.html"],
-        ["Projects", "projects.html"],
-        ["Contact", "contact.html"]
+        ["About FLEXIST", "about"],
+        ["Experience", "experience"],
+        ["Contact", "contact"]
       ]
     }
   ];
@@ -178,7 +135,7 @@ const Flexist = (() => {
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
               ${navGroups.map(renderNavItem).join("")}
-              <a class="nav-mobile-cta" href="${resolveUrl('inquiry.html')}">Start Expansion</a>
+              <a class="nav-mobile-cta" href="${resolveUrl('inquiry')}">Start Expansion</a>
             </nav>
             <div class="nav-actions">
               <div class="nav-socials" aria-label="Social links">
@@ -188,8 +145,8 @@ const Flexist = (() => {
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3m0 14v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg>
               </button>
-              <a class="ghost-button" href="${resolveUrl('inquiry.html')}">Book Call</a>
-              <a class="neon-button" href="${resolveUrl('inquiry.html')}">Start Expansion <span>&rarr;</span></a>
+              <a class="ghost-button" href="${resolveUrl('inquiry')}">Book Call</a>
+              <a class="neon-button" href="${resolveUrl('inquiry')}">Start Expansion <span>&rarr;</span></a>
               <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
               </button>
