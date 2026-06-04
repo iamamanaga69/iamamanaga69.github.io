@@ -3,6 +3,35 @@
    Premium glassmorphism + terminal aesthetics
    ═══════════════════════════════════════════════════════════ */
 
+/* ── Windows Scrollbar & Text Optimization ───────────────── */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) var(--bg-primary);
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary, #080808);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-subtle, #1e1e1e);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan, #00d4ff);
+}
+
 /* ── Two-Column Layout ──────────────────────────────────── */
 .checkout-layout-grid {
   display: grid;
@@ -16,10 +45,22 @@
 }
 
 .checkout-sidebar-col {
-  position: sticky;
-  top: 96px;
   display: grid;
   gap: 24px;
+}
+
+/* Only stick if the screen has enough height to avoid vertical clipping */
+@media (min-height: 780px) and (min-width: 981px) {
+  .checkout-sidebar-col {
+    position: sticky;
+    top: 96px;
+  }
+}
+
+.checkout-sidebar-col .security-notice {
+  grid-template-columns: 1fr;
+  margin-top: 0;
+  padding: 24px;
 }
 
 .sidebar-card-title {
