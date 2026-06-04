@@ -2,54 +2,71 @@ const Flexist = (() => {
   const route = document.body.dataset.page || "home";
   const themeKey = "flexist-theme";
 
+  const isSubfolder = window.location.pathname.includes("/plans/") || 
+                      window.location.pathname.includes("/payment/") || 
+                      window.location.pathname.includes("/onboarding/") || 
+                      window.location.pathname.includes("/services/");
+  const basePrefix = isSubfolder ? "../" : "";
+
+  function resolveUrl(href) {
+    if (!href) return href;
+    if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#") || href.startsWith("tel:")) {
+      return href;
+    }
+    if (href === "./") {
+      return isSubfolder ? "../index.html" : "./";
+    }
+    return basePrefix + href;
+  }
+
   const navGroups = [
     { key: "home", href: "./", label: "Home" },
     { key: "flexistlabs", href: "flexistlabs.html", label: "FlexistLabs" },
     {
       key: "growth-stack",
-      href: "services",
+      href: "services.html",
       label: "Services",
       items: [
-        ["services", "services", "Services Overview", "Complete India growth support"],
-        ["community", "community", "Community", "Telegram and Discord architecture"],
-        ["influencers", "influencers", "Influencers", "Creator and KOL campaigns"],
-        ["ambassadors", "ambassadors", "Ambassadors", "Local ambassador programs"],
-        ["partnerships", "partnerships", "Partnerships", "Useful project relationships"]
+        ["services", "services.html", "Services Overview", "Complete India growth support"],
+        ["community", "community.html", "Community", "Telegram and Discord architecture"],
+        ["influencers", "influencers.html", "Influencers", "Creator and KOL campaigns"],
+        ["ambassadors", "ambassadors.html", "Ambassadors", "Local ambassador programs"],
+        ["partnerships", "partnerships.html", "Partnerships", "Useful project relationships"]
       ]
     },
     {
       key: "plans",
-      href: "plans",
+      href: "plans/index.html",
       label: "Plans",
       items: [
-        ["plans", "plans", "Compare Plans", "Bundled India growth packages"],
+        ["plans", "plans/index.html", "Compare Plans", "Bundled India growth packages"],
         ["india-entry", "plans/india-entry.html", "India Entry", "Pre-launch essentials"],
         ["india-growth", "plans/india-growth.html", "India Growth", "Full community and campaigns"],
         ["india-partner", "plans/india-partner.html", "India Partner", "Total India ownership"],
-        ["payment", "payment", "Make Payment", "Secure crypto payment"]
+        ["payment", "payment/index.html", "Make Payment", "Secure crypto payment"]
       ]
     },
     {
       key: "proof",
-      href: "experience",
+      href: "experience.html",
       label: "Proof",
       items: [
-        ["experience", "experience", "Experience", "Real Web3 project work"],
-        ["projects", "projects", "Projects", "Ecosystems touched"],
-        ["case-studies", "case-studies", "Case Studies", "Growth work by scenario"],
-        ["testimonials", "testimonials", "Testimonials", "Project feedback"]
+        ["experience", "experience.html", "Experience", "Real Web3 project work"],
+        ["projects", "projects.html", "Projects", "Ecosystems touched"],
+        ["case-studies", "case-studies.html", "Case Studies", "Growth work by scenario"],
+        ["testimonials", "testimonials.html", "Testimonials", "Project feedback"]
       ]
     },
     {
       key: "platform",
-      href: "about",
+      href: "about.html",
       label: "About",
       items: [
-        ["about", "about", "About FLEXIST", "Positioning and mission"],
-        ["founder", "founder", "Behind FLEXIST", "Founder story without public identity"],
-        ["insights", "blog", "Insights", "India growth notes"],
-        ["media-kit", "media-kit", "Media Kit", "Brand and press assets"],
-        ["contact", "contact", "Contact", "Direct communication routes"]
+        ["about", "about.html", "About FLEXIST", "Positioning and mission"],
+        ["founder", "founder.html", "Behind FLEXIST", "Founder story without public identity"],
+        ["insights", "blog.html", "Insights", "India growth notes"],
+        ["media-kit", "media-kit.html", "Media Kit", "Brand and press assets"],
+        ["contact", "contact.html", "Contact", "Direct communication routes"]
       ]
     }
   ];
@@ -59,28 +76,28 @@ const Flexist = (() => {
       title: "Founder Journey",
       links: [
         ["FlexistLabs", "flexistlabs.html"],
-        ["Growth Services", "services"],
-        ["Plans & Pricing", "plans"],
-        ["Founder Inquiry", "inquiry"]
+        ["Growth Services", "services.html"],
+        ["Plans & Pricing", "plans/index.html"],
+        ["Founder Inquiry", "inquiry.html"]
       ]
     },
     {
       title: "Services",
       links: [
-        ["Community", "community"],
-        ["Influencers", "influencers"],
-        ["Ambassadors", "ambassadors"],
-        ["Partnerships", "partnerships"]
+        ["Community", "community.html"],
+        ["Influencers", "influencers.html"],
+        ["Ambassadors", "ambassadors.html"],
+        ["Partnerships", "partnerships.html"]
       ]
     },
     {
       title: "Proof & Platform",
       links: [
-        ["About FLEXIST", "about"],
-        ["Behind FLEXIST", "founder"],
-        ["Experience", "experience"],
-        ["Projects", "projects"],
-        ["Contact", "contact"]
+        ["About FLEXIST", "about.html"],
+        ["Behind FLEXIST", "founder.html"],
+        ["Experience", "experience.html"],
+        ["Projects", "projects.html"],
+        ["Contact", "contact.html"]
       ]
     }
   ];
@@ -123,14 +140,14 @@ const Flexist = (() => {
 
   function renderNavItem(item) {
     if (!item.items) {
-      return `<a class="${route === item.key ? "active" : ""}" href="${item.href}">${item.label}</a>`;
+      return `<a class="${route === item.key ? "active" : ""}" href="${resolveUrl(item.href)}">${item.label}</a>`;
     }
 
     const active = isActive(item.key, item.items);
     return `<div class="nav-group ${active ? "active" : ""}">
-      <a class="nav-group-label ${active ? "active" : ""}" href="${item.href}">${item.label}</a>
+      <a class="nav-group-label ${active ? "active" : ""}" href="${resolveUrl(item.href)}">${item.label}</a>
       <div class="nav-panel" aria-label="${item.label} links">
-        ${item.items.map(([key, href, label, description]) => `<a class="${route === key ? "active" : ""}" href="${href}"><strong>${label}</strong><small>${description}</small></a>`).join("")}
+        ${item.items.map(([key, href, label, description]) => `<a class="${route === key ? "active" : ""}" href="${resolveUrl(href)}"><strong>${label}</strong><small>${description}</small></a>`).join("")}
       </div>
     </div>`;
   }
@@ -141,7 +158,7 @@ const Flexist = (() => {
     const favicon = document.querySelector('link[rel="icon"]') || document.createElement("link");
     favicon.rel = "icon";
     favicon.type = "image/png";
-    favicon.href = "assets/images/flexist-avatar-192.png";
+    favicon.href = resolveUrl("assets/images/flexist-avatar-192.png");
     document.head.appendChild(favicon);
 
     if (nav) {
@@ -149,9 +166,9 @@ const Flexist = (() => {
         <a class="skip-link" href="#main-content">Skip to content</a>
         <header class="site-nav">
           <div class="container nav-inner">
-            <a class="brand brand-premium" href="./" aria-label="FLEXIST home">
+            <a class="brand brand-premium" href="${resolveUrl('./')}" aria-label="FLEXIST home">
               <span class="brand-mark">
-                <img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt="">
+                <img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="">
                 <i></i>
               </span>
               <span class="brand-copy">
@@ -161,7 +178,7 @@ const Flexist = (() => {
             </a>
             <nav class="nav-links" id="site-menu" aria-label="Primary navigation">
               ${navGroups.map(renderNavItem).join("")}
-              <a class="nav-mobile-cta" href="inquiry">Start Expansion</a>
+              <a class="nav-mobile-cta" href="${resolveUrl('inquiry.html')}">Start Expansion</a>
             </nav>
             <div class="nav-actions">
               <div class="nav-socials" aria-label="Social links">
@@ -171,8 +188,8 @@ const Flexist = (() => {
                 <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3m0 14v3M4.9 4.9 7 7m10 10 2.1 2.1M2 12h3m14 0h3M4.9 19.1 7 17m10-10 2.1-2.1"/></svg>
                 <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8 8 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"/></svg>
               </button>
-              <a class="ghost-button" href="inquiry">Book Call</a>
-              <a class="neon-button" href="inquiry">Start Expansion <span>&rarr;</span></a>
+              <a class="ghost-button" href="${resolveUrl('inquiry.html')}">Book Call</a>
+              <a class="neon-button" href="${resolveUrl('inquiry.html')}">Start Expansion <span>&rarr;</span></a>
               <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
               </button>
@@ -186,7 +203,7 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand brand-premium" href="./"><span class="brand-mark"><img class="brand-avatar" src="assets/images/flexist-avatar-192.png" alt=""><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
+              <a class="brand brand-premium" href="${resolveUrl('./')}"><span class="brand-mark"><img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt=""><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
               <p class="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
@@ -198,7 +215,7 @@ const Flexist = (() => {
             <div>
               <h3 class="footer-title">Route Map</h3>
               <div class="footer-map">
-                ${footerGroups.map((group) => `<div class="footer-group"><strong>${group.title}</strong>${group.links.map(([label, href]) => `<a href="${href}">${label}</a>`).join("")}</div>`).join("")}
+                ${footerGroups.map((group) => `<div class="footer-group"><strong>${group.title}</strong>${group.links.map(([label, href]) => `<a href="${resolveUrl(href)}">${label}</a>`).join("")}</div>`).join("")}
               </div>
             </div>
             <div>

@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (stateButtons.length && stateOutput) {
     const copy = {
       delhi: ["Delhi NCR", "High", "Founder networks, trading communities, and event-led discovery make NCR a launch amplifier."],
-      maharashtra: ["Maharashtra", "High", "Mumbai and Pune connect retail attention with fintech, exchange, and operator networks."],
-      karnataka: ["Karnataka", "High", "Bengaluru is the technical credibility node: builders, developers, and product communities."],
+      maharashtra: ["Maharashtra", "High", "Mumbai and Pune connect retail attention with fintech, exchange, and creator networks."],
+      karnataka: ["Karnataka", "High", "Bengaluru brings builders, developers, and product communities together."],
       gujarat: ["Gujarat", "Growing", "Regional creator distribution and Telegram-first retail groups create efficient activation loops."],
-      westbengal: ["West Bengal", "Growing", "Community-first launches work when education and local group operators move together."],
+      westbengal: ["West Bengal", "Growing", "Community-first launches work when education and local group leaders move together."],
       telangana: ["Telangana", "Growing", "Hyderabad offers strong tech adoption and compact on-ground activation opportunities."],
       tamilnadu: ["Tamil Nadu", "Growing", "Regional language creators make education-led acquisition especially effective."]
     };
@@ -100,14 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const gaps = [];
     const stack = [];
 
-    if (pick("telegram") === "5k-50k" || pick("telegram") === "50k+") strengths.push("Telegram already has enough density to support AMAs, mods, and launch loops.");
-    else gaps.push("Telegram needs a stronger operating layer before large campaign spend.");
+    if (pick("telegram") === "5k-50k" || pick("telegram") === "50k+") strengths.push("Telegram already has enough activity to support AMAs, moderation, and launch moments.");
+    else gaps.push("Telegram needs stronger community support before large campaign spend.");
 
     if (pick("users") === "10k-100k" || pick("users") === "100k+") strengths.push("Existing traction gives Indian creators and ambassadors something real to validate.");
     else gaps.push("India launch should start with trust-building before aggressive user targets.");
 
-    if (pick("budget") === "5k-20k" || pick("budget") === "20k+") strengths.push("Budget can support a connected creator, community, and ambassador stack.");
-    else gaps.push("Budget is tight for multi-channel execution; sequencing matters more than volume.");
+    if (pick("budget") === "5k-20k" || pick("budget") === "20k+") strengths.push("Budget can support connected creator, community, and ambassador work.");
+    else gaps.push("Budget is tight for multiple channels; clear order matters more than volume.");
 
     if (pick("launch") === "1-3m") strengths.push("The launch window is realistic for campaign prep and community warm-up.");
     if (pick("launch") === "<1m") gaps.push("The India launch window is compressed; execution needs a fast triage plan.");
@@ -126,12 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return {
       summary:
         score >= 75
-          ? "Your India posture is strong. The next move is execution design: channel ownership, creator sequencing, ambassador lanes, and weekly reporting."
+          ? "Your India plan looks strong. The next move is clear execution: channel ownership, creator timing, ambassador tasks, and weekly reporting."
           : score >= 50
-            ? "Your project has useful signals, but the India system needs stronger sequencing before scale spend."
-            : "Your project is early for India expansion. Start with trust infrastructure, Telegram discipline, and a focused launch thesis.",
-      strengths: addUnique(strengths, ["India expansion intent is defined.", "The selected goals create a usable growth brief.", "There is enough context to map a first operating sprint."]),
-      gaps: addUnique(gaps, ["Creator distribution mix still needs validation.", "Regional community nodes need mapping.", "A clearer reporting rhythm should be defined before launch."]),
+            ? "Your project has useful signals, but the India plan needs stronger order before bigger spend."
+            : "Your project is early for India expansion. Start with community trust, Telegram discipline, and a focused launch plan.",
+      strengths: addUnique(strengths, ["India expansion intent is defined.", "The selected goals create a usable growth brief.", "There is enough context to map a first growth sprint."]),
+      gaps: addUnique(gaps, ["Creator mix still needs validation.", "Regional community opportunities need mapping.", "A clearer reporting rhythm should be defined before launch."]),
       stack: addUnique(stack, ["Market Expansion Strategy", "Community Architecture", "Growth Consulting"])
     };
   }

@@ -2,6 +2,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("[data-inquiry-engine]");
   if (!form) return;
 
+  // Auto-select services from query parameters
+  const params = new URLSearchParams(window.location.search);
+  const chosenServices = (params.get("services") || params.get("service") || "").split(",").filter(Boolean);
+  const serviceMapping = {
+    "ama": "consulting",
+    "content": "consulting",
+    "india-expansion": "expansion",
+    "ambassadors": "ambassador"
+  };
+  chosenServices.forEach((service) => {
+    const val = serviceMapping[service] || service;
+    const checkbox = document.querySelector(`.service-select[value="${val}"]`);
+    if (checkbox) {
+      checkbox.checked = true;
+    }
+  });
+
   const totalSteps = 7;
   let currentStep = 1;
   const formData = {};
@@ -53,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentStep === 2 && !formData.stage) return "Select the project stage.";
     if (currentStep === 4 && !formData.indiaTarget) return "Add a 6-month India user target.";
     if (currentStep === 5 && !formData.budget) return "Select the India marketing budget.";
-    if (currentStep === 6 && !formData.services.length) return "Select at least one growth layer.";
+    if (currentStep === 6 && !formData.services.length) return "Select at least one service.";
     if (currentStep === 7 && (!formData.founderEmail || !formData.projectName)) return "Project name and founder email are required.";
     return "";
   }
@@ -83,8 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
     else gaps.push("Budget may limit multi-channel execution");
     if (["1month", "3months"].includes(formData.urgency)) strengths.push("Clear India launch timeline defined");
     else gaps.push("Timeline needs a stronger launch milestone");
-    if (formData.services.length >= 3) strengths.push("Multi-layer growth approach identified");
-    else gaps.push("Single-layer growth will limit compounding");
+    if (formData.services.length >= 3) strengths.push("Several growth services are clearly needed");
+    else gaps.push("One service alone may limit growth momentum");
     if (formData.platforms.includes("telegram")) strengths.push("Telegram-first India focus is correct");
     else gaps.push("Telegram should become the core India trust channel");
     if (score < 45) actions.push("Start with community architecture and market-entry planning");
