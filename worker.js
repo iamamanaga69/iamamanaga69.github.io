@@ -1,6 +1,13 @@
 const ALLOWED_ORIGINS = [
   "https://flexist.in",
-  "https://www.flexist.in"
+  "https://www.flexist.in",
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://localhost:5500",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5500",
+  "null"
 ];
 
 const RPC_ENDPOINTS = {
@@ -213,15 +220,23 @@ async function handleVerifyHash(request, env, ip, corsHeaders) {
   const lowerPlan = plan.toLowerCase().replace(/\s+/g, "");
   const lowerType = paymentType.toLowerCase().trim();
 
-  // Validate pricing check & calculate expected amount on server
-  const pricingTier = PLAN_PRICING[lowerType];
-  if (!pricingTier) {
-    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
-  }
+  let serverExpectedAmount;
+  if (lowerPlan === "custom") {
+    serverExpectedAmount = parseFloat(body.amount);
+    if (isNaN(serverExpectedAmount) || serverExpectedAmount <= 0) {
+      return new Response(JSON.stringify({ error: "Invalid payment amount specified for Custom plan" }), { status: 400, headers: corsHeaders });
+    }
+  } else {
+    // Validate pricing check & calculate expected amount on server
+    const pricingTier = PLAN_PRICING[lowerType];
+    if (!pricingTier) {
+      return new Response(JSON.stringify({ error: "Invalid plan type" }), { status: 400, headers: corsHeaders });
+    }
 
-  const serverExpectedAmount = pricingTier[lowerPlan];
-  if (!serverExpectedAmount) {
-    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+    serverExpectedAmount = pricingTier[lowerPlan];
+    if (!serverExpectedAmount) {
+      return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+    }
   }
 
   // 1. Validate Turnstile Token
@@ -375,15 +390,23 @@ async function handleVerifyPayment(request, env, ip, corsHeaders) {
   const lowerPlan = plan.toLowerCase().replace(/\s+/g, "");
   const lowerType = paymentType.toLowerCase().trim();
 
-  // Validate pricing check & calculate expected amount on server
-  const pricingTier = PLAN_PRICING[lowerType];
-  if (!pricingTier) {
-    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
-  }
+  let serverExpectedAmount;
+  if (lowerPlan === "custom") {
+    serverExpectedAmount = parseFloat(body.amount);
+    if (isNaN(serverExpectedAmount) || serverExpectedAmount <= 0) {
+      return new Response(JSON.stringify({ error: "Invalid payment amount specified for Custom plan" }), { status: 400, headers: corsHeaders });
+    }
+  } else {
+    // Validate pricing check & calculate expected amount on server
+    const pricingTier = PLAN_PRICING[lowerType];
+    if (!pricingTier) {
+      return new Response(JSON.stringify({ error: "Invalid plan type" }), { status: 400, headers: corsHeaders });
+    }
 
-  const serverExpectedAmount = pricingTier[lowerPlan];
-  if (!serverExpectedAmount) {
-    return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+    serverExpectedAmount = pricingTier[lowerPlan];
+    if (!serverExpectedAmount) {
+      return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+    }
   }
 
   // 1. Validate Turnstile Token

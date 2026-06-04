@@ -427,6 +427,7 @@ const FlexistPayment = (() => {
             chain: chain,
             token: token,
             txHash: txid,
+            amount: amountSent,
             turnstileToken: turnstileToken
           };
 
