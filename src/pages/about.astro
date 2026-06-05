@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import aboutData from '../data/about.json';
+import '../styles/about.css';
+---
+
+<Layout
+  title="About Us | FLEXIST"
+  description="FLEXIST helps Web3 projects enter India with community support, creator campaigns, ambassadors, partnerships, and clear growth plans."
+  canonical="https://flexist.in/about"
+  pageId="about"
+>
+  <main id="main-content">
+    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">About FLEXIST | India Growth Partner</p><h1 class="page-title">WEB3 PROJECTS<br><span class="gradient-text">GROW IN INDIA.</span></h1><p class="page-lede">FLEXIST helps founders enter India with a clear plan, trusted community support, local creators, ambassadors, and useful partnerships.</p></div></section>
+    
+    <section class="section"><div class="container split-layout">
+      <div class="manifesto-copy reveal">
+        <span class="section-label">Origin Story</span>
+        <h2 class="section-title">{aboutData.manifesto_title}</h2>
+        {aboutData.manifesto_copy.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="terminal-box reveal">
+        <div class="terminal-head"><span>FLEXIST Mission</span><span class="terminal-status">Clear</span></div>
+        <p><span class="terminal-prompt">Mission</span> {aboutData.mission}</p>
+        <p><span class="terminal-prompt">Vision</span> {aboutData.vision}</p>
+        <p><span class="terminal-prompt">Values</span> {aboutData.values}</p>
+      </div>
+    </div></section>
+    
+    <section class="section section-dark"><div class="container"><div class="section-header reveal"><span class="section-label">Market Opportunity</span><h2 class="section-title">India is not one simple audience.</h2><p>Users discover projects through Telegram, X, YouTube, regional voices, friends, and trusted communities. Strong launches connect these places instead of spending on random attention.</p></div><div class="grid-4"><div class="glass-card mini-stat reveal"><strong>100M+</strong><span>Market Potential</span></div><div class="glass-card mini-stat reveal"><strong>24/7</strong><span>Community Rhythm</span></div><div class="glass-card mini-stat reveal"><strong>4</strong><span>Main Growth Channels</span></div><div class="glass-card mini-stat reveal"><strong>1</strong><span>India Growth Partner</span></div></div></div></section>
+    
+    <section class="section"><div class="container"><div class="section-header reveal"><span class="section-label">Positioning</span><h2 class="section-title">This is more than basic community work.</h2></div><div class="compare-grid">
+      <article class="glass-card compare-card negative reveal"><h3>What We Are Not</h3><ul class="value-list"><li>Community manager for hire</li><li>Reactive chat moderator</li><li>Generic freelancer</li><li>Social media executive</li></ul></article>
+      <article class="glass-card compare-card positive reveal"><h3>What We Are</h3><ul class="value-list"><li>India growth partner</li><li>Community builder</li><li>Creator campaign planner</li><li>Expansion support for Web3 founders</li></ul></article>
+    </div></div></section>
+    
+    <section class="section section-dark"><div class="container"><div class="section-header reveal"><span class="section-label">Core Capabilities</span><h2 class="section-title">The work behind the growth.</h2></div><div class="accordion">
+      <article class="accordion-item"><button class="accordion-toggle" type="button" aria-expanded="false">Community Architecture</button><div class="accordion-panel"><p>Design Telegram and Discord operations around support speed, community rituals, moderation coverage, content cadence, and conversion points.</p></div></article>
+      <article class="accordion-item"><button class="accordion-toggle" type="button" aria-expanded="false">India Market Entry</button><div class="accordion-panel"><p>Turn project goals into a clear India launch plan with the right channels, community positioning, creator mapping, and simple growth targets.</p></div></article>
+      <article class="accordion-item"><button class="accordion-toggle" type="button" aria-expanded="false">Creator Campaigns</button><div class="accordion-panel"><p>Select creators by audience trust, platform behavior, regional relevance, and campaign goal instead of follower count alone.</p></div></article>
+      <article class="accordion-item"><button class="accordion-toggle" type="button" aria-expanded="false">Ambassador Programs</button><div class="accordion-panel"><p>Recruit and manage advocates with clear tasks, training, incentives, accountability, and progress updates.</p></div></article>
+      <article class="accordion-item"><button class="accordion-toggle" type="button" aria-expanded="false">Partnership Development</button><div class="accordion-panel"><p>Build useful relationships across projects, communities, campaign partners, and distribution channels to create steady momentum.</p></div></article>
+    </div></div></section>
+    
+    <section class="section section-dark"><div class="container split-layout"><div class="reveal"><span class="section-label">Skill Set & Philosophy</span><h2 class="section-title">Skills shaped for fast-moving Web3 teams.</h2><p>FLEXIST combines community building and local context with a commercial foundation. Our execution is remote-first, data-driven, and focused on long-term trust rather than short-term attention spikes.</p><div class="chip-row" style="margin-top:20px"><span class="tag-chip">AI-Integrated Workflow</span><span class="tag-chip">Community Support</span><span class="tag-chip">Partnership Ops</span><span class="tag-chip">Local Hinglish Advocacy</span><span class="tag-chip">Cost Discipline</span></div></div><div class="language-row reveal"><div class="language-item"><span>English</span><div class="proficiency"><i class="level-96"></i></div><span>Fluent</span></div><div class="language-item"><span>Turkish</span><div class="proficiency"><i class="level-92"></i></div><span>Fluent</span></div><div class="language-item"><span>Vietnamese</span><div class="proficiency"><i class="level-64"></i></div><span>Written</span></div><div class="language-item"><span>Hinglish</span><div class="proficiency"><i class="level-100"></i></div><span>Native</span></div></div></div></section>
+
+    <section class="section"><div class="container"><div class="section-header reveal"><span class="section-label">Founder Credentials</span><h2 class="section-title">Commercial foundation. Practical growth instincts.</h2></div><div class="grid-2"><article class="glass-card credential reveal" style="padding: 24px;"><small>Bachelor of Commerce</small><h3>Xavier's University</h3><p>Business fundamentals, commercial thinking, and a structured approach to growth decisions.</p></article><article class="glass-card credential reveal" style="padding: 24px;"><small>Cost & Management Accountancy - Pursuing</small><h3>ICMAI</h3><p>Management accounting discipline applied to efficient execution and measurable growth work.</p></article></div></div></section>
+
+    <section class="section section-dark"><div class="container"><div class="cta-block reveal"><span class="section-label">Start The India Plan</span><h2>India is too large for generic growth.</h2><p>Build a local plan around how users discover, evaluate, and join Web3 projects.</p><div class="button-row"><a class="neon-button" href="/inquiry">Book Strategy Call</a><a class="ghost-button" href="/flexistlabs">Open FlexistLabs</a></div></div></div></section>
+  </main>
+
+  <script src="../scripts/about.js"></script>
+</Layout>

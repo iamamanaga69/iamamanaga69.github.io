@@ -1,0 +1,653 @@
+/* ===================================================================
+   FLEXIST — Plans & Plan Detail Pages
+   =================================================================== */
+
+/* Sticky plan navigation bar */
+.plan-sticky-nav {
+  background: rgba(10, 16, 32, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 90;
+  padding: 10px 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.plan-sticky-nav.scrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.plan-sticky-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 4px;
+}
+
+.plan-sticky-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.plan-pill {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.plan-pill:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.plan-pill.active {
+  background: linear-gradient(135deg, #004de0, var(--accent-blue));
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(0, 102, 255, 0.3);
+  color: #fff;
+}
+/* End sticky nav styles */
+
+/* Desktop quick navigation styles */
+.hero-quick-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 36px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.quick-nav-label {
+  color: var(--text-muted);
+}
+
+.quick-nav-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: color 200ms ease, text-shadow 200ms ease;
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.quick-nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-cyan);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 250ms var(--ease-out);
+}
+
+.quick-nav-link:hover {
+  color: #fff;
+  text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.quick-nav-link:hover::after {
+  background: #fff;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.quick-nav-separator {
+  color: var(--text-muted);
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .hero-quick-nav {
+    display: none;
+  }
+
+  .plan-pill {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+  }
+
+  .plan-card {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-card {
+    padding: 14px !important;
+  }
+
+  .plan-sticky-inner {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .plan-pill {
+    padding: 6px 12px;
+    font-size: 0.62rem;
+  }
+}
+
+
+
+/* ---------- Price Toggle ---------- */
+.price-toggle {
+  align-items: center;
+  background: var(--terminal-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  display: inline-flex;
+  gap: 0;
+  margin-bottom: 42px;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.price-toggle button {
+  background: transparent;
+  border: 0;
+  border-radius: 99px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 11px 22px;
+  position: relative;
+  text-transform: uppercase;
+  transition: color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.price-toggle button.active {
+  background: linear-gradient(135deg, #004de0, var(--accent-blue));
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+  color: #fff;
+}
+
+.price-toggle button:not(.active):hover {
+  color: var(--accent-cyan);
+}
+
+/* ---------- Plan Cards Grid ---------- */
+.plan-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* ---------- Plan Card ---------- */
+.plan-card {
+  background: linear-gradient(145deg, var(--glass-start), var(--glass-end));
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  position: relative;
+  transition: border-color 240ms ease, box-shadow 240ms ease, transform 320ms var(--ease-out);
+}
+
+.plan-card::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.45), transparent);
+  content: "";
+  height: 1px;
+  left: 14%;
+  opacity: 0.3;
+  position: absolute;
+  right: 14%;
+  top: -1px;
+}
+
+.plan-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-8px);
+}
+
+/* Highlighted / Most Popular card */
+.plan-card.plan-highlight {
+  border-color: rgba(0, 102, 255, 0.55);
+  box-shadow: 0 0 48px rgba(0, 102, 255, 0.18), 0 0 96px rgba(0, 102, 255, 0.06);
+}
+
+.plan-card.plan-highlight::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 102, 255, 0.7), transparent);
+  opacity: 0.55;
+}
+
+.plan-card.plan-highlight::after {
+  background: radial-gradient(circle at 60% 0%, rgba(0, 102, 255, 0.12), transparent 60%);
+  border-radius: 14px;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.plan-card.plan-highlight:hover {
+  border-color: rgba(0, 102, 255, 0.8);
+  box-shadow: 0 0 64px rgba(0, 102, 255, 0.32), 0 0 120px rgba(0, 102, 255, 0.08);
+}
+
+/* Card badge */
+.plan-badge {
+  align-self: flex-start;
+  background: rgba(0, 255, 136, 0.07);
+  border: 1px solid rgba(0, 255, 136, 0.24);
+  border-radius: 99px;
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 18px;
+  padding: 6px 12px;
+  text-transform: uppercase;
+}
+
+.plan-highlight .plan-badge {
+  background: rgba(0, 102, 255, 0.12);
+  border-color: rgba(0, 102, 255, 0.4);
+  color: var(--accent-cyan);
+}
+
+/* Card title */
+.plan-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  letter-spacing: -0.04em;
+  margin: 0 0 12px;
+}
+
+/* Card price */
+.plan-price {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.plan-price-note {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+/* Card feature list */
+.plan-features {
+  display: grid;
+  flex: 1;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.plan-features li {
+  align-items: start;
+  color: var(--text-secondary);
+  display: flex;
+  font-size: 0.88rem;
+  gap: 10px;
+  line-height: 1.55;
+}
+
+.plan-features li::before {
+  color: var(--accent-cyan);
+  content: "›";
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.plan-highlight .plan-features li::before {
+  color: var(--accent-blue);
+}
+
+/* Card CTAs */
+.plan-ctas {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.plan-link {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 160ms ease;
+}
+
+.plan-link:hover {
+  color: var(--text-primary);
+}
+
+/* ---------- Comparison Table ---------- */
+.compare-wrap {
+  background: var(--terminal-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow-x: auto;
+  position: relative;
+}
+
+.compare-wrap::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+  content: "";
+  height: 1px;
+  left: 10%;
+  position: absolute;
+  right: 10%;
+  top: 0;
+}
+
+.compare-table {
+  border-collapse: collapse;
+  min-width: 720px;
+  width: 100%;
+}
+
+.compare-table thead th {
+  background: rgba(0, 102, 255, 0.04);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  padding: 16px 18px;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.compare-table thead th:not(:first-child) {
+  text-align: center;
+}
+
+.compare-table thead th.th-highlight {
+  color: var(--accent-cyan);
+  position: relative;
+}
+
+.compare-table tbody td {
+  border-bottom: 1px solid rgba(0, 180, 255, 0.06);
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  padding: 14px 18px;
+}
+
+.compare-table tbody td:not(:first-child) {
+  text-align: center;
+}
+
+.compare-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.compare-table tbody tr:hover {
+  background: rgba(0, 102, 255, 0.03);
+}
+
+.compare-check {
+  color: var(--accent-green);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.compare-dash {
+  color: var(--text-muted);
+  opacity: 0.4;
+}
+
+/* ---------- Plan Detail Page ---------- */
+.plan-detail-hero {
+  align-items: end;
+  display: flex;
+  min-height: 520px;
+  overflow: hidden;
+  padding: calc(var(--nav-height) + 80px) 0 72px;
+  position: relative;
+}
+
+.plan-detail-hero::before {
+  background: radial-gradient(circle at 72% 38%, rgba(0, 102, 255, 0.2), transparent 28%),
+    radial-gradient(circle at 55% 65%, rgba(0, 212, 255, 0.06), transparent 22%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+.plan-detail-content {
+  position: relative;
+  z-index: 1;
+}
+
+.plan-detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.plan-detail-subtitle {
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  line-height: 1.7;
+  max-width: 700px;
+}
+
+/* ---------- Feature List (detail page) ---------- */
+.feature-list {
+  display: grid;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feature-list li {
+  align-items: start;
+  color: var(--text-secondary);
+  display: flex;
+  font-size: 0.94rem;
+  gap: 14px;
+  line-height: 1.65;
+}
+
+.feature-bullet {
+  align-items: center;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  border-radius: 50%;
+  color: var(--accent-green);
+  display: inline-flex;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  height: 24px;
+  justify-content: center;
+  margin-top: 2px;
+  width: 24px;
+}
+
+/* ---------- Timeline ---------- */
+.plan-timeline {
+  display: grid;
+  gap: 0;
+  position: relative;
+}
+
+.plan-timeline::before {
+  background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue), transparent);
+  content: "";
+  height: 100%;
+  left: 11px;
+  position: absolute;
+  top: 0;
+  width: 2px;
+}
+
+.timeline-node {
+  padding: 0 0 32px 40px;
+  position: relative;
+}
+
+.timeline-node::before {
+  background: var(--bg-primary);
+  border: 2px solid var(--accent-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+  content: "";
+  height: 12px;
+  left: 6px;
+  position: absolute;
+  top: 4px;
+  width: 12px;
+}
+
+.timeline-node:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-week {
+  color: var(--accent-cyan);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.timeline-node h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+}
+
+.timeline-node p {
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+/* ---------- Who Is This For ---------- */
+.use-case-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.use-case {
+  background: linear-gradient(145deg, var(--glass-start), var(--glass-end));
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 24px;
+  transition: border-color 180ms ease, transform 240ms var(--ease-out);
+}
+
+.use-case:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-3px);
+}
+
+.use-case h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+
+.use-case p {
+  font-size: 0.86rem;
+  margin: 0;
+}
+
+/* ---------- Two Column Split for Detail Pages ---------- */
+.plan-split {
+  display: grid;
+  gap: 52px;
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+/* ---------- Bottom CTA strip ---------- */
+.plans-cta-strip {
+  text-align: center;
+}
+
+.plans-cta-strip p {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 560px;
+}
+
+/* ===================================================================
+   Responsive
+   =================================================================== */
+@media (max-width: 1080px) {
+  .plan-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+
+  .plan-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .plan-card {
+    padding: 26px 22px;
+  }
+
+  .plan-price {
+    font-size: 2.1rem;
+  }
+
+  .plan-detail-hero {
+    min-height: 420px;
+    padding-bottom: 56px;
+  }
+
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-toggle button {
+    font-size: 0.65rem;
+    padding: 9px 16px;
+  }
+}

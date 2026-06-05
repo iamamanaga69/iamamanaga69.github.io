@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/onboarding.css';
+---
+
+<Layout
+  title="Welcome | FLEXIST"
+  description="Welcome to FLEXIST — your India growth journey begins now."
+  canonical="https://flexist.in/onboarding/welcome"
+  pageId="onboarding"
+  robots="noindex, nofollow"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  </Fragment>
+
+  <main id="main-content">
+    <!-- Success Hero -->
+    <section class="welcome-hero">
+      <div class="success-rings"></div>
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h1 class="welcome-title gradient-text">Payment Received.</h1>
+      <p class="welcome-lede">Your FLEXIST India growth journey has officially begun. Here's what happens next.</p>
+    </section>
+
+    <!-- Receipt Card -->
+    <section class="section" style="padding-top:0">
+      <div class="container" style="display:flex;justify-content:center">
+        <div class="receipt-card reveal" data-welcome-receipt>
+          <div class="receipt-head">Loading payment data…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Happens Next -->
+    <section class="section">
+      <div class="container" style="max-width:680px">
+        <div class="section-header centered reveal">
+          <span class="section-label">Next Steps</span>
+          <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">What Happens Now</h2>
+        </div>
+
+        <div class="steps-timeline reveal">
+          <div class="step-item">
+            <span class="step-num">1</span>
+            <h4>Submit Your Project Brief</h4>
+            <p>Tell us about your project, blockchain, goals, and timeline. This helps us prepare your custom India growth strategy.</p>
+          </div>
+          <div class="step-item">
+            <span class="step-num">2</span>
+            <h4>Onboarding Call</h4>
+            <p>We'll reach out within 24 hours on Telegram to schedule your kickoff call and align on priorities.</p>
+          </div>
+          <div class="step-item">
+            <span class="step-num">3</span>
+            <h4>Execution Begins</h4>
+            <p>Your dedicated India growth operations start. Community setup, KOL outreach, and ambassador sourcing kick off immediately.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action CTAs -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-block reveal" style="text-align:center">
+          <h2>Ready to Begin?</h2>
+          <p>Complete your project brief so we can start building your India growth strategy right away.</p>
+          <div class="button-row" style="justify-content:center">
+            <a class="neon-button" href="/onboarding/brief">Submit Project Brief →</a>
+            <a class="ghost-button" href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer">Message on Telegram →</a>
+            <a class="ghost-button" href="/onboarding/portal">View Your Portal →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../scripts/onboarding.js"></script>
+</Layout>

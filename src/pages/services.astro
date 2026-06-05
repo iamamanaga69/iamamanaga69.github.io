@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import servicesData from '../data/services.json';
+import '../styles/services.css';
+---
+
+<Layout
+  title="Growth Services | FLEXIST"
+  description="Choose the India growth support your Web3 project needs: community, creators, ambassadors, partnerships, and strategy."
+  canonical="https://flexist.in/services"
+  pageId="services"
+>
+  <main id="main-content">
+    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Services | Choose What You Need</p><h1 class="page-title">WHAT DO YOU<br><span class="gradient-text">NEED TO FIX?</span></h1><p class="page-lede">Pick the growth support your project needs now. FLEXIST can help with one service or build the full India expansion plan.</p><div class="chip-row services-sticky-tabs" id="servicesTabs"><a class="tag-chip active" href="#community">Community</a><a class="tag-chip" href="#india-entry">Expansion</a><a class="tag-chip" href="#kol">Creators</a><a class="tag-chip" href="#ambassadors">Ambassadors</a><a class="tag-chip" href="#partnerships">Partnerships</a><a class="tag-chip" href="#consulting">Consulting</a></div></div></section>
+    <section class="section"><div class="container services-list">
+      
+      {servicesData.services.map((service, idx) => {
+        const isOdd = idx % 2 === 0;
+        return (
+          <>
+            <article class={`glass-card service-block ${isOdd ? 'odd-service' : 'even-service'}`} id={service.id}>
+              <span class="watermark-number">{String(idx + 1).padStart(2, '0')}</span>
+              {isOdd ? (
+                <>
+                  <div class="service-main">
+                    <span class="service-index">{service.index}</span>
+                    <h2>{service.title}</h2>
+                    {service.description.split('\n\n').map(p => <p>{p}</p>)}
+                  </div>
+                  <div class="service-deliverables">
+                    <h3>What You Get</h3>
+                    <ul class="value-list">
+                      {service.what_you_get.map(item => <li>{item}</li>)}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div class="service-deliverables">
+                    <h3>What You Get</h3>
+                    <ul class="value-list">
+                      {service.what_you_get.map(item => <li>{item}</li>)}
+                    </ul>
+                  </div>
+                  <div class="service-main">
+                    <span class="service-index">{service.index}</span>
+                    <h2>{service.title}</h2>
+                    {service.description.split('\n\n').map(p => <p>{p}</p>)}
+                  </div>
+                </>
+              )}
+            </article>
+            {idx < servicesData.services.length - 1 && <div class="glowing-divider"></div>}
+          </>
+        )
+      })}
+
+    </div></section>
+    
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal">
+          <span class="section-label">Ready For India?</span>
+          <h2>Use the right service at the right time.</h2>
+          
+          <div class="services-tab-switcher">
+            <div class="tab-pills">
+              <button type="button" class="tab-pill active" data-tab-target="inquiry">
+                Founder Inquiry
+              </button>
+              <button type="button" class="tab-pill" data-tab-target="flexistlabs">
+                India Readiness Check
+              </button>
+            </div>
+            
+            <div class="tab-content-wrapper">
+              <div class="tab-panel active" id="tab-inquiry">
+                <p class="tab-description">Answer a few simple questions. FLEXIST will understand your project stage, India goal, current community, budget, and the support you need first.</p>
+                <button type="button" class="neon-button services-drawer-trigger" data-target-url="inquiry">Open Founder Inquiry &rarr;</button>
+              </div>
+              <div class="tab-panel" id="tab-flexistlabs">
+                <p class="tab-description">Assess your project's readiness for the Indian Web3 market across 5 key dimensions: community, localized messaging, resources, regulatory awareness, and strategic fit.</p>
+                <button type="button" class="neon-button services-drawer-trigger" data-target-url="flexistlabs">Run India Check &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="services-drawer" id="servicesDrawer">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-content-box">
+      <div class="drawer-header">
+        <span class="drawer-title" id="drawerTitle">Loading Portal...</span>
+        <button type="button" class="drawer-close" id="drawerClose" aria-label="Close drawer">&times;</button>
+      </div>
+      <div class="drawer-body" id="drawerBody">
+        <div class="drawer-loader">
+          <span class="pay-spinner"></span>
+          <p>Loading portal...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../scripts/services.js"></script>
+</Layout>

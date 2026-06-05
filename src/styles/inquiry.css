@@ -1,0 +1,595 @@
+.inquiry-layout {
+  align-items: start;
+  display: grid;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+.inquiry-terminal {
+  padding: 0;
+  overflow: hidden;
+}
+
+.terminal-topbar {
+  align-items: center;
+  background: rgba(0, 102, 255, 0.08);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 8px;
+  padding: 14px 18px;
+}
+
+.terminal-dot {
+  border-radius: 50%;
+  display: inline-flex;
+  height: 10px;
+  width: 10px;
+}
+
+.terminal-dot.red {
+  background: #ff4d6d;
+}
+
+.terminal-dot.yellow {
+  background: #ffd166;
+}
+
+.terminal-dot.green {
+  background: var(--accent-green);
+}
+
+.terminal-path {
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  margin-left: 6px;
+}
+
+.cursor {
+  animation: inquiryCursor 1s steps(2, start) infinite;
+  color: var(--accent-cyan);
+}
+
+.inquiry-progress {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr auto;
+  padding: 20px 22px 0;
+}
+
+.progress-track {
+  background: rgba(0, 212, 255, 0.08);
+  height: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  display: block;
+  height: 100%;
+  transform: scaleX(0.14);
+  transform-origin: left;
+  transition: transform 320ms var(--ease-out);
+}
+
+.progress-label,
+.step-label {
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.inquiry-steps {
+  padding: 28px 22px 22px;
+}
+
+.inquiry-step {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  min-height: 430px;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inquiry-step.past {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inquiry-step.future {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inquiry-step.active {
+  position: relative;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.step-heading {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 0.98;
+  margin: 14px 0 24px;
+}
+
+.field-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.spaced {
+  margin-top: 18px;
+}
+
+.field-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.option-grid,
+.checkbox-grid,
+.checkbox-group {
+  display: grid;
+  gap: 10px;
+}
+
+.option-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.option-grid.two-col,
+.checkbox-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.option-card,
+.checkbox-grid label,
+.checkbox-group label {
+  background: var(--ghost-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  min-height: 56px;
+  padding: 14px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 170ms ease, border-color 170ms ease, color 170ms ease, transform 170ms var(--ease-out), box-shadow 170ms ease;
+}
+
+/* Hide raw checkboxes */
+.checkbox-grid label input[type="checkbox"],
+.checkbox-group label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.option-card:hover,
+.checkbox-grid label:hover,
+.checkbox-group label:hover {
+  background: rgba(0, 102, 255, 0.14);
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+}
+
+.option-card.selected,
+.checkbox-grid label.selected,
+.checkbox-group label.selected {
+  background: rgba(0, 102, 255, 0.2) !important;
+  border-color: var(--accent-cyan) !important;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.4), inset 0 0 8px rgba(0, 212, 255, 0.2);
+  color: var(--text-primary) !important;
+  transform: translateY(-2px);
+}
+
+.option-card.selected::after,
+.checkbox-grid label.selected::after,
+.checkbox-group label.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  font-weight: bold;
+  text-shadow: 0 0 8px var(--accent-cyan);
+}
+
+.checkbox-group {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+
+.checkbox-group p.field-label {
+  grid-column: 1 / -1;
+}
+
+.step-nav {
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 20px;
+}
+
+.inquiry-ticket {
+  padding: 26px 22px 22px;
+}
+
+.ticket-header,
+.ticket-score {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.ticket-header strong {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+}
+
+.ticket-score {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-gauge {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.circular-gauge {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: rgba(0, 212, 255, 0.08);
+  stroke-width: 8px;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: url(#gaugeGradient);
+  stroke-width: 8px;
+  stroke-linecap: round;
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: 251.2;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.1, 1, 0.1, 1);
+  filter: drop-shadow(0 0 6px var(--accent-green));
+}
+
+#scoreNumber {
+  position: absolute;
+  font-size: 2.2rem !important;
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  margin: 0;
+}
+
+.ticket-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 18px;
+}
+
+.ticket-grid div {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.ticket-grid span {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.ticket-grid strong {
+  color: var(--text-primary);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.ticket-insights {
+  margin-bottom: 18px;
+}
+
+.inquiry-aside {
+  display: grid;
+  gap: 12px;
+}
+
+.inquiry-aside .glass-card {
+  padding: 20px;
+}
+
+.inquiry-aside h3 {
+  font-size: 1.03rem;
+}
+
+.inquiry-aside p {
+  font-size: 0.82rem;
+  margin-bottom: 0;
+}
+
+@keyframes inquiryCursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 920px) {
+  .inquiry-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .field-grid,
+  .option-grid,
+  .option-grid.two-col,
+  .checkbox-grid,
+  .ticket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-progress {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-score {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .score-gauge {
+    width: 100%;
+  }
+}
+
+/* Sticky step progress bar styles */
+.sticky-progress-bar {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  z-index: 80;
+  background: rgba(8, 13, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sticky-progress-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.progress-bar-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.progress-bar-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.progress-step-num {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.progress-step-divider {
+  color: var(--text-muted);
+}
+
+.progress-step-name {
+  color: var(--text-primary);
+}
+
+.progress-bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--text-muted);
+  border-radius: 99px;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  transform: scaleX(0.14);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .progress-bar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .progress-bar-track {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .field-grid,
+  .option-grid,
+  .option-grid.two-col,
+  .checkbox-grid,
+  .ticket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-progress {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-aside .glass-card {
+    padding: 16px !important;
+  }
+
+  .option-card,
+  .checkbox-grid label,
+  .checkbox-group label {
+    padding: 12px 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .inquiry-aside .glass-card {
+    padding: 12px !important;
+  }
+
+  .option-card,
+  .checkbox-grid label,
+  .checkbox-group label {
+    padding: 10px 8px !important;
+  }
+}
+
+/* UX Overhaul styling additions */
+.form-est-time {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  margin-bottom: -10px;
+  padding: 10px 22px 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Inline Validation Styles */
+.error-border {
+  border-color: #ff4d6d !important;
+  box-shadow: 0 0 10px rgba(255, 77, 109, 0.3) !important;
+}
+
+.error-message {
+  color: #ff4d6d;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  margin-top: 6px;
+  display: block;
+}
+
+/* Ticket Reveal and Pulse Animations */
+.inquiry-ticket {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inquiry-ticket.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes neonPulse {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 25px var(--accent-cyan), 0 0 35px var(--accent-cyan);
+    transform: scale(1.1);
+    color: var(--accent-cyan) !important;
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    transform: scale(1);
+  }
+}
+
+.neon-pulse-active {
+  animation: neonPulse 0.6s ease-in-out 1;
+}
+
+@keyframes terminalSuccessFlash {
+  0% {
+    border-color: var(--border-subtle);
+    box-shadow: none;
+  }
+  50% {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  }
+  100% {
+    border-color: var(--border-subtle);
+    box-shadow: none;
+  }
+}
+
+.success-pulse {
+  animation: terminalSuccessFlash 0.8s ease-in-out 1;
+}
+

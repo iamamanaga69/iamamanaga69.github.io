@@ -1,0 +1,143 @@
+backend:
+  name: github
+  repo: iamamanaga69/iamamanaga69.github.io
+  branch: main
+
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: homepage
+    label: "Homepage"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/homepage.json"
+        label: "Homepage Copy"
+        name: "homepage"
+        fields:
+          - {label: "Hero Title", name: "hero_title", widget: "string"}
+          - {label: "Hero Tagline", name: "hero_tagline", widget: "string"}
+          - {label: "Hero Copy", name: "hero_copy", widget: "text"}
+          - label: "Stats"
+            name: "stats"
+            widget: "object"
+            fields:
+              - {label: "Years in Crypto", name: "years", widget: "string"}
+              - {label: "Projects Operated", name: "projects", widget: "string"}
+              - {label: "Members Grown", name: "members", widget: "string"}
+          - label: "Marquee Projects"
+            name: "marquee_projects"
+            widget: "list"
+            field: {label: "Project Name", name: "name", widget: "string"}
+
+  - name: services
+    label: "Services"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/services.json"
+        label: "Services Copy"
+        name: "services"
+        fields:
+          - label: "Services List"
+            name: "services"
+            widget: "list"
+            fields:
+              - {label: "Service ID", name: "id", widget: "string"}
+              - {label: "Service Index Label", name: "index", widget: "string"}
+              - {label: "Service Title", name: "title", widget: "string"}
+              - {label: "Service Description", name: "description", widget: "text"}
+              - label: "What You Get"
+                name: "what_you_get"
+                widget: "list"
+                field: {label: "Bullet Point", name: "bullet", widget: "string"}
+
+  - name: experience
+    label: "Experience"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/experience.json"
+        label: "Experience Copy"
+        name: "experience"
+        fields:
+          - label: "Projects Timeline"
+            name: "projects"
+            widget: "list"
+            fields:
+              - {label: "Company", name: "company", widget: "string"}
+              - {label: "Date Range", name: "date_range", widget: "string"}
+              - {label: "Role", name: "role", widget: "string"}
+              - {label: "Current Role?", name: "is_current", widget: "boolean"}
+              - label: "Bullet Points"
+                name: "bullets"
+                widget: "list"
+                field: {label: "Bullet", name: "bullet", widget: "string"}
+              - {label: "Traction Note", name: "traction", widget: "string"}
+              - label: "Tags"
+                name: "tags"
+                widget: "list"
+                field: {label: "Tag", name: "tag", widget: "string"}
+
+  - name: about
+    label: "About Us"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/about.json"
+        label: "About Copy"
+        name: "about"
+        fields:
+          - {label: "Manifesto Title", name: "manifesto_title", widget: "string"}
+          - label: "Manifesto Copy Paragraphs"
+            name: "manifesto_copy"
+            widget: "list"
+            field: {label: "Paragraph Text", name: "text", widget: "text"}
+          - {label: "Mission Statement", name: "mission", widget: "string"}
+          - {label: "Vision Statement", name: "vision", widget: "string"}
+          - {label: "Values Statement", name: "values", widget: "string"}
+
+  - name: plans
+    label: "Plans & Pricing"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/plans.json"
+        label: "Plans Copy"
+        name: "plans"
+        fields:
+          - label: "Plans List"
+            name: "plans"
+            widget: "list"
+            fields:
+              - {label: "Plan ID", name: "id", widget: "string"}
+              - {label: "Plan Name", name: "name", widget: "string"}
+              - {label: "One-Time Price", name: "price_one", widget: "string"}
+              - {label: "Monthly Price", name: "price_monthly", widget: "string"}
+              - label: "Features List"
+                name: "features"
+                widget: "list"
+                field: {label: "Feature Text", name: "text", widget: "string"}
+
+  - name: global
+    label: "Global Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - file: "src/data/global.json"
+        label: "Global Settings"
+        name: "global"
+        fields:
+          - {label: "Contact Email", name: "contact_email", widget: "string"}
+          - {label: "Telegram Handle", name: "telegram_handle", widget: "string"}
+          - {label: "Telegram URL", name: "telegram_url", widget: "string"}
+          - {label: "X (Twitter) URL", name: "x_url", widget: "string"}
+          - {label: "Linktree URL", name: "linktree_url", widget: "string"}
+          - {label: "Footer Copy", name: "footer_copy", widget: "text"}

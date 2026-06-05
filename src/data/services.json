@@ -1,0 +1,76 @@
+{
+  "services": [
+    {
+      "id": "community",
+      "index": "Service 1",
+      "title": "Community Architecture",
+      "description": "A strong India launch needs more than a Telegram group. It needs fast replies, clear rules, helpful admins, simple education, and reasons for users to keep talking.\n\nFLEXIST builds the Telegram and Discord setup, moderation flow, content rhythm, and engagement ideas around your project stage.\n\nThe goal is simple: turn joins into real community activity.",
+      "what_you_get": [
+        "Telegram and Discord setup plan",
+        "Moderation guide and response flow",
+        "Community activation calendar",
+        "Weekly health notes"
+      ]
+    },
+    {
+      "id": "india-entry",
+      "index": "Service 2",
+      "title": "India Market Expansion Strategy",
+      "description": "India is not one simple audience. Users come from Telegram groups, YouTube videos, X posts, regional communities, and friend referrals.\n\nFLEXIST studies your project, stage, user target, and budget. Then we choose the right India channels and the right order to launch them.\n\nYou get a practical plan, not a generic report.",
+      "what_you_get": [
+        "India opportunity review",
+        "Channel and audience map",
+        "90-day action plan",
+        "Simple progress signals"
+      ]
+    },
+    {
+      "id": "kol",
+      "index": "Service 3",
+      "title": "Influencer & Creator Campaigns",
+      "description": "Follower counts are not a strategy. The right creator depends on audience trust, content format, language, niche relevance, and the exact action your campaign needs.\n\nFLEXIST builds creator mixes across Indian crypto YouTube, X, Telegram, educators, regional voices, and community leaders. Each campaign has a clear job: awareness, education, launch traffic, product usage, or steady credibility.\n\nThe result feels native to India instead of imported.",
+      "what_you_get": [
+        "Creator shortlist",
+        "Campaign brief and schedule",
+        "Regional creator mix",
+        "Post-campaign review"
+      ]
+    },
+    {
+      "id": "ambassadors",
+      "index": "Service 4",
+      "title": "Ambassador Program Operations",
+      "description": "India has a strong base of motivated Web3 advocates. But ambassador programs fail when they reward noise instead of useful contribution.\n\nFLEXIST structures recruitment, onboarding, tasks, training, incentives, reporting, and recognition. Founders can see what work is happening and where momentum is coming from.\n\nThe program can support local content, community support, event activation, regional discovery, and ecosystem outreach.",
+      "what_you_get": [
+        "Recruitment criteria",
+        "Ambassador guide",
+        "Contribution scorecard",
+        "Monthly recognition plan"
+      ]
+    },
+    {
+      "id": "partnerships",
+      "index": "Service 5",
+      "title": "Partnership Development",
+      "description": "Web3 growth compounds through relationships. The right communities, projects, launch partners, and distribution channels can unlock outcomes no isolated ad campaign can produce.\n\nFLEXIST sources and manages partnership opportunities aligned to your stage and category. That includes collaboration campaigns, community swaps, ecosystem visibility, token-facing conversations, and targeted introductions.\n\nEach relationship is evaluated for strategic fit and its ability to move growth forward.",
+      "what_you_get": [
+        "Partner opportunity map",
+        "Outreach and follow-through",
+        "Campaign collaboration briefs",
+        "Pipeline tracking"
+      ]
+    },
+    {
+      "id": "consulting",
+      "index": "Service 6",
+      "title": "Growth Consulting",
+      "description": "Sometimes the first need is clarity. Where should the India budget go? Why is a community quiet? Which channel should launch first? What does a realistic 90-day plan look like?\n\nFLEXIST provides practical consulting for founders who need a sharper plan before expanding execution. The work focuses on the biggest gaps and the fastest route to useful market feedback.\n\nYou leave with an action plan, not a generic report.",
+      "what_you_get": [
+        "Growth review",
+        "Priority list",
+        "Action plan",
+        "Founder strategy session"
+      ]
+    }
+  ]
+}

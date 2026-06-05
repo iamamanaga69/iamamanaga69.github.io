@@ -1,0 +1,50 @@
+{
+  "plans": [
+    {
+      "id": "india-entry",
+      "name": "India Entry",
+      "price_one": "$500",
+      "price_monthly": "$350/mo",
+      "features": [
+        "India market audit",
+        "Telegram setup + 30 days management",
+        "KOL micro campaign — 3‑5 creators",
+        "Ambassador recruitment — up to 10",
+        "Weekly report"
+      ]
+    },
+    {
+      "id": "india-growth",
+      "name": "India Growth",
+      "price_one": "$1,200",
+      "price_monthly": "$800/mo",
+      "features": [
+        "Everything in India Entry",
+        "Full Telegram + Discord architecture",
+        "KOL standard campaign — 10‑15 creators",
+        "Full ambassador program",
+        "2 strategic partnerships",
+        "Content calendar",
+        "Bi‑weekly strategy call",
+        "Monthly report"
+      ]
+    },
+    {
+      "id": "india-partner",
+      "name": "India Partner",
+      "price_one": "$1,800/mo",
+      "price_monthly": "$1,800/mo",
+      "features": [
+        "Everything in India Growth",
+        "Unlimited KOL campaigns",
+        "Full ambassador management",
+        "Monthly partnership pipeline",
+        "Monthly AMA coordination",
+        "App review management",
+        "Dedicated Indian support",
+        "Full network access",
+        "Weekly founder call"
+      ]
+    }
+  ]
+}

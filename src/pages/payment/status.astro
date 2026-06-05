@@ -1,0 +1,181 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/payment.css';
+---
+
+<Layout
+  title="Payment Status | FLEXIST"
+  description="Track your FLEXIST crypto payment status. Enter your TxID to check verification progress."
+  canonical="https://flexist.in/payment/status"
+  pageId="payment-status"
+  robots="noindex, nofollow"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  </Fragment>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="page-hero">
+      <div class="container page-hero-content">
+        <span class="page-kicker">// transaction lookup</span>
+        <h1 class="page-title">Payment <span class="gradient-text">Status</span></h1>
+        <p class="page-lede">Enter your transaction ID to track the verification status of your FLEXIST payment.</p>
+      </div>
+    </section>
+
+    <!-- STATUS TRACKER -->
+    <section class="section">
+      <div class="container">
+
+        <!-- Search Box -->
+        <div class="status-search reveal">
+          <div class="section-label">Transaction Lookup</div>
+          <form id="status-search-form">
+            <div class="status-search-row">
+              <input type="text" id="status-txid" placeholder="Paste your TxID or transaction hash..." required>
+              <button type="submit">Search</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Loading State -->
+        <div class="pay-loading" id="status-loading" hidden>
+          <div class="pay-spinner"></div>
+          <span>Searching records...</span>
+        </div>
+
+        <!-- Empty State -->
+        <div class="status-empty" id="status-empty" hidden>
+          No matching payment found.
+        </div>
+
+        <!-- Result Card -->
+        <div class="status-result" id="status-result" hidden>
+          <div class="status-card">
+            <div class="status-header">
+              <h3>Payment Details</h3>
+              <span class="status-badge pending" id="res-badge">Pending</span>
+            </div>
+            <div class="status-details">
+              <div class="status-detail">
+                <div class="status-detail-label">Name</div>
+                <div class="status-detail-value" id="res-name">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Email</div>
+                <div class="status-detail-value" id="res-email">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Plan</div>
+                <div class="status-detail-value" id="res-plan">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Chain</div>
+                <div class="status-detail-value" id="res-chain">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Token</div>
+                <div class="status-detail-value" id="res-token">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Amount</div>
+                <div class="status-detail-value" id="res-amount">—</div>
+              </div>
+              <div class="status-detail" style="grid-column: 1 / -1">
+                <div class="status-detail-label">Transaction ID</div>
+                <div class="status-detail-value" id="res-txid" style="color: var(--accent-cyan); font-family: var(--font-mono); font-size: 0.78rem;">—</div>
+              </div>
+              <div class="status-detail">
+                <div class="status-detail-label">Submitted</div>
+                <div class="status-detail-value" id="res-date">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Local History List -->
+        <div class="history-section reveal" style="margin-top: 40px; margin-bottom: 20px;">
+          <div class="section-label">Local History</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 16px;">Previous Payments on this Device</h3>
+          
+          <div class="history-security-alert">
+            <strong>⚠ Browser Storage Notice</strong>
+            <p>This history is stored locally in your browser's <code>localStorage</code>. It is device-specific and will be cleared if you clear cookies or browser data. Please save your <strong>Payment Reference ID</strong> for receipts.</p>
+          </div>
+
+          <div class="history-table-container glass-card" id="history-container">
+            <table class="history-table" id="history-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Reference ID</th>
+                  <th>Plan</th>
+                  <th>Amount</th>
+                  <th>Chain / Token</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="history-rows">
+                <!-- Loaded dynamically by JS -->
+              </tbody>
+            </table>
+            <div id="no-history-msg" class="no-history-message" style="display: none; padding: 24px; text-align: center; color: var(--text-secondary);">
+              No payment submissions found on this device.
+            </div>
+          </div>
+        </div>
+
+        <!-- Expected Timeline -->
+        <div class="glass-card reveal" style="padding: 32px; margin-top: 20px;">
+          <div class="section-label">Expected Timeline</div>
+          <h3 style="font-size: 1.4rem; margin-bottom: 24px;">What Happens After Payment</h3>
+
+          <div class="ty-timeline" style="max-width: 100%; margin: 0;">
+            <div class="ty-step">
+              <div class="ty-step-dot">1</div>
+              <div class="ty-step-content">
+                <div class="ty-step-time">Within 12 Hours</div>
+                <div class="ty-step-title">Transaction Verified</div>
+                <p class="ty-step-desc">FLEXIST verifies your on-chain transaction and updates your payment status to confirmed.</p>
+              </div>
+            </div>
+            <div class="ty-step">
+              <div class="ty-step-dot">2</div>
+              <div class="ty-step-content">
+                <div class="ty-step-time">Within 24 Hours</div>
+                <div class="ty-step-title">Onboarding Brief Sent</div>
+                <p class="ty-step-desc">You receive a detailed onboarding brief via Telegram with your project timeline and deliverables.</p>
+              </div>
+            </div>
+            <div class="ty-step">
+              <div class="ty-step-dot">3</div>
+              <div class="ty-step-content">
+                <div class="ty-step-time">Within 48 Hours</div>
+                <div class="ty-step-title">Work Begins</div>
+                <p class="ty-step-desc">Your India growth campaign kicks off. Community, content, and outreach operations start running.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-block reveal" style="margin-top: 48px;">
+          <h2>Need Help? <span class="gradient-text">Message Us</span></h2>
+          <p>If you have questions about your payment or need to update your transaction details, reach out directly.</p>
+          <div class="button-row">
+            <a class="neon-button" href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer">Message on Telegram →</a>
+            <a class="ghost-button" href="mailto:FlexistCrypto@gmail.com">Send Email</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../../scripts/payment.js"></script>
+</Layout>

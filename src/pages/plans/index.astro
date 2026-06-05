@@ -1,0 +1,197 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import plansData from '../../data/plans.json';
+import '../../styles/plans.css';
+---
+
+<Layout
+  title="Plans & Pricing | FLEXIST"
+  description="Simple bundled plans for India Web3 growth. Entry, Growth, and Partner tiers with clear deliverables."
+  canonical="https://flexist.in/plans/"
+  pageId="plans"
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  </Fragment>
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container page-hero-content">
+        <span class="page-kicker">// plans</span>
+        <h1 class="page-title gradient-text">Simple Plans.<br>Clear Deliverables.</h1>
+        <p class="page-lede">Bundled plans combine the most important services into one India growth system — saving 30‑40% vs buying individually.</p>
+        <!-- Desktop quick navigation -->
+        <div class="hero-quick-nav">
+          <span class="quick-nav-label">Jump to:</span>
+          <a class="quick-nav-link" href="#plan-india-entry">India Entry</a>
+          <span class="quick-nav-separator">&middot;</span>
+          <a class="quick-nav-link" href="#plan-india-growth">India Growth</a>
+          <span class="quick-nav-separator">&middot;</span>
+          <a class="quick-nav-link" href="#plan-india-partner">India Partner</a>
+          <span class="quick-nav-separator">&middot;</span>
+          <a class="quick-nav-link" href="#compare">Compare Matrix</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sticky plan navigation -->
+    <div class="plan-sticky-nav" id="plan-sticky-nav">
+      <div class="container plan-sticky-inner">
+        <a class="plan-pill active" href="#plan-india-entry" data-plan-pill>India Entry</a>
+        <a class="plan-pill" href="#plan-india-growth" data-plan-pill>India Growth</a>
+        <a class="plan-pill" href="#plan-india-partner" data-plan-pill>India Partner</a>
+        <a class="plan-pill" href="#compare" data-plan-pill>Compare</a>
+      </div>
+    </div>
+
+    <!-- Price Toggle + Plan Cards -->
+    <section class="section">
+      <div class="container">
+        <div class="price-toggle">
+          <button class="active" data-price-mode="one" type="button">One‑Time</button>
+          <button data-price-mode="monthly" type="button">Monthly</button>
+        </div>
+
+        <div class="plan-grid">
+          {plansData.plans.map((plan) => {
+            const isHighlight = plan.id === 'india-growth';
+            const isPartner = plan.id === 'india-partner';
+            return (
+              <article class={`plan-card reveal ${isHighlight ? 'plan-highlight' : ''}`} id={`plan-${plan.id}`}>
+                <span class="plan-badge">
+                  {plan.id === 'india-entry' && 'Best for Pre‑Launch'}
+                  {plan.id === 'india-growth' && 'Most Popular'}
+                  {plan.id === 'india-partner' && 'Full India Ownership'}
+                </span>
+                <h3>{plan.name}</h3>
+                <p class="plan-price" data-one={plan.price_one} data-monthly={plan.price_monthly}>{plan.price_one}</p>
+                <p class="plan-price-note">{isPartner ? 'Monthly retainer' : 'One‑time setup'}</p>
+                <ul class="plan-features">
+                  {plan.features.map(feat => <li><strong><em>{feat}</em></strong></li>)}
+                </ul>
+                <div class="plan-ctas">
+                  {isPartner ? (
+                    <a class="neon-button" href={`/payment/?plan=IndiaPartner&type=monthly&amount=${plan.price_monthly.replace(/[^0-9]/g, '')}`}>Monthly {plan.price_monthly} →</a>
+                  ) : (
+                    <>
+                      <a class="neon-button" href={`/payment/?plan=${plan.name.replace(/\s+/g, '')}&type=onetime&amount=${plan.price_one.replace(/[^0-9]/g, '')}`} data-cta-onetime>One‑Time {plan.price_one} →</a>
+                      <a class="ghost-button" href={`/payment/?plan=${plan.name.replace(/\s+/g, '')}&type=monthly&amount=${plan.price_monthly.replace(/[^0-9]/g, '')}`}>Monthly {plan.price_monthly} →</a>
+                    </>
+                  )}
+                </div>
+                <a class="plan-link" href={`/plans/${plan.id}`}>See Full Plan →</a>
+              </article>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section section-dark" id="compare">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-label">Feature Matrix</span>
+          <h2 class="section-title">Full Comparison</h2>
+        </div>
+
+        <div class="compare-wrap reveal">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>India Entry</th>
+                <th class="th-highlight">India Growth</th>
+                <th>India Partner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Market audit</td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Telegram setup</td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Discord architecture</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>KOL campaign</td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Ambassador program</td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Partnerships</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Content calendar</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>AMA coordination</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Weekly founder call</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+              <tr>
+                <td>Full India ownership</td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-dash">—</span></td>
+                <td><span class="compare-check">✓</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal plans-cta-strip">
+          <h2>Need just one service?</h2>
+          <p>Not every project needs a full plan. Pick individual services like community management, KOL campaigns, or ambassador programs.</p>
+          <div class="button-row">
+            <a class="neon-button" href="/services">View All Services →</a>
+            <a class="ghost-button" href="/services">Or build your own →</a>
+          </div>
+          <p class="cta-fallback" style="margin-top: 24px; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">
+            Not sure which plan fits? &rarr; <a href="/inquiry" style="color: var(--accent-cyan); text-decoration: none; border-bottom: 1px dashed var(--accent-cyan); transition: color 0.15s ease, border-color 0.15s ease;">Open Founder Inquiry</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../../scripts/plans.js"></script>
+</Layout>

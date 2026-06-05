@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.vercel/
+.astro/
+
+# IDE / System files
+.DS_Store
+*.local
+Thumbs.db
