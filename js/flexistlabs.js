@@ -221,7 +221,79 @@ document.addEventListener("DOMContentLoaded", () => {
         if (arc) {
           arc.style.strokeDashoffset = "326.7";
         }
+
+        // FIX 8 — Reset progressive reveal state on retake
+        const allQuestions = form.querySelectorAll(".assessment-question[data-question]");
+        allQuestions.forEach(q => {
+          q.classList.remove("question-revealed", "question-answered");
+        });
+        const emailSection = form.querySelector(".assessment-email");
+        if (emailSection) emailSection.classList.remove("question-revealed");
+        const submitBtnReveal = form.querySelector(".assessment-submit");
+        if (submitBtnReveal) submitBtnReveal.classList.remove("question-revealed");
       });
     }
   }
+
+  // FIX 8 START — INDIA READINESS PROGRESSIVE REVEAL
+  function initProgressiveReveal() {
+    const form = document.getElementById("assessment-form");
+    if (!form) return;
+
+    const totalQuestions = 5;
+    const answeredState = {};
+
+    // Listen for radio input changes on each question
+    for (let i = 1; i <= totalQuestions; i++) {
+      const radios = form.querySelectorAll(`input[type="radio"][name="q${i}"]`);
+      radios.forEach(radio => {
+        radio.addEventListener("change", () => {
+          answeredState[i] = true;
+
+          // Mark current question as answered
+          const currentQ = form.querySelector(`.assessment-question[data-question="${i}"]`);
+          if (currentQ) {
+            currentQ.classList.add("question-answered");
+          }
+
+          // Reveal next question
+          if (i < totalQuestions) {
+            const nextQ = form.querySelector(`.assessment-question[data-question="${i + 1}"]`);
+            if (nextQ && !nextQ.classList.contains("question-revealed")) {
+              nextQ.classList.add("question-revealed");
+
+              // Smooth scroll to next question after transition starts
+              setTimeout(() => {
+                nextQ.scrollIntoView({ behavior: "smooth", block: "center" });
+              }, 200);
+            }
+          }
+
+          // If all questions answered, reveal email section and submit button
+          const allAnswered = Object.keys(answeredState).length >= totalQuestions;
+          if (allAnswered) {
+            const emailSection = form.querySelector(".assessment-email");
+            const submitBtn = form.querySelector(".assessment-submit");
+
+            if (emailSection && !emailSection.classList.contains("question-revealed")) {
+              emailSection.classList.add("question-revealed");
+            }
+
+            setTimeout(() => {
+              if (submitBtn && !submitBtn.classList.contains("question-revealed")) {
+                submitBtn.classList.add("question-revealed");
+                setTimeout(() => {
+                  submitBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+                }, 200);
+              }
+            }, 300);
+          }
+        });
+      });
+    }
+  }
+  // FIX 8 END
+
+  // FIX 8 — Initialize progressive reveal
+  initProgressiveReveal();
 });

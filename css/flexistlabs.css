@@ -815,3 +815,94 @@
     text-align: left;
   }
 }
+
+/* FIX 8 START — INDIA READINESS PROGRESSIVE REVEAL */
+.assessment-question[data-question] {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s ease 0.1s,
+              margin 0.4s ease,
+              padding 0.4s ease;
+  pointer-events: none;
+}
+
+.assessment-question[data-question="1"],
+.assessment-question.question-revealed {
+  max-height: 800px;
+  opacity: 1;
+  overflow: visible;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border-subtle);
+  pointer-events: auto;
+}
+
+.assessment-question.question-answered {
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+.assessment-question.question-answered .question-number {
+  background: rgba(0, 255, 136, 0.12);
+  border-color: rgba(0, 255, 136, 0.3);
+  color: var(--accent-green);
+}
+
+.assessment-question.question-answered .question-number::after {
+  content: " ✓";
+}
+
+/* Hide email section and submit button until all questions answered */
+.assessment-email {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s ease 0.1s,
+              margin 0.4s ease,
+              padding 0.4s ease;
+  pointer-events: none;
+}
+
+.assessment-email.question-revealed {
+  max-height: 400px;
+  opacity: 1;
+  overflow: visible;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--border-subtle);
+  pointer-events: auto;
+}
+
+.assessment-submit {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  border: none;
+  transition: max-height 0.5s ease, opacity 0.3s ease 0.1s, margin 0.3s ease, padding 0.3s ease;
+  pointer-events: none;
+}
+
+.assessment-submit.question-revealed {
+  max-height: 120px;
+  opacity: 1;
+  overflow: visible;
+  display: block;
+  margin: 36px auto 0;
+  min-width: 260px;
+  padding: 14px 28px;
+  pointer-events: auto;
+}
+/* FIX 8 END */

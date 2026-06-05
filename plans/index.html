@@ -27,6 +27,18 @@
       </div>
     </section>
 
+
+    <!-- FIX 1 START — STICKY PLAN NAVIGATION -->
+    <div class="plan-sticky-nav" id="plan-sticky-nav">
+      <div class="container plan-sticky-inner">
+        <a class="plan-pill active" href="#plan-india-entry" data-plan-pill>India Entry</a>
+        <a class="plan-pill" href="#plan-india-growth" data-plan-pill>India Growth</a>
+        <a class="plan-pill" href="#plan-india-partner" data-plan-pill>India Partner</a>
+        <a class="plan-pill" href="#compare" data-plan-pill>Compare</a>
+      </div>
+    </div>
+    <!-- FIX 1 END -->
+
     <!-- ═══ Price Toggle + Plan Cards ═══ -->
     <section class="section">
       <div class="container">
@@ -37,7 +49,8 @@
 
         <div class="plan-grid">
           <!-- India Entry -->
-          <article class="plan-card reveal">
+          <!-- FIX 1 — STICKY PLAN NAVIGATION -->
+          <article class="plan-card reveal" id="plan-india-entry">
             <span class="plan-badge">Best for Pre‑Launch</span>
             <h3>India Entry</h3>
             <p class="plan-price" data-one="$500" data-monthly="$350/mo">$500</p>
@@ -57,7 +70,7 @@
           </article>
 
           <!-- India Growth (Highlighted) -->
-          <article class="plan-card plan-highlight reveal">
+          <article class="plan-card plan-highlight reveal" id="plan-india-growth">
             <span class="plan-badge">Most Popular</span>
             <h3>India Growth</h3>
             <p class="plan-price" data-one="$1,200" data-monthly="$800/mo">$1,200</p>
@@ -80,7 +93,8 @@
           </article>
 
           <!-- India Partner -->
-          <article class="plan-card reveal">
+          <!-- FIX 1 — STICKY PLAN NAVIGATION -->
+          <article class="plan-card reveal" id="plan-india-partner">
             <span class="plan-badge">Full India Ownership</span>
             <h3>India Partner</h3>
             <p class="plan-price" data-one="$1,800/mo" data-monthly="$1,800/mo">$1,800/mo</p>

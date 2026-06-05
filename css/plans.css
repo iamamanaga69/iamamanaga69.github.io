@@ -2,6 +2,69 @@
    FLEXIST — Plans & Plan Detail Pages
    =================================================================== */
 
+/* FIX 1 START — STICKY PLAN NAVIGATION */
+.plan-sticky-nav {
+  background: rgba(10, 16, 32, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 68px;
+  z-index: 90;
+  padding: 10px 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.plan-sticky-nav.scrolled {
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.plan-sticky-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0 4px;
+}
+
+.plan-sticky-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.plan-pill {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 8px 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.plan-pill:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.plan-pill.active {
+  background: linear-gradient(135deg, #004de0, var(--accent-blue));
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(0, 102, 255, 0.3);
+  color: #fff;
+}
+/* FIX 1 END */
+
+
 /* ---------- Price Toggle ---------- */
 .price-toggle {
   align-items: center;

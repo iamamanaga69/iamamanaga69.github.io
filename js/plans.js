@@ -51,8 +51,62 @@
     });
   }
 
+  // FIX 1 START — STICKY PLAN NAVIGATION
+  function initPlanStickyNav() {
+    const pills = document.querySelectorAll("[data-plan-pill]");
+    const stickyNav = document.getElementById("plan-sticky-nav");
+    if (!pills.length || !stickyNav) return;
+
+    // Smooth scroll on pill click
+    pills.forEach(pill => {
+      pill.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = pill.getAttribute("href").slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          const navHeight = 68 + stickyNav.offsetHeight + 16;
+          const y = target.getBoundingClientRect().top + window.scrollY - navHeight;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      });
+    });
+
+    // IntersectionObserver for active pill tracking
+    const sections = [];
+    pills.forEach(pill => {
+      const targetId = pill.getAttribute("href").slice(1);
+      const el = document.getElementById(targetId);
+      if (el) sections.push({ el, pill });
+    });
+
+    if (sections.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            pills.forEach(p => p.classList.remove("active"));
+            const match = sections.find(s => s.el === entry.target);
+            if (match) match.pill.classList.add("active");
+          }
+        });
+      }, {
+        rootMargin: "-120px 0px -50% 0px",
+        threshold: 0
+      });
+
+      sections.forEach(s => observer.observe(s.el));
+    }
+
+    // Add shadow on scroll
+    const checkScroll = () => stickyNav.classList.toggle("scrolled", window.scrollY > 200);
+    checkScroll();
+    window.addEventListener("scroll", checkScroll, { passive: true });
+  }
+  // FIX 1 END
+
   document.addEventListener("DOMContentLoaded", () => {
     initPriceToggle();
     initSmoothScroll();
+    // FIX 1 — STICKY PLAN NAVIGATION
+    initPlanStickyNav();
   });
 })();
