@@ -10,6 +10,28 @@
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/pages.css">
   <link rel="stylesheet" href="css/home.css">
+
+  <!-- SEO Meta Tags -->
+  <link rel="canonical" href="https://flexist.in/">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://flexist.in/sitemap.xml">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://flexist.in/">
+  <meta property="og:title" content="FLEXIST | Web3 India Growth Partner">
+  <meta property="og:description" content="FLEXIST helps Web3 projects grow in India with community support, creator campaigns, ambassadors, partnerships, and simple growth plans.">
+  <meta property="og:image" content="https://flexist.in/assets/images/flexist-avatar-192.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://flexist.in/">
+  <meta name="twitter:title" content="FLEXIST | Web3 India Growth Partner">
+  <meta name="twitter:description" content="FLEXIST helps Web3 projects grow in India with community support, creator campaigns, ambassadors, partnerships, and simple growth plans.">
+  <meta name="twitter:image" content="https://flexist.in/assets/images/flexist-avatar-192.png">
+
+  <!-- Preload Hero Image -->
+  <link rel="preload" href="assets/images/flexist-hero-operator.png" as="image">
 </head>
 <body data-page="home">
   <div data-site-nav></div>
@@ -20,7 +42,7 @@
         <div class="hero-content">
           <span class="section-label">India's Web3 Growth Partner</span>
           <h1 class="hero-title gradient-text">SCALE WEB3<br>ACROSS INDIA</h1>
-          <h2 class="hero-tagline">Grow faster with Indian users, active communities, trusted creators, and local support.</h2>
+          <p class="hero-tagline">Grow faster with Indian users, active communities, trusted creators, and local support.</p>
           <p class="hero-copy">FLEXIST helps Web3 founders enter India with a clear plan. We help you build community, run creator campaigns, manage ambassadors, and create partnerships that bring real users.</p>
           <ul class="hero-proof-list" aria-label="FLEXIST launch promises">
             <li>Simple India growth plan</li>
@@ -339,7 +361,7 @@
             </div>
           </div>
           <div class="founder-contact-card">
-            <img src="assets/images/flexist-avatar-192.png" alt="">
+            <img src="assets/images/flexist-avatar-192.png" alt="FLEXIST Avatar" loading="lazy">
             <strong>FLEXIST</strong>
             <span>Private Web3 growth desk</span>
             <a href="mailto:FlexistCrypto@gmail.com">FlexistCrypto@gmail.com</a>
@@ -354,5 +376,27 @@
   <script src="js/counters.js"></script>
   <script src="js/india-map.js"></script>
   <script src="js/home.js"></script>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "FLEXIST",
+    "image": "https://flexist.in/assets/images/flexist-avatar-192.png",
+    "@id": "https://flexist.in/#organization",
+    "url": "https://flexist.in/",
+    "telephone": "",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://x.com/flexistcrypto",
+      "https://t.me/FlexistCrypto",
+      "https://linktr.ee/FlexistWeb3"
+    ]
+  }
+  </script>
 </body>
 </html>

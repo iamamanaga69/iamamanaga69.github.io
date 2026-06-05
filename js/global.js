@@ -143,7 +143,7 @@ const Flexist = (() => {
           <div class="container nav-inner">
             <a class="brand brand-premium" href="${resolveUrl('./')}" aria-label="FLEXIST home">
               <span class="brand-mark">
-                <img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="">
+                <img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="FLEXIST Logo">
                 <i></i>
               </span>
               <span class="brand-copy">
@@ -178,7 +178,7 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand brand-premium" href="${resolveUrl('./')}"><span class="brand-mark"><img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt=""><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
+              <a class="brand brand-premium" href="${resolveUrl('./')}"><span class="brand-mark"><img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="FLEXIST Logo" loading="lazy"><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
               <p class="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
