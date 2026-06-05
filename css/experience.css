@@ -129,3 +129,47 @@
     grid-row: 1 / span 3;
   }
 }
+
+@media (max-width: 768px) {
+  .experience-timeline {
+    padding-left: 32px;
+  }
+
+  .experience-timeline::before {
+    left: 8px;
+  }
+
+  .timeline-entry::before {
+    left: -32px;
+  }
+
+  .timeline-trigger {
+    grid-template-columns: 1fr 18px;
+    min-height: 44px;
+    padding: 14px;
+  }
+
+  .timeline-trigger time,
+  .timeline-trigger span {
+    grid-column: 1;
+  }
+
+  .timeline-trigger i {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .timeline-detail-inner {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timeline-trigger {
+    padding: 12px 10px;
+  }
+
+  .timeline-detail-inner {
+    padding: 12px;
+  }
+}

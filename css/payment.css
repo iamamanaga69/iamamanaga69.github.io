@@ -1288,6 +1288,13 @@ body {
   .order-value.amount {
     font-size: 1.1rem;
   }
+
+  .pay-panel,
+  .order-sidebar,
+  .path-card,
+  .receipt-card {
+    padding: 12px !important;
+  }
 }
 
 /* ── Payment History Styles ──────────────────────────────── */
@@ -1388,6 +1395,18 @@ body {
     font-size: 0.72rem;
     color: var(--text-secondary);
     text-transform: uppercase;
+  }
+
+  .pay-panel,
+  .order-sidebar,
+  .path-card,
+  .receipt-card {
+    padding: 16px !important;
+  }
+
+  .checkout-paths {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
   }
 }
 

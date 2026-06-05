@@ -185,3 +185,45 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@media (max-width: 768px) {
+  .drawer-body {
+    padding: 20px 16px;
+  }
+
+  .drawer-header {
+    padding: 14px 16px;
+  }
+
+  .drawer-close {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tab-pills {
+    flex-direction: column;
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .tab-pill {
+    width: 100%;
+    text-align: center;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .drawer-title {
+    font-size: 1rem;
+  }
+  .tab-description {
+    font-size: 0.88rem;
+  }
+}
+

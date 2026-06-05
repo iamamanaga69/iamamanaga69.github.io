@@ -369,3 +369,19 @@
     gap: 6px;
   }
 }
+
+@media (max-width: 768px) {
+  .quote-card,
+  .compare-card,
+  .terminal-box {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .quote-card,
+  .compare-card,
+  .terminal-box {
+    padding: 12px !important;
+  }
+}

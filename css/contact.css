@@ -175,3 +175,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 768px) {
+  .contact-status-grid,
+  .contact-method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-aside .glass-card,
+  .contact-method-card {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-aside .glass-card,
+  .contact-method-card {
+    padding: 12px !important;
+  }
+}

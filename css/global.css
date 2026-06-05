@@ -967,3 +967,39 @@ html[data-theme="light"] .theme-icon-moon {
     display: none;
   }
 }
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .page-hero {
+    min-height: auto;
+    padding-top: calc(var(--nav-height) + 40px);
+    padding-bottom: 60px;
+  }
+
+  .page-hero::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: clamp(2.2rem, 12vw, 3.2rem);
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+}

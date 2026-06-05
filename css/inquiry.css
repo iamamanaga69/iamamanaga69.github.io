@@ -390,9 +390,44 @@
     align-items: flex-start;
     gap: 8px;
   }
+
   .progress-bar-track {
     max-width: 100%;
     width: 100%;
+  }
+
+  .field-grid,
+  .option-grid,
+  .option-grid.two-col,
+  .checkbox-grid,
+  .ticket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-progress {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-aside .glass-card {
+    padding: 16px !important;
+  }
+
+  .option-card,
+  .checkbox-grid label,
+  .checkbox-group label {
+    padding: 12px 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .inquiry-aside .glass-card {
+    padding: 12px !important;
+  }
+
+  .option-card,
+  .checkbox-grid label,
+  .checkbox-group label {
+    padding: 10px 8px !important;
   }
 }
 

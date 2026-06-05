@@ -121,6 +121,34 @@
   .hero-quick-nav {
     display: none;
   }
+
+  .plan-pill {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+  }
+
+  .plan-card {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .plan-card {
+    padding: 14px !important;
+  }
+
+  .plan-sticky-inner {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .plan-pill {
+    padding: 6px 12px;
+    font-size: 0.62rem;
+  }
 }
 
 
