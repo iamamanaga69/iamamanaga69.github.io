@@ -54,6 +54,8 @@
           <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
           <span class="progress-label" id="progressLabel">Step 1 / 7</span>
         </div>
+        <!-- UX Overhaul: Estimated time indicator -->
+        <div class="form-est-time" id="formEstTime">🕒 Takes about 3 minutes</div>
 
         <form class="inquiry-steps" id="inquirySteps" data-inquiry-engine>
           <section class="inquiry-step active" data-step="1">
@@ -96,7 +98,7 @@
             <div class="step-label">Step 4 - India Goals</div>
             <h2 class="step-heading">What does success in India look like?</h2>
             <div class="field"><label for="indiaTarget">Target Indian users in 6 months</label><input id="indiaTarget" type="number" min="0" placeholder="100000"></div>
-            <div class="checkbox-group"><p class="field-label">Priority platforms</p><label><input type="checkbox" value="telegram" class="india-platform"> Telegram</label><label><input type="checkbox" value="youtube" class="india-platform"> YouTube</label><label><input type="checkbox" value="twitter" class="india-platform"> Twitter / X</label><label><input type="checkbox" value="discord" class="india-platform"> Discord</label></div>
+            <div class="checkbox-group"><p class="field-label">Priority platforms</p><label><input type="checkbox" value="telegram" class="india-platform"> ✈️ Telegram</label><label><input type="checkbox" value="youtube" class="india-platform"> 📺 YouTube</label><label><input type="checkbox" value="twitter" class="india-platform"> 𝕏 Twitter / X</label><label><input type="checkbox" value="discord" class="india-platform"> 👾 Discord</label></div>
           </section>
 
           <section class="inquiry-step" data-step="5">
@@ -115,12 +117,12 @@
             <div class="step-label">Step 6 - Support Needed</div>
             <h2 class="step-heading">What help do you need from FLEXIST?</h2>
             <div class="checkbox-grid">
-              <label><input type="checkbox" value="community" class="service-select"> Community Architecture</label>
-              <label><input type="checkbox" value="expansion" class="service-select"> India Market Expansion</label>
-              <label><input type="checkbox" value="kol" class="service-select"> Influencer / KOL Campaigns</label>
-              <label><input type="checkbox" value="ambassador" class="service-select"> Ambassador Program</label>
-              <label><input type="checkbox" value="partnerships" class="service-select"> Partnership Development</label>
-              <label><input type="checkbox" value="consulting" class="service-select"> Growth Consulting</label>
+              <label><input type="checkbox" value="community" class="service-select"> 🏗️ Community Architecture</label>
+              <label><input type="checkbox" value="expansion" class="service-select"> 🇮🇳 India Expansion</label>
+              <label><input type="checkbox" value="kol" class="service-select"> 📣 KOL Campaigns</label>
+              <label><input type="checkbox" value="ambassador" class="service-select"> 🤝 Ambassador Program</label>
+              <label><input type="checkbox" value="partnerships" class="service-select"> 💼 Partnerships</label>
+              <label><input type="checkbox" value="consulting" class="service-select"> 📈 Growth Consulting</label>
             </div>
           </section>
 
@@ -137,7 +139,22 @@
 
         <section class="inquiry-ticket" id="inquiryTicket" hidden>
           <div class="ticket-header"><span class="tag-chip signal">Inquiry Ticket</span><strong id="ticketId">FC-0000</strong></div>
-          <div class="ticket-score"><span id="scoreNumber">0/100</span><div class="score-gauge"><i id="scoreGaugeFill"></i></div></div>
+          <div class="ticket-score">
+            <div class="score-gauge">
+              <i id="scoreGaugeFill" style="display: none;"></i>
+              <svg class="circular-gauge" viewBox="0 0 100 100">
+                <defs>
+                  <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="var(--accent-blue)" />
+                    <stop offset="100%" stop-color="var(--accent-green)" />
+                  </linearGradient>
+                </defs>
+                <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                <circle class="gauge-fill" cx="50" cy="50" r="40" id="gaugeCircleFill" />
+              </svg>
+              <span id="scoreNumber">0/100</span>
+            </div>
+          </div>
           <div class="ticket-grid">
             <div><span>Project</span><strong id="ticketProject">-</strong></div>
             <div><span>Chain</span><strong id="ticketChain">-</strong></div>
