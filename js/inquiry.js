@@ -29,10 +29,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const next = document.querySelector("[data-next]");
   const steps = Array.from(document.querySelectorAll(".inquiry-step"));
 
+  const stepNames = [
+    "Project Details",
+    "Stage And Funding",
+    "Current Community",
+    "India Goals",
+    "Budget And Timeline",
+    "Support Needed",
+    "Founder Contact"
+  ];
+
   function updateProgress() {
     steps.forEach((step) => step.classList.toggle("active", Number(step.dataset.step) === currentStep));
     progressFill.style.transform = `scaleX(${currentStep / totalSteps})`;
     progressLabel.textContent = `Step ${currentStep} / ${totalSteps}`;
+
+    // // FIX 7 — Update sticky progress bar elements
+    const stickyStep = document.getElementById("stickyProgressStep");
+    const stickyName = document.getElementById("stickyProgressName");
+    const stickyFill = document.getElementById("stickyProgressFill");
+    if (stickyStep) stickyStep.textContent = `Step ${currentStep} of ${totalSteps}`;
+    if (stickyName) stickyName.textContent = stepNames[currentStep - 1] || "";
+    if (stickyFill) stickyFill.style.transform = `scaleX(${currentStep / totalSteps})`;
+
     back.hidden = currentStep === 1;
     next.textContent = currentStep === totalSteps ? "Generate Inquiry Ticket" : "Continue";
     note.textContent = "";
@@ -149,6 +168,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("ticketEmail").href = `mailto:FlexistCrypto@gmail.com?subject=Founder Inquiry ${ticketId}&body=${body}`;
     form.hidden = true;
     document.querySelector("[data-inquiry-progress]").hidden = true;
+
+    // // FIX 7 — Hide sticky progress bar
+    const stickyBar = document.getElementById("stickyProgressBar");
+    if (stickyBar) {
+      stickyBar.classList.remove("visible");
+      stickyBar.style.display = "none";
+    }
+
     document.getElementById("inquiryTicket").hidden = false;
   }
 
@@ -176,4 +203,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   updateProgress();
+
+  // // FIX 7 — Sticky progress bar scroll listener
+  const stickyBar = document.getElementById("stickyProgressBar");
+  const handleScroll = () => {
+    if (!stickyBar) return;
+    if (window.scrollY > 200 && !form.hidden) {
+      stickyBar.classList.add("visible");
+    } else {
+      stickyBar.classList.remove("visible");
+    }
+  };
+  window.addEventListener("scroll", handleScroll, { passive: true });
 });

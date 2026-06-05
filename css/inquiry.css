@@ -307,3 +307,92 @@
     width: 100%;
   }
 }
+
+/* // FIX 7 — Sticky Step Progress Bar */
+.sticky-progress-bar {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  width: 100%;
+  z-index: 80;
+  background: rgba(8, 13, 20, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.sticky-progress-bar.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.progress-bar-container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.progress-bar-text {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.progress-step-num {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.progress-step-divider {
+  color: var(--text-muted);
+}
+
+.progress-step-name {
+  color: var(--text-primary);
+}
+
+.progress-bar-track {
+  flex: 1;
+  height: 4px;
+  background: var(--text-muted);
+  border-radius: 99px;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+  transform: scaleX(0.14);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .progress-bar-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .progress-bar-track {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+

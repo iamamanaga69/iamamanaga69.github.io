@@ -18,8 +18,56 @@
       <article class="service-block" id="partnerships"><div><span class="service-index">Service 5</span><h2>Partnership Development</h2><p>Web3 growth compounds through relationships. The right communities, projects, launch partners, and distribution channels can unlock outcomes no isolated ad campaign can produce.</p><p>FLEXIST sources and manages partnership opportunities aligned to your stage and category. That includes collaboration campaigns, community swaps, ecosystem visibility, token-facing conversations, and targeted introductions.</p><p>Each relationship is evaluated for strategic fit and its ability to move growth forward.</p></div><aside class="glass-card deliverable-card"><h3>What You Get</h3><ul class="value-list"><li>Partner opportunity map</li><li>Outreach and follow-through</li><li>Campaign collaboration briefs</li><li>Pipeline tracking</li></ul></aside></article>
       <article class="service-block" id="consulting"><div><span class="service-index">Service 6</span><h2>Growth Consulting</h2><p>Sometimes the first need is clarity. Where should the India budget go? Why is a community quiet? Which channel should launch first? What does a realistic 90-day plan look like?</p><p>FLEXIST provides practical consulting for founders who need a sharper plan before expanding execution. The work focuses on the biggest gaps and the fastest route to useful market feedback.</p><p>You leave with an action plan, not a generic report.</p></div><aside class="glass-card deliverable-card"><h3>What You Get</h3><ul class="value-list"><li>Growth review</li><li>Priority list</li><li>Action plan</li><li>Founder strategy session</li></ul></aside></article>
     </div></section>
-    <section class="section section-dark"><div class="container"><div class="cta-block reveal"><span class="section-label">Ready For India?</span><h2>Use the right service at the right time.</h2><p>Start with the founder inquiry form and map the India plan your project actually needs.</p><div class="button-row"><a class="neon-button" href="inquiry">Open Founder Inquiry</a><a class="ghost-button" href="flexistlabs">Run India Check</a></div></div></div></section>
+    <!-- // FIX 6 — Tab Switch on Services -->
+    <section class="section section-dark">
+      <div class="container">
+        <div class="cta-block reveal">
+          <span class="section-label">Ready For India?</span>
+          <h2>Use the right service at the right time.</h2>
+          
+          <div class="services-tab-switcher">
+            <div class="tab-pills">
+              <button type="button" class="tab-pill active" data-tab-target="inquiry">
+                Founder Inquiry
+              </button>
+              <button type="button" class="tab-pill" data-tab-target="flexistlabs">
+                India Readiness Check
+              </button>
+            </div>
+            
+            <div class="tab-content-wrapper">
+              <div class="tab-panel active" id="tab-inquiry">
+                <p class="tab-description">Answer a few simple questions. FLEXIST will understand your project stage, India goal, current community, budget, and the support you need first.</p>
+                <button type="button" class="neon-button services-drawer-trigger" data-target-url="inquiry">Open Founder Inquiry &rarr;</button>
+              </div>
+              <div class="tab-panel" id="tab-flexistlabs">
+                <p class="tab-description">Assess your project's readiness for the Indian Web3 market across 5 key dimensions: community, localized messaging, resources, regulatory awareness, and strategic fit.</p>
+                <button type="button" class="neon-button services-drawer-trigger" data-target-url="flexistlabs">Run India Check &rarr;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- // FIX 5 — Bottom Drawer -->
+  <div class="services-drawer" id="servicesDrawer">
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <div class="drawer-content-box">
+      <div class="drawer-header">
+        <span class="drawer-title" id="drawerTitle">Loading Portal...</span>
+        <button type="button" class="drawer-close" id="drawerClose" aria-label="Close drawer">&times;</button>
+      </div>
+      <div class="drawer-body" id="drawerBody">
+        <div class="drawer-loader">
+          <span class="pay-spinner"></span>
+          <p>Loading portal...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div data-site-footer></div><script src="js/global.js"></script><script src="js/services.js"></script>
 </body>
 </html>

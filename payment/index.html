@@ -32,6 +32,20 @@
     <!-- ═══ PAYMENT FLOW ═══ -->
     <section class="section">
       <div class="container">
+
+        <!-- // FIX 3 — Fallback if no plan is selected -->
+        <div class="no-plan-fallback" id="no-plan-fallback" hidden>
+          <div class="fallback-card">
+            <span class="fallback-icon">🛒</span>
+            <h2>No Plan Selected</h2>
+            <p>To proceed with a payment, please choose one of our growth plans first. If you need a custom invoice or package, please contact our support team.</p>
+            <div class="fallback-actions">
+              <a href="../plans" class="neon-button">View Growth Plans</a>
+              <a href="https://t.me/FlexistCrypto" target="_blank" class="ghost-button">Contact Support (Telegram)</a>
+            </div>
+          </div>
+        </div>
+
         <div class="checkout-layout-grid">
 
           <!-- Left Column: Payment Steps -->
@@ -257,9 +271,12 @@
 
           <!-- Right Column: Sticky Pricing/Safety Info -->
           <div class="checkout-sidebar-col">
-            <!-- Order Summary Card -->
+             <!-- Order Summary Card -->
             <div class="order-summary reveal">
-              <h3 class="sidebar-card-title">Order Details</h3>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+                <h3 class="sidebar-card-title" style="margin-bottom: 0;">Order Details</h3>
+                <a href="../plans" id="change-plan-link" class="change-plan-link" style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent-cyan); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px dashed var(--accent-cyan);">Change Plan</a>
+              </div>
               <div class="order-summary-row">
                 <span class="order-label">Plan</span>
                 <span class="order-value" id="order-plan">—</span>

@@ -119,6 +119,18 @@ const FlexistPayment = (() => {
      PAYMENT INDEX PAGE
      ═══════════════════════════════════════════════════════ */
   function initPaymentPage() {
+    // // FIX 3 — Check if plan context is present
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has("plan")) {
+      const grid = document.querySelector(".checkout-layout-grid");
+      if (grid) grid.style.display = "none";
+      const fallback = document.getElementById("no-plan-fallback");
+      if (fallback) fallback.hidden = false;
+      const heroSub = document.getElementById("pay-hero-plan");
+      if (heroSub) heroSub.textContent = "Please select a plan to continue.";
+      return;
+    }
+
     const { plan, type, amount } = getParams();
     let selectedChain = null;
     let currentStep = 1;
@@ -132,6 +144,16 @@ const FlexistPayment = (() => {
     if (planEl) planEl.textContent = plan;
     if (typeEl) typeEl.textContent = formatType(type);
     if (amountEl) amountEl.textContent = "$" + Number(amount).toLocaleString();
+
+    // Update change-plan link anchor
+    const changeLink = document.getElementById("change-plan-link");
+    if (changeLink) {
+      let anchor = "";
+      if (plan.toLowerCase().includes("entry")) anchor = "#plan-india-entry";
+      else if (plan.toLowerCase().includes("growth")) anchor = "#plan-india-growth";
+      else if (plan.toLowerCase().includes("partner")) anchor = "#plan-india-partner";
+      changeLink.href = `../plans${anchor}`;
+    }
 
     // Hero subtitle
     const heroSub = document.getElementById("pay-hero-plan");

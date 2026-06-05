@@ -64,7 +64,25 @@
         const targetId = pill.getAttribute("href").slice(1);
         const target = document.getElementById(targetId);
         if (target) {
-          const navHeight = 68 + stickyNav.offsetHeight + 16;
+          const siteNav = document.querySelector(".site-nav");
+          const siteNavHeight = siteNav ? siteNav.offsetHeight : 76;
+          const navHeight = siteNavHeight + stickyNav.offsetHeight + 16;
+          const y = target.getBoundingClientRect().top + window.scrollY - navHeight;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      });
+    });
+
+    // Smooth scroll on hero quick-nav click
+    document.querySelectorAll(".quick-nav-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href").slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          const siteNav = document.querySelector(".site-nav");
+          const siteNavHeight = siteNav ? siteNav.offsetHeight : 76;
+          const navHeight = siteNavHeight + stickyNav.offsetHeight + 16;
           const y = target.getBoundingClientRect().top + window.scrollY - navHeight;
           window.scrollTo({ top: y, behavior: "smooth" });
         }
