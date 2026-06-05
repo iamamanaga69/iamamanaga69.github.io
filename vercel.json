@@ -5,6 +5,7 @@
     { "source": "/payment", "destination": "/payment/index.html" },
     { "source": "/onboarding", "destination": "/onboarding/welcome.html" },
     { "source": "/onboarding/portal", "destination": "/onboarding/portal.html" },
-    { "source": "/onboarding/brief", "destination": "/onboarding/brief.html" }
+    { "source": "/onboarding/brief", "destination": "/onboarding/brief.html" },
+    { "source": "/flexistlabs", "destination": "/flexistlabs.html" }
   ]
 }

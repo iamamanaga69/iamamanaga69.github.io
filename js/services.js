@@ -1,4 +1,4 @@
-// // FIX 5 & 6 — Services Bottom Drawer and Tab Switcher
+/* Services drawer and tab switcher features */
 (() => {
   "use strict";
 
@@ -165,8 +165,41 @@
     });
   }
 
+  /* Scroll spy highlights active tab chip and keeps it visible on mobile */
+  function initScrollSpy() {
+    const tabs = document.querySelectorAll("#servicesTabs a");
+    const sections = Array.from(tabs).map(tab => document.querySelector(tab.getAttribute("href")));
+    if (!tabs.length || !sections.length) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -60% 0px",
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("id");
+          tabs.forEach(tab => {
+            const isActive = tab.getAttribute("href") === `#${id}`;
+            tab.classList.toggle("active", isActive);
+            if (isActive) {
+              tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => {
+      if (section) observer.observe(section);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     initTabSwitcher();
     initBottomDrawer();
+    initScrollSpy();
   });
 })();

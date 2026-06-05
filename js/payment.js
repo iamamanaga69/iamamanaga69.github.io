@@ -119,7 +119,7 @@ const FlexistPayment = (() => {
      PAYMENT INDEX PAGE
      ═══════════════════════════════════════════════════════ */
   function initPaymentPage() {
-    // // FIX 3 — Check if plan context is present
+    // Check if plan context is present
     const urlParams = new URLSearchParams(window.location.search);
     if (!urlParams.has("plan")) {
       const grid = document.querySelector(".checkout-layout-grid");

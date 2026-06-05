@@ -391,7 +391,7 @@
   }
 }
 
-/* // FIX 7 — Sticky Step Progress Bar */
+/* Sticky step progress bar styles */
 .sticky-progress-bar {
   position: fixed;
   top: var(--nav-height);

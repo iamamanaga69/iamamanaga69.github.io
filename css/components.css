@@ -61,13 +61,13 @@
 }
 
 .glass-card.hoverable {
-  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms var(--ease-out);
+  transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card.hoverable:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--glow-cyan);
-  transform: translateY(-6px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.15);
+  transform: translateY(-4px);
 }
 
 .neon-button,
@@ -84,7 +84,7 @@
   padding: 13px 17px;
   position: relative;
   text-transform: uppercase;
-  transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: border-color 220ms ease, box-shadow 220ms ease, color 220ms ease, transform 220ms ease, background-color 220ms ease;
 }
 
 .neon-button {
@@ -96,21 +96,24 @@
 }
 
 .neon-button::before {
-  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
   content: "";
-  inset: 0;
   position: absolute;
-  transform: translateX(-140%);
-  transition: transform 500ms ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+  z-index: 1;
 }
 
 .neon-button:hover::before {
-  transform: translateX(140%);
+  animation: shimmerSweep 1s infinite linear;
 }
 
 .neon-button:hover {
-  box-shadow: 0 0 32px rgba(0, 102, 255, 0.55);
-  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(0, 102, 255, 0.55), 0 0 10px var(--accent-cyan);
+  transform: scale(1.03);
 }
 
 .ghost-button {
@@ -120,9 +123,89 @@
 }
 
 .ghost-button:hover {
-  border-color: var(--border-glow);
-  color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.04);
+  border-color: var(--accent-cyan);
+  color: var(--text-primary);
   transform: translateY(-2px);
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Service Card Left Border Animation */
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 35%;
+  bottom: 35%;
+  width: 3px;
+  background: var(--accent-cyan);
+  opacity: 0.4;
+  border-radius: 0 4px 4px 0;
+  transition: top 220ms ease, bottom 220ms ease, opacity 220ms ease, background-color 220ms ease;
+}
+
+.service-card:hover::before {
+  top: 15%;
+  bottom: 15%;
+  opacity: 1;
+  background: var(--accent-green);
+}
+
+/* Accordion Toggle Text Shift */
+.accordion-toggle {
+  transition: transform 220ms ease, color 220ms ease;
+}
+
+.accordion-toggle:hover {
+  transform: translateX(4px);
+  color: var(--accent-cyan);
+}
+
+/* Inquiry Form Option Card Hover */
+.option-card {
+  transition: border-color 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+}
+
+.option-card:hover:not(.selected) {
+  border-color: rgba(0, 212, 255, 0.4) !important;
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+}
+
+/* Desktop Nav Links Left-to-Right Underline */
+@media (min-width: 769px) {
+  .nav-links > a {
+    position: relative;
+  }
+  .nav-links > a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-cyan);
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-links > a:hover::after,
+  .nav-links > a.active::after {
+    transform: scaleX(1);
+  }
 }
 
 .tag-chip {

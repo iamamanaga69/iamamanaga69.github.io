@@ -8,8 +8,11 @@
 .contact-terminal {
   display: grid;
   gap: 22px;
-  padding: 0;
+  padding: 0 0 24px 0;
   overflow: hidden;
+  position: relative;
+  background-image: radial-gradient(rgba(0, 212, 255, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
 .terminal-topbar {

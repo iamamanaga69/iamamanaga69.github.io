@@ -840,7 +840,7 @@
   }
 }
 
-/* FIX 8 START — INDIA READINESS PROGRESSIVE REVEAL */
+/* India readiness progressive reveal styles */
 .assessment-question[data-question] {
   max-height: 0;
   opacity: 0;
@@ -929,4 +929,4 @@
   padding: 14px 28px;
   pointer-events: auto;
 }
-/* FIX 8 END */
+/* End progressive reveal styles */

@@ -1529,7 +1529,7 @@ body {
   text-shadow: 0 0 8px rgba(0, 212, 255, 0.4);
 }
 
-/* // FIX 3 — Fallback and Plan Change Styles */
+/* Fallback and plan change styles */
 .no-plan-fallback {
   display: flex;
   justify-content: center;

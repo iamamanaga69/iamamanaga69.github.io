@@ -2,7 +2,7 @@
    FLEXIST — Plans & Plan Detail Pages
    =================================================================== */
 
-/* FIX 1 START — STICKY PLAN NAVIGATION */
+/* Sticky plan navigation bar */
 .plan-sticky-nav {
   background: rgba(10, 16, 32, 0.88);
   backdrop-filter: blur(16px);
@@ -62,9 +62,9 @@
   box-shadow: 0 0 16px rgba(0, 102, 255, 0.3);
   color: #fff;
 }
-/* FIX 1 END */
+/* End sticky nav styles */
 
-/* // FIX 1A — DESKTOP INSTANT VISIBILITY QUICK-NAV */
+/* Desktop quick navigation styles */
 .hero-quick-nav {
   display: flex;
   align-items: center;

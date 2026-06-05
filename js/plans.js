@@ -51,7 +51,7 @@
     });
   }
 
-  // FIX 1 START — STICKY PLAN NAVIGATION
+  // Sticky plan navigation features
   function initPlanStickyNav() {
     const pills = document.querySelectorAll("[data-plan-pill]");
     const stickyNav = document.getElementById("plan-sticky-nav");
@@ -119,12 +119,12 @@
     checkScroll();
     window.addEventListener("scroll", checkScroll, { passive: true });
   }
-  // FIX 1 END
+
 
   document.addEventListener("DOMContentLoaded", () => {
     initPriceToggle();
     initSmoothScroll();
-    // FIX 1 — STICKY PLAN NAVIGATION
+
     initPlanStickyNav();
   });
 })();

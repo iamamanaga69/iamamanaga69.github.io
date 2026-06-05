@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
           arc.style.strokeDashoffset = "326.7";
         }
 
-        // FIX 8 — Reset progressive reveal state on retake
+        // Reset progressive reveal state on retake
         const allQuestions = form.querySelectorAll(".assessment-question[data-question]");
         allQuestions.forEach(q => {
           q.classList.remove("question-revealed", "question-answered");
@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // FIX 8 START — INDIA READINESS PROGRESSIVE REVEAL
+  // Progressive reveal feature
   function initProgressiveReveal() {
     const form = document.getElementById("assessment-form");
     if (!form) return;
@@ -292,8 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
-  // FIX 8 END
 
-  // FIX 8 — Initialize progressive reveal
+
+  // Initialize progressive reveal
   initProgressiveReveal();
 });
