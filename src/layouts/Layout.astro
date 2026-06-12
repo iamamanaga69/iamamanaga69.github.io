@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/animations.css';
 import '../styles/pages.css';
+import '../styles/mobile-fixes.css';
 
 interface Props {
   title: string;
@@ -11,16 +12,22 @@ interface Props {
   ogImage?: string;
   pageId?: string;
   robots?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  preloadImage?: string;
 }
 
 const {
   title,
   description,
   canonical = 'https://flexist.in/',
-  ogImage = 'https://flexist.in/assets/images/flexist-avatar-192.png',
+  ogImage = 'https://flexist.in/assets/images/flexist-og.png',
   pageId = 'home',
   robots = 'index, follow',
+  schema,
+  preloadImage,
 } = Astro.props;
+
+const schemaJson = schema ? JSON.stringify(schema) : '';
 ---
 
 <!doctype html>
@@ -38,19 +45,24 @@ const {
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Flexist">
   <meta property="og:url" content={canonical}>
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
   <meta property="og:image" content={ogImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content={canonical}>
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={ogImage}>
   
   <link rel="icon" type="image/png" href="/assets/images/flexist-avatar-192.png">
+  {preloadImage && <link rel="preload" href={preloadImage} as="image">}
+  {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
   
   <slot name="head" />
 </head>
@@ -73,15 +85,16 @@ const {
           <a class={pageId === 'home' ? 'active' : ''} href="/">Home</a>
           <a class={pageId === 'flexistlabs' ? 'active' : ''} href="/flexistlabs">FlexistLabs</a>
           <a class={pageId === 'services' ? 'active' : ''} href="/services">Services</a>
+          <a class={pageId === 'resources' ? 'active' : ''} href="/resources">Resources</a>
           
           <div class={`nav-group ${['plans', 'india-entry', 'india-growth', 'india-partner', 'payment'].includes(pageId) ? 'active' : ''}`}>
-            <a class={`nav-group-label ${['plans', 'india-entry', 'india-growth', 'india-partner', 'payment'].includes(pageId) ? 'active' : ''}`} href="/plans/">Plans</a>
+            <a class={`nav-group-label ${['plans', 'india-entry', 'india-growth', 'india-partner', 'payment'].includes(pageId) ? 'active' : ''}`} href="/plans">Plans</a>
             <div class="nav-panel" aria-label="Plans links">
-              <a class={pageId === 'plans' ? 'active' : ''} href="/plans/"><strong>Compare Plans</strong><small>Bundled India growth packages</small></a>
+              <a class={pageId === 'plans' ? 'active' : ''} href="/plans"><strong>Compare Plans</strong><small>Bundled India growth packages</small></a>
               <a class={pageId === 'india-entry' ? 'active' : ''} href="/plans/india-entry"><strong>India Entry</strong><small>Pre-launch essentials</small></a>
               <a class={pageId === 'india-growth' ? 'active' : ''} href="/plans/india-growth"><strong>India Growth</strong><small>Full community and campaigns</small></a>
               <a class={pageId === 'india-partner' ? 'active' : ''} href="/plans/india-partner"><strong>India Partner</strong><small>Total India ownership</small></a>
-              <a class={pageId === 'payment' ? 'active' : ''} href="/payment/"><strong>Make Payment</strong><small>Secure crypto payment</small></a>
+              <a class={pageId === 'payment' ? 'active' : ''} href="/payment"><strong>Make Payment</strong><small>Secure crypto payment</small></a>
             </div>
           </div>
 
@@ -146,7 +159,8 @@ const {
               <strong>Founder Journey</strong>
               <a href="/flexistlabs">FlexistLabs</a>
               <a href="/services">Growth Services</a>
-              <a href="/plans/">Plans & Pricing</a>
+              <a href="/plans">Plans & Pricing</a>
+              <a href="/resources">Resources</a>
               <a href="/inquiry">Founder Inquiry</a>
             </div>
             <div class="footer-group">
@@ -174,6 +188,6 @@ const {
     </footer>
   </div>
 
-  <script src="../scripts/global.js"></script>
+  <script src="/scripts/global.js"></script>
 </body>
 </html>

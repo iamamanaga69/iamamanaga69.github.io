@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-  NetworkGraph.init();
+  const startNetworkGraph = () => NetworkGraph.init();
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(startNetworkGraph, { timeout: 1800 });
+  } else {
+    window.setTimeout(startNetworkGraph, 900);
+  }
   IndiaMap.init();
 
   const form = document.querySelector("[data-mini-readiness]");

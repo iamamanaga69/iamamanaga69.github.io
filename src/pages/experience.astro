@@ -1,14 +1,24 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import experienceData from '../data/experience.json';
 import '../styles/experience.css';
+
+const experienceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://flexist.in/' },
+    { '@type': 'ListItem', position: 2, name: 'Web3 Marketing Experience', item: 'https://flexist.in/experience' }
+  ]
+};
 ---
 
 <Layout
-  title="Our Experience | FLEXIST"
-  description="FLEXIST experience across live Web3 projects, community support, wallet ecosystems, partnerships, and ambassador growth."
+  title="Web3 Marketing Experience | Flexist â€” 5+ Years in Crypto"
+  description="See Flexist's track record: Maestro Bots, UXUY Wallet, Unielon Wallet, and more. Real Web3 projects, real India growth results."
   canonical="https://flexist.in/experience"
   pageId="experience"
+  schema={experienceSchema}
 >
   <main id="main-content">
     <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Experience | 2020 to Present</p><h1 class="page-title">REAL WORK IN<br><span class="gradient-text">LIVE PROJECTS.</span></h1><p class="page-lede">This page shows where FLEXIST learned community growth, user support, collaborations, wallet promotion, and India ambassador work.</p></div></section>
@@ -56,5 +66,5 @@ import '../styles/experience.css';
     <section class="section section-dark"><div class="container"><div class="cta-block reveal"><span class="section-label">Next Step</span><h2>Bring real Web3 experience into your India launch.</h2><p>The best India strategies are designed by people who understand what happens after the campaign goes live.</p><div class="button-row"><a class="neon-button" href="/inquiry">Start Founder Inquiry</a><a class="ghost-button" href="/services">Review Services</a></div></div></div></section>
   </main>
 
-  <script src="../scripts/experience.js"></script>
+  <script src="/scripts/experience.js"></script>
 </Layout>

@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/payment.css';
 ---
@@ -6,7 +6,7 @@ import '../../styles/payment.css';
 <Layout
   title="Secure Payment | FLEXIST"
   description="Complete your crypto payment to FLEXIST. Multi-chain support: Ethereum, BNB Chain, Polygon, Solana, Base, Arbitrum, TRON."
-  canonical="https://flexist.in/payment/"
+  canonical="https://flexist.in/payment"
   pageId="payment"
   robots="noindex, nofollow"
 >
@@ -35,7 +35,7 @@ import '../../styles/payment.css';
         <!-- Fallback if no plan is selected -->
         <div class="no-plan-fallback" id="no-plan-fallback" hidden>
           <div class="fallback-card">
-            <span class="fallback-icon">🛒</span>
+            <span class="fallback-icon">ðŸ›’</span>
             <h2>No Plan Selected</h2>
             <p>To proceed with a payment, please choose one of our growth plans first. If you need a custom invoice or package, please contact our support team.</p>
             <div class="fallback-actions">
@@ -81,7 +81,7 @@ import '../../styles/payment.css';
                 <!-- Path A: Automated Web Checkout -->
                 <div class="path-card active" id="path-automated">
                   <div class="path-card-title">
-                    <span>⚡</span>
+                    <span>âš¡</span>
                     <strong>Instant Web Checkout</strong>
                   </div>
                   <p class="path-card-desc">Pay automatically with major cryptocurrencies and verify transaction instantly on-chain.</p>
@@ -90,7 +90,7 @@ import '../../styles/payment.css';
                 <!-- Path B: Private Telegram Coordination -->
                 <a href="https://t.me/FlexistCrypto" target="_blank" class="path-card" id="path-private">
                   <div class="path-card-title">
-                    <span>💬</span>
+                    <span>ðŸ’¬</span>
                     <strong>Deal Privately (Telegram)</strong>
                   </div>
                   <p class="path-card-desc">Coordinate privately with @FlexistCrypto, customize terms, or pay with other methods.</p>
@@ -114,11 +114,11 @@ import '../../styles/payment.css';
               <div class="wallet-display">
                 <div class="wallet-head">
                   <span class="wallet-head-label">Wallet Address</span>
-                  <span class="wallet-head-chain" id="wallet-chain">● Network</span>
+                  <span class="wallet-head-chain" id="wallet-chain">â— Network</span>
                 </div>
                 <div class="wallet-body">
-                  <code class="wallet-address" id="wallet-addr">—</code>
-                  <button class="copy-btn" type="button" id="copy-wallet">⧉ Copy</button>
+                  <code class="wallet-address" id="wallet-addr">â€”</code>
+                  <button class="copy-btn" type="button" id="copy-wallet">â§‰ Copy</button>
                 </div>
               </div>
 
@@ -130,14 +130,14 @@ import '../../styles/payment.css';
 
               <!-- Network Warning -->
               <div class="network-warning">
-                <strong>⚠ Network Warning</strong>
-                <p>Only send tokens on the <strong id="warning-chain">—</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
+                <strong>âš  Network Warning</strong>
+                <p>Only send tokens on the <strong id="warning-chain">â€”</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
               </div>
 
               <!-- Action Row -->
               <div class="pay-action-row">
-                <button class="ghost-button" type="button" data-back="1">← Back</button>
-                <button class="btn-sent" type="button" id="btn-sent">I Have Sent the Payment →</button>
+                <button class="ghost-button" type="button" data-back="1">â† Back</button>
+                <button class="btn-sent" type="button" id="btn-sent">I Have Sent the Payment â†’</button>
               </div>
             </div>
 
@@ -155,8 +155,8 @@ import '../../styles/payment.css';
 
                   <!-- Redesigned Verification Tip Alert -->
                   <div class="verification-advice-box">
-                    <strong>🔒 SECURED PAYMENT VERIFICATION</strong>
-                    <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10–15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
+                    <strong>ðŸ”’ SECURED PAYMENT VERIFICATION</strong>
+                    <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10â€“15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
                   </div>
 
                   <div class="form-row">
@@ -210,15 +210,15 @@ import '../../styles/payment.css';
                   </div>
 
                   <div class="pay-action-row" style="margin-top: 24px;">
-                    <button class="ghost-button" type="button" data-back="2">← Back</button>
-                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash →</button>
+                    <button class="ghost-button" type="button" data-back="2">â† Back</button>
+                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash â†’</button>
                   </div>
                 </div>
 
                 <!-- PART B: ONBOARDING DETAILS -->
                 <div id="form-part-details" style="display: none;">
                   <div class="verify-success-badge" id="details-success-badge" style="background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.88rem; color: var(--accent-green); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <span>✓</span> <strong>Transaction verified successfully!</strong>
+                    <span>âœ“</span> <strong>Transaction verified successfully!</strong>
                   </div>
 
                   <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your project details to link your verified payment and activate onboarding.</p>
@@ -251,8 +251,8 @@ import '../../styles/payment.css';
                   </div>
 
                   <div class="pay-action-row" style="margin-top: 24px;">
-                    <button class="ghost-button" type="button" id="btn-back-verification">← Re-verify</button>
-                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate →</button>
+                    <button class="ghost-button" type="button" id="btn-back-verification">â† Re-verify</button>
+                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate â†’</button>
                   </div>
                 </div>
               </form>
@@ -260,10 +260,10 @@ import '../../styles/payment.css';
 
             <!-- SUCCESS STATE -->
             <div class="pay-success" id="pay-success" hidden>
-              <div class="success-checkmark">✓</div>
+              <div class="success-checkmark">âœ“</div>
               <h2 class="success-title">Payment Submitted</h2>
               <p class="success-copy">Your confirmation has been received. FLEXIST will verify your transaction within 12 hours and begin onboarding.</p>
-              <div class="success-txid" id="success-txid">—</div>
+              <div class="success-txid" id="success-txid">â€”</div>
               <p style="color: var(--text-muted); font-size: 0.82rem;">Redirecting to next steps...</p>
             </div>
           </div>
@@ -278,36 +278,36 @@ import '../../styles/payment.css';
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Plan</span>
-                <span class="order-value" id="order-plan">—</span>
+                <span class="order-value" id="order-plan">â€”</span>
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Type</span>
-                <span class="order-value" id="order-type">—</span>
+                <span class="order-value" id="order-type">â€”</span>
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Amount</span>
-                <span class="order-value amount" id="order-amount">—</span>
+                <span class="order-value amount" id="order-amount">â€”</span>
               </div>
             </div>
 
             <!-- Security Trust Notice -->
             <div class="security-notice reveal">
               <div class="security-item">
-                <div class="security-icon">🔒</div>
+                <div class="security-icon">ðŸ”’</div>
                 <div>
                   <strong>On-Chain Verification</strong>
                   <p>Payment details are verified directly on-chain using secure Cloudflare Worker endpoints.</p>
                 </div>
               </div>
               <div class="security-item">
-                <div class="security-icon">🛡</div>
+                <div class="security-icon">ðŸ›¡</div>
                 <div>
                   <strong>Verified Wallet</strong>
                   <p>Always confirm the wallet address matches: 0xB980...4E25. Never trust third-party links.</p>
                 </div>
               </div>
               <div class="security-item">
-                <div class="security-icon">⚡</div>
+                <div class="security-icon">âš¡</div>
                 <div>
                   <strong>Fast Verification</strong>
                   <p>Payments are verified within 12 hours. Check status anytime on the status tracker page.</p>
@@ -322,5 +322,5 @@ import '../../styles/payment.css';
 
   </main>
 
-  <script src="../../scripts/payment.js"></script>
+  <script src="/scripts/payment.js"></script>
 </Layout>

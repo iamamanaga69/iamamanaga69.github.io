@@ -1,17 +1,74 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import servicesData from '../data/services.json';
 import '../styles/services.css';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Web3 Marketing Services India',
+  itemListElement: servicesData.services.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      name: service.title,
+      serviceType: service.title,
+      provider: {
+        '@type': 'Organization',
+        name: 'Flexist',
+        url: 'https://flexist.in'
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'India'
+      },
+      description: service.description.replace(/\s+/g, ' ')
+    }
+  }))
+};
+
+const servicesFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What Web3 marketing services does Flexist offer in India?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Flexist offers Telegram community management, India market entry strategy, KOL campaigns, ambassador programs, partnership operations, and growth consulting for Web3 projects.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Can Flexist support only one service?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Founders can start with one service such as Telegram community management or KOL campaigns, then combine services into a wider India growth system.'
+      }
+    },
+    {
+      '@type': 'Question',
+      name: 'Who are these services for?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'These services are for Web3 founders, wallets, trading tools, communities, and crypto projects that want real Indian users and stronger local trust.'
+      }
+    }
+  ]
+};
 ---
 
 <Layout
-  title="Growth Services | FLEXIST"
-  description="Choose the India growth support your Web3 project needs: community, creators, ambassadors, partnerships, and strategy."
+  title="Web3 & Crypto Marketing Services India | Flexist"
+  description="Flexist offers Web3 community management, Telegram marketing, KOL campaigns, ambassador programs, and India market entry for crypto projects."
   canonical="https://flexist.in/services"
   pageId="services"
+  schema={[serviceSchema, servicesFaqSchema]}
 >
   <main id="main-content">
-    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Services | Choose What You Need</p><h1 class="page-title">WHAT DO YOU<br><span class="gradient-text">NEED TO FIX?</span></h1><p class="page-lede">Pick the growth support your project needs now. FLEXIST can help with one service or build the full India expansion plan.</p><div class="chip-row services-sticky-tabs" id="servicesTabs"><a class="tag-chip active" href="#community">Community</a><a class="tag-chip" href="#india-entry">Expansion</a><a class="tag-chip" href="#kol">Creators</a><a class="tag-chip" href="#ambassadors">Ambassadors</a><a class="tag-chip" href="#partnerships">Partnerships</a><a class="tag-chip" href="#consulting">Consulting</a></div></div></section>
+    <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Services | Web3 Marketing India</p><h1 class="page-title">Web3 Marketing Services<br><span class="gradient-text">for India Expansion</span></h1><p class="page-lede">Pick the growth support your project needs now. FLEXIST can help with one service or build the full India expansion plan.</p><div class="chip-row services-sticky-tabs" id="servicesTabs"><a class="tag-chip active" href="#community">Community</a><a class="tag-chip" href="#india-entry">Expansion</a><a class="tag-chip" href="#kol">Creators</a><a class="tag-chip" href="#ambassadors">Ambassadors</a><a class="tag-chip" href="#partnerships">Partnerships</a><a class="tag-chip" href="#consulting">Consulting</a></div></div></section>
     <section class="section"><div class="container services-list">
       
       {servicesData.services.map((service, idx) => {
@@ -105,5 +162,5 @@ import '../styles/services.css';
     </div>
   </div>
 
-  <script src="../scripts/services.js"></script>
+  <script src="/scripts/services.js"></script>
 </Layout>
