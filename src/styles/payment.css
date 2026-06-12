@@ -1596,3 +1596,559 @@ body {
   text-shadow: 0 0 8px var(--accent-cyan);
 }
 
+/* ═══════════════════════════════════════════════════════════
+   PAYMENT UX OVERHAUL — Professional, Trustworthy, Clean
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Trust Banner ────────────────────────────────────────── */
+.payment-trust-banner {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.04), rgba(0, 102, 255, 0.04));
+  border: 1px solid rgba(0, 255, 136, 0.15);
+  border-radius: 10px;
+  padding: 16px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.payment-trust-banner .trust-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.payment-trust-banner .trust-text {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.payment-trust-banner .trust-text strong {
+  color: var(--accent-green);
+}
+
+/* ── Powered-by Footer ───────────────────────────────────── */
+.payment-powered-by {
+  text-align: center;
+  margin-top: 40px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.payment-powered-by::before {
+  content: "🔗";
+  font-size: 0.8rem;
+}
+
+/* ── Step Indicator — thicker, cleaner ───────────────────── */
+.pay-step-line {
+  height: 3px !important;
+  width: 72px !important;
+  border-radius: 2px !important;
+  margin: 0 10px !important;
+}
+
+.pay-step-dot {
+  height: 42px !important;
+  width: 42px !important;
+  font-size: 0.76rem !important;
+}
+
+.pay-step-sub {
+  display: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+@media (min-width: 769px) {
+  .pay-step {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .pay-step-label {
+    margin-left: 0 !important;
+    font-size: 0.58rem !important;
+  }
+
+  .pay-step-sub {
+    display: block;
+  }
+}
+
+/* ── Action Buttons — professional layout ────────────────── */
+.pay-action-row {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-top: 32px !important;
+  padding-top: 24px !important;
+  border-top: 1px solid var(--border-subtle) !important;
+}
+
+.pay-action-row .ghost-button {
+  order: 1;
+  flex: 0 0 auto;
+}
+
+.pay-action-row .neon-button,
+.pay-action-row .btn-sent,
+.pay-action-row button[type="submit"] {
+  order: 2;
+  flex: 1 1 auto;
+  max-width: 320px;
+  text-align: center;
+  justify-content: center;
+}
+
+.btn-sent {
+  padding: 16px 28px !important;
+  font-size: 0.74rem !important;
+  border-radius: 8px !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ── Wallet Display — cleaner, professional ──────────────── */
+.wallet-display {
+  border-radius: 10px !important;
+  border: 1px solid rgba(0, 255, 136, 0.12) !important;
+  overflow: hidden !important;
+}
+
+.wallet-head {
+  background: rgba(0, 255, 136, 0.03) !important;
+  padding: 12px 20px !important;
+}
+
+.wallet-body {
+  padding: 20px !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+}
+
+.wallet-address {
+  font-size: 0.72rem !important;
+  padding: 14px !important;
+  border-radius: 6px !important;
+  word-break: break-all !important;
+  white-space: normal !important;
+}
+
+.copy-btn {
+  padding: 12px 18px !important;
+  border-radius: 8px !important;
+  font-size: 0.68rem !important;
+  font-weight: 600 !important;
+}
+
+/* ── QR Frame — centered, prominent ──────────────────────── */
+.qr-frame {
+  margin: 28px auto !important;
+  max-width: 220px !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  text-align: center !important;
+}
+
+/* ── Network Warning — info-style, not alarming ──────────── */
+.network-warning {
+  background: rgba(0, 102, 255, 0.04) !important;
+  border: 1px solid rgba(0, 102, 255, 0.18) !important;
+  border-left: 3px solid var(--accent-blue) !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+}
+
+.network-warning strong {
+  color: var(--accent-cyan) !important;
+  font-size: 0.68rem !important;
+}
+
+/* ── Order Summary — prominent, clear hierarchy ──────────── */
+.order-summary {
+  border: 1px solid rgba(0, 255, 136, 0.18) !important;
+  border-radius: 12px !important;
+  padding: 24px 28px !important;
+  margin-bottom: 24px !important;
+  max-width: none !important;
+}
+
+.order-summary .order-value.amount {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* ── Security Notice — clean bordered cards ──────────────── */
+.checkout-sidebar-col .security-notice {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  gap: 12px !important;
+}
+
+.checkout-sidebar-col .security-item {
+  background: linear-gradient(145deg, var(--glass-start), var(--glass-end));
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 16px;
+  gap: 14px;
+}
+
+.checkout-sidebar-col .security-icon {
+  height: 36px !important;
+  width: 36px !important;
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+}
+
+.checkout-sidebar-col .security-item strong {
+  font-size: 0.82rem !important;
+}
+
+.checkout-sidebar-col .security-item p {
+  font-size: 0.76rem !important;
+}
+
+/* ── Verification Advice Box — professional callout ──────── */
+.verification-advice-box {
+  background: rgba(0, 102, 255, 0.04) !important;
+  border: 1px solid rgba(0, 102, 255, 0.15) !important;
+  border-left: 3px solid var(--accent-blue) !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  margin-bottom: 24px !important;
+}
+
+.verification-advice-box strong {
+  color: var(--accent-cyan) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+}
+
+.verification-advice-box p {
+  color: var(--text-secondary) !important;
+  font-size: 0.84rem !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+/* ── Verify Success Badge — clean class-based styles ─────── */
+.verify-success-badge {
+  background: rgba(0, 255, 136, 0.06) !important;
+  border: 1px solid rgba(0, 255, 136, 0.18) !important;
+  border-radius: 10px !important;
+  padding: 14px 18px !important;
+  margin-bottom: 24px !important;
+  font-size: 0.84rem !important;
+  color: var(--accent-green) !important;
+  text-align: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+/* ── Support Links — subtle professional ─────────────────── */
+.verification-support-link {
+  text-align: center;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(0, 102, 255, 0.02);
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.verification-support-link a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.verification-support-link a:hover {
+  text-decoration: underline;
+}
+
+/* ── Checkout Paths — cleaner card design ────────────────── */
+.checkout-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.path-card {
+  background: linear-gradient(145deg, var(--glass-start), var(--glass-end));
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  text-decoration: none;
+}
+
+.path-card:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-2px);
+}
+
+.path-card.active {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.12);
+}
+
+.path-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.path-card-title span {
+  font-size: 1.2rem;
+}
+
+.path-card-title strong {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.path-card-desc {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Fallback Card — professional empty state ────────────── */
+.no-plan-fallback {
+  padding: 40px 0;
+}
+
+.fallback-card {
+  max-width: 520px !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  padding: 48px 36px !important;
+  border-radius: 14px !important;
+}
+
+.fallback-icon {
+  font-size: 2.4rem !important;
+  margin-bottom: 16px !important;
+}
+
+.fallback-card h2 {
+  font-size: 1.6rem !important;
+  margin: 0 0 12px !important;
+}
+
+.fallback-card p {
+  font-size: 0.88rem !important;
+  margin: 0 0 24px !important;
+}
+
+/* ── Form Improvements ───────────────────────────────────── */
+.pay-form .form-row {
+  gap: 16px !important;
+}
+
+.pay-form .field label {
+  font-size: 0.64rem !important;
+  margin-bottom: 2px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+}
+
+.pay-form .field input,
+.pay-form .field select {
+  padding: 14px !important;
+  border-radius: 8px !important;
+  font-size: 0.92rem !important;
+}
+
+.pay-panel-sub {
+  margin-bottom: 24px !important;
+}
+
+/* ── Form Section Headers ────────────────────────────────── */
+.form-section-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAYMENT MOBILE OVERHAUL
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width: 980px) {
+  /* Mobile: sidebar ORDER SUMMARY appears above main steps */
+  .checkout-layout-grid {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+  }
+
+  .checkout-sidebar-col {
+    order: -1 !important;
+    position: static !important;
+  }
+
+  .order-summary {
+    margin-bottom: 20px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Step indicator compact */
+  .pay-steps {
+    margin-bottom: 28px !important;
+  }
+
+  .pay-step-dot {
+    height: 34px !important;
+    width: 34px !important;
+    font-size: 0.68rem !important;
+  }
+
+  .pay-step-label {
+    font-size: 0.52rem !important;
+  }
+
+  .pay-step-line {
+    width: 36px !important;
+    margin: 0 6px !important;
+  }
+
+  /* Buttons full-width stacked on mobile */
+  .pay-action-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .pay-action-row > * {
+    width: 100% !important;
+    max-width: none !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .pay-action-row .ghost-button {
+    order: 2 !important;
+  }
+
+  .pay-action-row .neon-button,
+  .pay-action-row .btn-sent,
+  .pay-action-row button[type="submit"] {
+    order: 1 !important;
+  }
+
+  /* Forms single column */
+  .pay-form .form-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Checkout paths stack */
+  .checkout-paths {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Panel titles */
+  .pay-panel-title {
+    font-size: 1.2rem !important;
+  }
+
+  /* Wallet display mobile */
+  .wallet-body {
+    flex-direction: column !important;
+  }
+
+  .wallet-address {
+    width: 100% !important;
+    font-size: 0.65rem !important;
+  }
+
+  .copy-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  /* QR frame smaller */
+  .qr-frame {
+    max-width: 180px !important;
+    padding: 18px !important;
+  }
+
+  /* Trust banner */
+  .payment-trust-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 14px 18px;
+  }
+
+  /* Order summary compact */
+  .order-summary {
+    padding: 18px 20px !important;
+  }
+
+  /* Security items stack */
+  .checkout-sidebar-col .security-item {
+    padding: 12px !important;
+  }
+
+  /* Powered by */
+  .payment-powered-by {
+    margin-top: 24px;
+    font-size: 0.52rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pay-step-label {
+    display: none !important;
+  }
+
+  .pay-step-line {
+    width: 28px !important;
+  }
+
+  .pay-panel-title {
+    font-size: 1.05rem !important;
+  }
+
+  .btn-sent {
+    padding: 14px 16px !important;
+    font-size: 0.66rem !important;
+  }
+}
+

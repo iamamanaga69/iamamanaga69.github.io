@@ -1,4 +1,4 @@
-﻿---
+---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/payment.css';
 ---
@@ -50,21 +50,30 @@ import '../../styles/payment.css';
           <!-- Left Column: Payment Steps -->
           <div class="checkout-main-col">
             
+            <!-- Trust Banner -->
+            <div class="payment-trust-banner reveal">
+              <span class="trust-icon">🔒</span>
+              <p class="trust-text">All payments are <strong>verified directly on-chain</strong> using secure blockchain infrastructure. Your funds are protected by cryptographic verification at every step.</p>
+            </div>
+
             <!-- Step Indicator -->
             <div class="pay-steps reveal">
               <div class="pay-step active" data-step="1">
                 <span class="pay-step-dot">1</span>
                 <span class="pay-step-label">Select Chain</span>
+                <span class="pay-step-sub">Choose network</span>
               </div>
               <div class="pay-step-line" data-after="1"></div>
               <div class="pay-step" data-step="2">
                 <span class="pay-step-dot">2</span>
                 <span class="pay-step-label">Send Payment</span>
+                <span class="pay-step-sub">Transfer funds</span>
               </div>
               <div class="pay-step-line" data-after="2"></div>
               <div class="pay-step" data-step="3">
                 <span class="pay-step-dot">3</span>
                 <span class="pay-step-label">Confirm</span>
+                <span class="pay-step-sub">Verify & complete</span>
               </div>
             </div>
 
@@ -319,6 +328,11 @@ import '../../styles/payment.css';
         </div>
       </div>
     </section>
+
+    <!-- Powered-by Footer -->
+    <div class="container">
+      <div class="payment-powered-by">Secured by on-chain verification · Powered by blockchain technology</div>
+    </div>
 
   </main>
 

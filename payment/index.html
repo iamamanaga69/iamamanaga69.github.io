@@ -69,22 +69,31 @@
 
           <!-- Left Column: Payment Steps -->
           <div class="checkout-main-col">
+
+            <!-- Trust Banner -->
+            <div class="payment-trust-banner reveal">
+              <span class="trust-icon">🔒</span>
+              <p class="trust-text">All payments are <strong>verified directly on-chain</strong> using secure blockchain infrastructure. Your funds are protected by cryptographic verification at every step.</p>
+            </div>
             
             <!-- Step Indicator -->
             <div class="pay-steps reveal">
               <div class="pay-step active" data-step="1">
                 <span class="pay-step-dot">1</span>
                 <span class="pay-step-label">Select Chain</span>
+                <span class="pay-step-sub">Choose network</span>
               </div>
               <div class="pay-step-line" data-after="1"></div>
               <div class="pay-step" data-step="2">
                 <span class="pay-step-dot">2</span>
                 <span class="pay-step-label">Send Payment</span>
+                <span class="pay-step-sub">Transfer funds</span>
               </div>
               <div class="pay-step-line" data-after="2"></div>
               <div class="pay-step" data-step="3">
                 <span class="pay-step-dot">3</span>
                 <span class="pay-step-label">Confirm</span>
+                <span class="pay-step-sub">Verify &amp; complete</span>
               </div>
             </div>
 
@@ -148,9 +157,9 @@
                 <div id="qr-container"></div>
               </div>
 
-              <!-- Network Warning -->
-              <div class="network-warning">
-                <strong>⚠ Network Warning</strong>
+              <!-- Network Info Notice -->
+              <div class="network-info-notice">
+                <strong>ℹ️ Important: Verify Your Network</strong>
                 <p>Only send tokens on the <strong id="warning-chain">—</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
               </div>
 
@@ -171,13 +180,16 @@
               <form class="pay-form" id="pay-form">
                 <!-- PART A: VERIFY TRANSACTION HASH -->
                 <div id="form-part-verification">
-                  <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your transaction details to verify your payment directly on-chain first.</p>
+                  <p class="pay-panel-sub pay-panel-sub--spaced">Provide your transaction details to verify your payment directly on-chain first.</p>
 
-                  <!-- Redesigned Verification Tip Alert -->
+                  <!-- Verification Info Callout -->
                   <div class="verification-advice-box">
                     <strong>🔒 SECURED PAYMENT VERIFICATION</strong>
                     <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10–15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
                   </div>
+
+                  <div class="form-section-group">
+                    <span class="form-section-label">Payment Details</span>
 
                   <div class="form-row">
                     <div class="field">
@@ -217,10 +229,11 @@
                       <input type="text" name="txid" id="form-txid" required placeholder="0x... or transaction hash">
                       <span class="txid-feedback" id="txid-feedback"></span>
                     </div>
-                  </div>
+                  </div><!-- close form-row -->
+                  </div><!-- close form-section-group -->
 
                   <!-- Turnstile Security Challenge -->
-                  <div class="form-row" style="margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: center;">
+                  <div class="form-row turnstile-row">
                     <div class="cf-turnstile" data-sitekey="0x4AAAAAADem-VgyP4W5SlpV" data-theme="dark"></div>
                   </div>
 
@@ -229,19 +242,22 @@
                     Having issues verifying? Message us on Telegram for support: <a href="https://t.me/FlexistCrypto" target="_blank">@FlexistCrypto</a>
                   </div>
 
-                  <div class="pay-action-row" style="margin-top: 24px;">
+                  <div class="pay-action-row pay-action-row--spaced">
                     <button class="ghost-button" type="button" data-back="2">← Back</button>
-                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash →</button>
+                    <button class="neon-button btn-primary-action" type="button" id="btn-verify-hash">Verify Transaction Hash →</button>
                   </div>
                 </div>
 
                 <!-- PART B: ONBOARDING DETAILS -->
-                <div id="form-part-details" style="display: none;">
-                  <div class="verify-success-badge" id="details-success-badge" style="background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.88rem; color: var(--accent-green); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <div id="form-part-details" class="form-part-details-hidden">
+                  <div class="verify-success-badge" id="details-success-badge">
                     <span>✓</span> <strong>Transaction verified successfully!</strong>
                   </div>
 
-                  <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your project details to link your verified payment and activate onboarding.</p>
+                  <p class="pay-panel-sub pay-panel-sub--spaced">Provide your project details to link your verified payment and activate onboarding.</p>
+
+                  <div class="form-section-group">
+                    <span class="form-section-label">Personal Details</span>
 
                   <div class="form-row">
                     <div class="field">
@@ -270,9 +286,9 @@
                     Having issues submitting details? Contact us on Telegram: <a href="https://t.me/FlexistCrypto" target="_blank">@FlexistCrypto</a>
                   </div>
 
-                  <div class="pay-action-row" style="margin-top: 24px;">
+                  <div class="pay-action-row pay-action-row--spaced">
                     <button class="ghost-button" type="button" id="btn-back-verification">← Re-verify</button>
-                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate →</button>
+                    <button class="neon-button btn-primary-action" type="submit" id="btn-submit">Complete Onboarding & Activate →</button>
                   </div>
                 </div>
               </form>
@@ -284,7 +300,7 @@
               <h2 class="success-title">Payment Submitted</h2>
               <p class="success-copy">Your confirmation has been received. FLEXIST will verify your transaction within 12 hours and begin onboarding.</p>
               <div class="success-txid" id="success-txid">—</div>
-              <p style="color: var(--text-muted); font-size: 0.82rem;">Redirecting to next steps...</p>
+              <p class="success-redirect-text">Redirecting to next steps...</p>
             </div>
           </div>
 
@@ -292,9 +308,9 @@
           <div class="checkout-sidebar-col">
              <!-- Order Summary Card -->
             <div class="order-summary reveal">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
-                <h3 class="sidebar-card-title" style="margin-bottom: 0;">Order Details</h3>
-                <a href="../plans" id="change-plan-link" class="change-plan-link" style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent-cyan); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px dashed var(--accent-cyan);">Change Plan</a>
+              <div class="order-summary-header">
+                <h3 class="sidebar-card-title">Order Details</h3>
+                <a href="../plans" id="change-plan-link" class="change-plan-link">Change Plan</a>
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Plan</span>
@@ -334,11 +350,21 @@
                 </div>
               </div>
             </div>
+
+            <!-- Powered by Blockchain -->
+            <div class="powered-by-badge">
+              <span>🔗</span> Powered by Blockchain · On-chain verified payments
+            </div>
           </div>
 
         </div>
       </div>
     </section>
+
+    <!-- Powered-by Footer -->
+    <div class="container">
+      <div class="payment-powered-by">Secured by on-chain verification · Powered by blockchain technology</div>
+    </div>
 
   </main>
 
