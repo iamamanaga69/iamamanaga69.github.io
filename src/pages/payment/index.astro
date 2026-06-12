@@ -123,11 +123,11 @@ import '../../styles/payment.css';
               <div class="wallet-display">
                 <div class="wallet-head">
                   <span class="wallet-head-label">Wallet Address</span>
-                  <span class="wallet-head-chain" id="wallet-chain">â— Network</span>
+                  <span class="wallet-head-chain" id="wallet-chain">● Network</span>
                 </div>
                 <div class="wallet-body">
-                  <code class="wallet-address" id="wallet-addr">â€”</code>
-                  <button class="copy-btn" type="button" id="copy-wallet">â§‰ Copy</button>
+                  <code class="wallet-address" id="wallet-addr">—</code>
+                  <button class="copy-btn" type="button" id="copy-wallet">⧉ Copy</button>
                 </div>
               </div>
 
@@ -140,13 +140,13 @@ import '../../styles/payment.css';
               <!-- Network Warning -->
               <div class="network-warning">
                 <strong>⚠️ Network Warning</strong>
-                <p>Only send tokens on the <strong id="warning-chain">â€”</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
+                <p>Only send tokens on the <strong id="warning-chain">—</strong> network. Tokens sent on the wrong network may be permanently lost. Double-check the chain before confirming.</p>
               </div>
 
               <!-- Action Row -->
               <div class="pay-action-row">
-                <button class="ghost-button" type="button" data-back="1">â† Back</button>
-                <button class="btn-sent" type="button" id="btn-sent">I Have Sent the Payment â†’</button>
+                <button class="ghost-button" type="button" data-back="1">← Back</button>
+                <button class="btn-sent" type="button" id="btn-sent">I Have Sent the Payment →</button>
               </div>
             </div>
 
@@ -165,7 +165,7 @@ import '../../styles/payment.css';
                   <!-- Redesigned Verification Tip Alert -->
                   <div class="verification-advice-box">
                     <strong>🔒 SECURED PAYMENT VERIFICATION</strong>
-                    <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10â€“15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
+                    <p>If your transaction is not verifying immediately, do not worry! Please try to verify the transaction hash after <strong>10–15 block confirmations</strong> or about <strong>5 minutes</strong>. Blockchain indexers can take a few minutes to sync and register your payment.</p>
                   </div>
 
                   <div class="form-row">
@@ -219,15 +219,15 @@ import '../../styles/payment.css';
                   </div>
 
                   <div class="pay-action-row" style="margin-top: 24px;">
-                    <button class="ghost-button" type="button" data-back="2">â† Back</button>
-                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash â†’</button>
+                    <button class="ghost-button" type="button" data-back="2">← Back</button>
+                    <button class="neon-button" type="button" id="btn-verify-hash">Verify Transaction Hash →</button>
                   </div>
                 </div>
 
                 <!-- PART B: ONBOARDING DETAILS -->
                 <div id="form-part-details" style="display: none;">
                   <div class="verify-success-badge" id="details-success-badge" style="background: rgba(0, 255, 136, 0.08); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; font-size: 0.88rem; color: var(--accent-green); text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <span>âœ“</span> <strong>Transaction verified successfully!</strong>
+                    <span>✓</span> <strong>Transaction verified successfully!</strong>
                   </div>
 
                   <p class="pay-panel-sub" style="margin-bottom: 20px;">Provide your project details to link your verified payment and activate onboarding.</p>
@@ -260,8 +260,8 @@ import '../../styles/payment.css';
                   </div>
 
                   <div class="pay-action-row" style="margin-top: 24px;">
-                    <button class="ghost-button" type="button" id="btn-back-verification">â† Re-verify</button>
-                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate â†’</button>
+                    <button class="ghost-button" type="button" id="btn-back-verification">← Re-verify</button>
+                    <button class="neon-button" type="submit" id="btn-submit">Complete Onboarding & Activate →</button>
                   </div>
                 </div>
               </form>
@@ -269,10 +269,10 @@ import '../../styles/payment.css';
 
             <!-- SUCCESS STATE -->
             <div class="pay-success" id="pay-success" hidden>
-              <div class="success-checkmark">âœ“</div>
+              <div class="success-checkmark">✓</div>
               <h2 class="success-title">Payment Submitted</h2>
               <p class="success-copy">Your confirmation has been received. FLEXIST will verify your transaction within 12 hours and begin onboarding.</p>
-              <div class="success-txid" id="success-txid">â€”</div>
+              <div class="success-txid" id="success-txid">—</div>
               <p style="color: var(--text-muted); font-size: 0.82rem;">Redirecting to next steps...</p>
             </div>
           </div>
@@ -287,15 +287,15 @@ import '../../styles/payment.css';
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Plan</span>
-                <span class="order-value" id="order-plan">â€”</span>
+                <span class="order-value" id="order-plan">—</span>
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Type</span>
-                <span class="order-value" id="order-type">â€”</span>
+                <span class="order-value" id="order-type">—</span>
               </div>
               <div class="order-summary-row">
                 <span class="order-label">Amount</span>
-                <span class="order-value amount" id="order-amount">â€”</span>
+                <span class="order-value amount" id="order-amount">—</span>
               </div>
             </div>
 
