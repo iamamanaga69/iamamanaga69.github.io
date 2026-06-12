@@ -137,7 +137,7 @@
   margin-bottom: 4px;
 }
 
-.timeline-trigger span {
+.timeline-trigger > span {
   display: block;
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -176,7 +176,7 @@
 }
 
 .current-badge {
-  display: inline-block;
+  display: inline-block !important;
   background: rgba(0, 212, 255, 0.1);
   border: 1px solid var(--accent-cyan);
   color: var(--accent-cyan);
