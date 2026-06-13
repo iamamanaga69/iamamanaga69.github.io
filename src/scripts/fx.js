@@ -380,7 +380,7 @@ const FlexistFX = (() => {
             letterSpan.style.transform = 'translateY(110%)';
             letterSpan.style.willChange = 'transform';
             letterSpan.style.transition = `transform 0.55s cubic-bezier(.19,1,.22,1) ${letterIndex * LETTER_STAGGER}ms`;
-            letterSpan.dataset.fxLetterIdx = letterIndex;
+            letterSpan.setAttribute('data-fx-letter-idx', letterIndex);
 
             wrapper.appendChild(letterSpan);
             wordSpan.appendChild(wrapper);
@@ -420,7 +420,7 @@ const FlexistFX = (() => {
               observer.unobserve(title);
             });
           },
-          { threshold: 0.2 }
+          { threshold: 0 }
         );
 
         observer.observe(title);
