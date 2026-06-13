@@ -150,7 +150,16 @@ import '../styles/inquiry.css';
             <article class="glass-card recommendation"><h4>Gaps</h4><ul id="gapsList"></ul></article>
             <article class="glass-card recommendation"><h4>Next Actions</h4><ul id="actionsList"></ul></article>
           </div>
-          <div class="button-row"><a class="neon-button" id="ticketEmail" href="mailto:FlexistCrypto@gmail.com">Send Details By Email</a><a class="ghost-button" href="/contact">Open Contact Page</a></div>
+          <div class="button-row" id="ticketButtonRow" style="display: flex; flex-direction: column; gap: 12px; width: 100%; margin-top: 24px;">
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
+              <a class="neon-button" id="ticketDiscussTelegram" href="#" target="_blank" style="flex: 1; min-width: 200px; text-align: center;">Discuss with Flexist (Auto Group)</a>
+              <a class="ghost-button" id="ticketDirectTelegram" href="https://t.me/FlexistCrypto" target="_blank" style="flex: 1; min-width: 200px; text-align: center; border-color: rgba(255,255,255,0.1);">Direct Founder Chat (t.me/FlexistCrypto)</a>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%;">
+              <a class="ghost-button" id="ticketEmail" href="mailto:FlexistCrypto@gmail.com" style="flex: 1; min-width: 200px; text-align: center;">Send Details By Email</a>
+              <a class="ghost-button" href="/contact" style="flex: 1; min-width: 200px; text-align: center;">Open Contact Page</a>
+            </div>
+          </div>
         </section>
       </div>
 

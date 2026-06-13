@@ -418,6 +418,12 @@ STEP 7: FOUNDER CONTACT
     const subject = `FLEXIST Inquiry — ${formData.projectName}`;
     document.getElementById("ticketEmail").href = `mailto:FlexistCrypto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     
+    // Set Telegram Group Bot start link with ticket ID parameter
+    const discussBtn = document.getElementById("ticketDiscussTelegram");
+    if (discussBtn) {
+      discussBtn.href = `https://t.me/FlexistGroupBot?start=inquiry_${ticketId}`;
+    }
+    
     form.hidden = true;
     document.querySelector("[data-inquiry-progress]").hidden = true;
 

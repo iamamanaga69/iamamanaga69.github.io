@@ -325,7 +325,19 @@
         alertBox.innerHTML = `
           <strong>Application Received!</strong><br>
           The Flexist team will review your profile. We have sent a validation code/link to <strong>${email}</strong>.<br>
-          Once your application is approved your application (usually within 24-48 hours), you can log in to view campaign briefs.
+          Once your application is approved (usually within 24-48 hours), you can log in to view campaign briefs.
+          
+          <div class="telegram-options-box" style="margin-top: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 20px;">
+            <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">Want to discuss your application immediately? Choose an option below:</p>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <a href="https://t.me/FlexistGroupBot?start=creator_${encodeURIComponent(creatorData.telegram_handle)}" target="_blank" class="neon-button" style="padding: 10px 16px; font-size: 13px; flex: 1; min-width: 180px; text-align: center; text-decoration: none;">
+                Discuss with Flexist (Auto Group)
+              </a>
+              <a href="https://t.me/FlexistCrypto" target="_blank" class="ghost-button" style="padding: 10px 16px; font-size: 13px; flex: 1; min-width: 180px; text-align: center; text-decoration: none; border-color: rgba(255,255,255,0.1);">
+                Direct Founder Chat (t.me/FlexistCrypto)
+              </a>
+            </div>
+          </div>
         `;
         alertBox.className = "form-alert success";
         form.reset();

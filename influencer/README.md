@@ -152,3 +152,29 @@ create policy "assignment_self" on campaign_assignments
 - `/influencer/` is added to your site's `robots.txt` to prevent Google from indexing the pages.
 - Every influencer portal page contains the `<meta name="robots" content="noindex, nofollow">` tag.
 - The admin page is protected. Even if an attacker finds `/influencer/admin`, they must log in using a magic link. The script hard-guards authentication to **only** allow access if the logged-in user email matches `FlexistCrypto@gmail.com`.
+
+---
+
+## 🤖 Telegram Discussion Bot Setup (Optional)
+
+To fully enable the **Discuss with Flexist (Auto Group)** feature and automatically create a dedicated discussion topic/group for verified form submissions, follow these instructions:
+
+1. **Create the Telegram Bot**:
+   * Open Telegram and search for `@BotFather`.
+   * Send the `/newbot` command and follow the prompts. Name the bot (e.g. `Flexist Group Bot`) and give it a username (e.g., `FlexistGroupBot`).
+   * Copy the generated **HTTP API Token**.
+
+2. **Set up a Discussion Supergroup**:
+   * Create a new Telegram group (e.g. `Flexist Discussions`).
+   * Go to Group Info > Edit > enable **Topics** (this turns the group into a Forum).
+   * Add your new bot to the group as an Administrator. Make sure to grant it the **Manage Topics** and **Invite Users via Link** permissions.
+
+3. **Deploy the Bot Listener**:
+   * You can deploy a simple webhook to a Cloudflare Worker or a free Python service. The handler should watch for the `/start` command containing a parameter:
+     * e.g. `/start inquiry_FC-XXXX` (for client projects)
+     * e.g. `/start creator_@handle` (for creator applicants)
+   * When triggered, the handler calls the Telegram Bot API:
+     1. `createForumTopic` inside your Supergroup, using the project or creator name as the topic name.
+     2. `createChatInviteLink` specifying the `message_thread_id` (topic ID) to generate an invite link for just that topic.
+     3. Sends that invite link back to the user: *"Here is your private discussion group: [Invite Link]"*.
+   * If the bot is not yet configured, the button will default to starting a chat with the bot, serving as a spam filter since only users who filled out the form receive the dynamic parameters.
