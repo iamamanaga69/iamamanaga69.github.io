@@ -159,6 +159,10 @@ export default {
       return handleCompleteOnboarding(request, env, corsHeaders);
     } else if (url.pathname === "/payment-status" && request.method === "GET") {
       return handlePaymentStatus(url, env, corsHeaders);
+    } else if (url.pathname === "/create-nowpayment-invoice" && request.method === "POST") {
+      return handleCreateNowpaymentsInvoice(request, env, corsHeaders);
+    } else if (url.pathname === "/nowpayments-ipn" && request.method === "POST") {
+      return handleNowpaymentsIPN(request, env, corsHeaders);
     }
 
     return new Response(JSON.stringify({ error: "Not Found" }), {
@@ -953,4 +957,247 @@ async function sendTopicLinks(token, chatId, id, name, inviteLink, supergroupId,
   const messageText = `🚀 <b>Your Discussion Topic is Ready!</b>\n\nWe have created a dedicated discussion thread for <b>${name}</b> (${id}).\n\nFollow these 2 steps to join:\n\n1️⃣ <b>Join our Supergroup:</b>\n👉 <a href="${inviteLink}">Click here to join the group</a>\n\n2️⃣ <b>Enter your discussion thread:</b>\n👉 <a href="${topicLink}">Click here to go directly to your thread</a>\n\n<i>Note: The invite link is valid for 1 join only. Our team has been notified and is looking forward to chatting with you!</i>`;
 
   await sendTelegramMessage(token, chatId, messageText);
+}
+
+// ── NOWPAYMENTS INVOICE AND WEBHOOK VERIFICATION ──
+
+async function handleCreateNowpaymentsInvoice(request, env, corsHeaders) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
+  }
+
+  const { plan, paymentType, name, email, telegram, project, amount } = body;
+
+  if (!plan || !paymentType || !name || !email || !telegram || !project) {
+    return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: corsHeaders });
+  }
+
+  const lowerPlan = plan.toLowerCase().replace(/\s+/g, "");
+  const lowerType = paymentType.toLowerCase().trim();
+
+  let serverExpectedAmount;
+  if (lowerPlan === "custom") {
+    serverExpectedAmount = parseFloat(amount);
+    if (isNaN(serverExpectedAmount) || serverExpectedAmount <= 0) {
+      return new Response(JSON.stringify({ error: "Invalid payment amount specified for Custom plan" }), { status: 400, headers: corsHeaders });
+    }
+  } else {
+    const pricingTier = PLAN_PRICING[lowerType];
+    if (!pricingTier) {
+      return new Response(JSON.stringify({ error: "Invalid plan type" }), { status: 400, headers: corsHeaders });
+    }
+
+    serverExpectedAmount = pricingTier[lowerPlan];
+    if (!serverExpectedAmount) {
+      return new Response(JSON.stringify({ error: "Invalid plan" }), { status: 400, headers: corsHeaders });
+    }
+  }
+
+  const paymentId = generatePaymentId(plan, "NOW");
+
+  try {
+    const npResponse = await fetch("https://api.nowpayments.io/v1/invoice", {
+      method: "POST",
+      headers: {
+        "x-api-key": env.NOWPAYMENTS_API_KEY,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        price_amount: serverExpectedAmount,
+        price_currency: "usd",
+        order_id: paymentId,
+        order_description: `FLEXIST ${plan} (${paymentType === "monthly" ? "Monthly" : "One-Time"})`,
+        ipn_callback_url: "https://flexist-payment-verifier.flexistcrypto.workers.dev/nowpayments-ipn",
+        success_url: `https://flexist.in/payment/thank-you?paymentId=${paymentId}`,
+        cancel_url: "https://flexist.in/payment/",
+        is_fixed_rate: true
+      })
+    });
+
+    const npData = await npResponse.json();
+    if (!npResponse.ok || !npData.invoice_url) {
+      return new Response(JSON.stringify({ error: "Failed to create invoice with NOWPayments", details: npData }), {
+        status: 502,
+        headers: corsHeaders
+      });
+    }
+
+    // Register pending payment in D1 database
+    await env.DB.prepare(
+      "INSERT INTO payments (id, plan, payment_type, expected_amount, actual_amount, chain, token, tx_hash, name, email, telegram, project, status) VALUES (?, ?, ?, ?, 0, '', '', '', ?, ?, ?, ?, 'pending_payment')"
+    ).bind(
+      paymentId,
+      plan,
+      paymentType,
+      serverExpectedAmount,
+      name.trim(),
+      email.trim(),
+      telegram.trim(),
+      project.trim()
+    ).run();
+
+    return new Response(JSON.stringify({ success: true, paymentId, invoiceUrl: npData.invoice_url }), {
+      status: 200,
+      headers: corsHeaders
+    });
+
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Checkout initiation failed", details: err.message }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+async function handleNowpaymentsIPN(request, env, corsHeaders) {
+  const signature = request.headers.get("x-nowpayments-sig");
+  if (!signature) {
+    return new Response(JSON.stringify({ error: "Missing signature" }), { status: 400, headers: corsHeaders });
+  }
+
+  let bodyText;
+  try {
+    bodyText = await request.text();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid body text" }), { status: 400, headers: corsHeaders });
+  }
+
+  let payload;
+  try {
+    payload = JSON.parse(bodyText);
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON payload" }), { status: 400, headers: corsHeaders });
+  }
+
+  try {
+    const sortedJson = sortObjectStringify(payload);
+    const expectedSignature = await hmacSha512(sortedJson, env.NOWPAYMENTS_IPN_SECRET);
+    if (signature !== expectedSignature) {
+      return new Response(JSON.stringify({ error: "HMAC signature mismatch" }), { status: 401, headers: corsHeaders });
+    }
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Signature verification error", details: err.message }), { status: 500, headers: corsHeaders });
+  }
+
+  const { payment_id, order_id, payment_status, pay_amount, pay_currency, pay_address, outcome_amount, outcome_currency } = payload;
+
+  if (payment_status === "finished") {
+    try {
+      const paymentRecord = await env.DB.prepare(
+        "SELECT plan, payment_type, name, email, telegram, project, status FROM payments WHERE id = ?"
+      ).bind(order_id).first();
+
+      if (!paymentRecord) {
+        return new Response(JSON.stringify({ error: "Order not found in database" }), { status: 404, headers: corsHeaders });
+      }
+
+      if (paymentRecord.status !== "verified") {
+        const txHash = payload.hash || String(payment_id);
+        
+        await env.DB.prepare(
+          "UPDATE payments SET status = 'verified', actual_amount = ?, chain = ?, token = ?, tx_hash = ? WHERE id = ?"
+        ).bind(
+          parseFloat(outcome_amount || pay_amount || 0),
+          String(outcome_currency || pay_currency || ""),
+          String(pay_currency || ""),
+          txHash,
+          order_id
+        ).run();
+
+        await notifyTelegramPaymentVerified(order_id, paymentRecord, txHash, env);
+      }
+
+    } catch (err) {
+      return new Response(JSON.stringify({ error: "Database or bot update error", details: err.message }), { status: 500, headers: corsHeaders });
+    }
+  }
+
+  return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+}
+
+async function notifyTelegramPaymentVerified(paymentId, paymentRecord, txHash, env) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_SUPERGROUP_ID) {
+    console.error("Telegram credentials missing in Worker environment variables.");
+    return;
+  }
+
+  try {
+    const topicName = `Client: ${paymentRecord.project} (${paymentId})`;
+    const threadId = await createForumTopic(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, topicName);
+    const inviteLink = await createChatInviteLink(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, `Client ${paymentId}`);
+
+    // Map topic details as existing topic in KV
+    const topicKey = `topic:inquiry:${paymentId}`;
+    await env.VERIFIED_TXIDS.put(topicKey, JSON.stringify({ threadId, inviteLink }));
+
+    // Send project details message into the supergroup channel thread
+    const alertMessage = `🔔 <b>New Paid Client Onboarding Started</b>\n\n` +
+      `<b>Payment ID:</b> <code>${paymentId}</code>\n` +
+      `<b>Project:</b> ${paymentRecord.project}\n` +
+      `<b>Plan:</b> ${paymentRecord.plan} (${paymentRecord.payment_type})\n` +
+      `<b>Amount:</b> $${paymentRecord.expected_amount}\n` +
+      `<b>TxHash:</b> <code>${txHash}</code>\n\n` +
+      `<b>Client Contact:</b>\n` +
+      `• Name: ${paymentRecord.name}\n` +
+      `• Email: ${paymentRecord.email}\n` +
+      `• Telegram: @${paymentRecord.telegram.replace(/^@/, "")}\n\n` +
+      `<i>Invite link generated: <a href="${inviteLink}">${inviteLink}</a></i>`;
+
+    await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, alertMessage, threadId);
+
+    // Also cache client ticket so start parameters resolve correctly
+    const ticketKey = `ticket:${paymentId}`;
+    const ticketData = {
+      ticketId: paymentId,
+      projectName: paymentRecord.project,
+      telegramHandle: paymentRecord.telegram
+    };
+    await env.VERIFIED_TXIDS.put(ticketKey, JSON.stringify(ticketData), { expirationTtl: 604800 });
+
+  } catch (err) {
+    console.error("Error in notifyTelegramPaymentVerified:", err);
+  }
+}
+
+function sortObject(obj) {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) {
+    return obj.map(sortObject);
+  }
+  return Object.keys(obj).sort().reduce((result, key) => {
+    result[key] = sortObject(obj[key]);
+    return result;
+  }, {});
+}
+
+function sortObjectStringify(obj) {
+  const sorted = sortObject(obj);
+  return JSON.stringify(sorted, (key, value) => {
+    if (typeof value === "string") {
+      return value;
+    }
+    return value;
+  }).replace(/\//g, "\\/");
+}
+
+async function hmacSha512(message, secret) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: { name: "SHA-512" } },
+    false,
+    ["sign"]
+  );
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    enc.encode(message)
+  );
+  return Array.from(new Uint8Array(signature))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
 }
