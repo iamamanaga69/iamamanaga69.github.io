@@ -9,11 +9,11 @@
   <meta name="robots" content="noindex, nofollow">
   
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="../css/global.css">
-  <link rel="stylesheet" href="../css/components.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/mobile-fixes.css">
-  <link rel="stylesheet" href="./css/influencer.css">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/mobile-fixes.css">
+  <link rel="stylesheet" href="/influencer/css/influencer.css">
 </head>
 <body data-page="influencer">
   <div data-site-nav></div>
@@ -198,7 +198,7 @@
 
         <!-- Login Link -->
         <p style="text-align: center; font-size: 14px; margin-top: 16px; color: var(--text-secondary);">
-          Already registered? <a href="login.html" style="color: var(--accent-cyan); text-decoration: underline;">Log in here</a>
+          Already registered? <a href="/influencer/login" style="color: var(--accent-cyan); text-decoration: underline;">Log in here</a>
         </p>
       </form>
     </div>
@@ -209,8 +209,8 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/global.js"></script><script src="../js/fx.js"></script>
-  <script src="./js/auth.js"></script>
+  <script src="/js/global.js"></script><script src="/js/fx.js"></script>
+  <script src="/influencer/js/auth.js"></script>
   
   <script>
     // Handle payment conditional fields toggle
@@ -312,7 +312,7 @@
         const { error: authError } = await supabase.auth.signInWithOtp({
           email: email,
           options: {
-            emailRedirectTo: window.location.origin + '/influencer/dashboard.html'
+            emailRedirectTo: window.location.origin + '/influencer/dashboard'
           }
         });
 

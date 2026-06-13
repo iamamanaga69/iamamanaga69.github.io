@@ -92,7 +92,7 @@
 
       try {
         // Fetch target page HTML
-        const res = await fetch(`${targetUrl}.html`);
+        const res = await fetch(`/${targetUrl}`);
         if (!res.ok) throw new Error(`HTML fetch failed: ${res.status}`);
         const htmlText = await res.text();
         

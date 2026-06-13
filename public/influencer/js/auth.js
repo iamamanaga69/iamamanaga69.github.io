@@ -126,7 +126,7 @@ async function getSession() {
 async function signOut() {
   if (!supabase) return;
   await supabase.auth.signOut();
-  window.location.href = 'login.html';
+  window.location.href = '/influencer/login';
 }
 
 /**
@@ -176,7 +176,7 @@ async function linkAuthUser(session) {
 async function requireAuth() {
   const session = await getSession();
   if (!session) {
-    window.location.href = 'login.html';
+    window.location.href = '/influencer/login';
     return null;
   }
 
@@ -189,7 +189,7 @@ async function requireAuth() {
           <h1>Application Not Found</h1>
           <p>No creator profile is registered under <strong>${session.user.email}</strong>.</p>
           <p style="margin-top: 20px;">
-            <a href="signup.html" class="neon-button" style="display: inline-block;">Apply Now &rarr;</a>
+            <a href="/influencer/signup" class="neon-button" style="display: inline-block;">Apply Now &rarr;</a>
           </p>
           <p style="margin-top: 15px;">
             <button onclick="signOut()" class="ghost-button" style="display: inline-block;">Logout</button>
@@ -245,7 +245,7 @@ async function requireAdmin() {
   const adminEmail = 'FlexistCrypto@gmail.com';
 
   if (!session) {
-    window.location.href = 'login.html';
+    window.location.href = '/influencer/login';
     return null;
   }
 

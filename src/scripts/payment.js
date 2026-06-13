@@ -592,7 +592,7 @@ const FlexistPayment = (() => {
 
           // Redirect to thank you page
           setTimeout(() => {
-            window.location.href = `thank-you.html?paymentId=${encodeURIComponent(verifiedPaymentId)}`;
+            window.location.href = `/payment/thank-you?paymentId=${encodeURIComponent(verifiedPaymentId)}`;
           }, 3000);
 
         } catch (err) {
