@@ -68,6 +68,10 @@
  * create policy "creators_public_insert" on creators
  *   for insert with check (true);
  * 
+ * -- Allow public select of approved creators only (for the directory)
+ * create policy "creators_read_approved" on creators
+ *   for select using (status = 'approved');
+ * 
  * -- Creators can read/update their own row (either by uuid or email match in JWT)
  * create policy "creator_self" on creators
  *   for all using (

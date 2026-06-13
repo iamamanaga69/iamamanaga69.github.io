@@ -93,6 +93,10 @@ alter table campaign_assignments enable row level security;
 create policy "creators_public_insert" on creators
   for insert with check (true);
 
+-- Allow public select of approved creators only (for the directory)
+create policy "creators_read_approved" on creators
+  for select using (status = 'approved');
+
 -- Creators can read/update their own row
 create policy "creator_self" on creators
   for all using (
@@ -123,6 +127,9 @@ create policy "assignment_self" on campaign_assignments
    - In `influencer/js/creator.js` (uses the same initialized variables from `auth.js`).
    - In `influencer/js/admin.js`:
      - Replace `'SUPABASE_SERVICE_KEY'` with your actual `service_role` key.
+   - In `creators.html` (at the website root and in `public/creators.html`):
+     - Replace `'SUPABASE_URL'` with your actual Project URL.
+     - Replace `'SUPABASE_ANON_KEY'` with your actual `anon` key.
      
 > [!CAUTION]
 > The `service_role` key bypasses all security rules. **NEVER** share the admin URL or push a commit containing the actual `service_role` key to a public GitHub repository. You should keep this key local or restrict access.

@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore Flexist's verified network of top Web3 influencers, community leads, and content creators in India.">
+  <title>Verified Creator Network | FLEXIST</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/mobile-fixes.css">
+  
+  <!-- Dynamic Styles for Creator Grid -->
+  <style>
+    .creator-header-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .directory-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 16px 24px;
+      border-radius: 12px;
+    }
+
+    .search-field {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-field input {
+      width: 100%;
+      padding: 10px 16px;
+      background: var(--input-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .search-field input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.15);
+      outline: none;
+    }
+
+    .filters-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filters-row select {
+      padding: 10px 16px;
+      background: var(--input-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .filters-row select:focus {
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+
+    .creators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .creator-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .creator-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 212, 255, 0.3);
+    }
+
+    .creator-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+      opacity: 0.7;
+    }
+
+    .creator-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .creator-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--bg-primary);
+    }
+
+    .creator-title h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      margin: 0;
+      color: #fff;
+    }
+
+    .creator-title span {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    .creator-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 13px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .creator-stats div small {
+      display: block;
+      color: var(--text-secondary);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-bottom: 2px;
+    }
+
+    .creator-stats div strong {
+      color: #fff;
+    }
+
+    .format-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .format-chip {
+      font-size: 11px;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      color: var(--accent-cyan);
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    .creator-socials {
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 12px;
+      margin-top: auto;
+    }
+
+    .social-btn {
+      flex: 1;
+      text-align: center;
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .social-btn:hover {
+      background: rgba(0, 212, 255, 0.08);
+      border-color: var(--accent-cyan);
+      color: #fff;
+    }
+  </style>
+</head>
+<body data-page="creators">
+  <div data-site-nav></div>
+
+  <main id="main-content" style="padding: 120px 24px 80px 24px;" class="container">
+    
+    <!-- Hero Header -->
+    <section class="creator-header-section">
+      <p class="page-kicker">VERIFIED WEB3 INFLUENCER NETWORK</p>
+      <h1 class="page-title" style="font-size: clamp(2rem, 5vw, 3rem); font-family: var(--font-display); line-height: 1.1; margin: 16px 0;">
+        Meet Our Indian<br>
+        <span class="gradient-text">Creator Partner Network.</span>
+      </h1>
+      <p class="page-lede" style="max-width: 650px; margin: 0 auto; color: var(--text-secondary);">
+        Flexist collaborates with India's most active Web3 KOLs, community moderators, and technical content developers. Explore our verified distribution partners available for your campaigns.
+      </p>
+    </section>
+
+    <!-- Filters & Search Controls -->
+    <section class="directory-controls">
+      <div class="search-field">
+        <input type="text" id="search-input" placeholder="🔍 Search creators by name, handle...">
+      </div>
+      
+      <div class="filters-row">
+        <!-- Platform filter -->
+        <select id="platform-filter">
+          <option value="all">All Platforms</option>
+          <option value="Telegram">Telegram</option>
+          <option value="Twitter-X">Twitter / X</option>
+          <option value="YouTube">YouTube</option>
+          <option value="Instagram">Instagram</option>
+        </select>
+
+        <!-- Language filter -->
+        <select id="language-filter">
+          <option value="all">All Languages</option>
+          <option value="English">English</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Hinglish">Hinglish</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Creators Grid -->
+    <section>
+      <div id="creators-directory-grid" class="creators-grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-secondary);">
+          Connecting to database and fetching creator network...
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div data-site-footer></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/global.js"></script>
+  
+  <script>
+    // Supabase configurations - Aman/Admin will populate these
+    const SUPABASE_URL = 'SUPABASE_URL';
+    const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY';
+    
+    let supabase = null;
+    let allCreators = [];
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        await fetchAndRenderCreators();
+        setupFilters();
+      } else {
+        document.getElementById("creators-directory-grid").innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ff3c3c;">
+            Failed to load database client.
+          </div>
+        `;
+      }
+    });
+
+    /**
+     * Fetch approved creators list from Supabase
+     */
+    async function fetchAndRenderCreators() {
+      const grid = document.getElementById("creators-directory-grid");
+      
+      try {
+        const { data, error } = await supabase
+          .from('creators')
+          .select('name, primary_platform, follower_count, language_primary, content_type, telegram_handle, twitter_handle, instagram_handle, youtube_channel')
+          .eq('status', 'approved');
+
+        if (error) throw error;
+        
+        allCreators = data || [];
+        renderCreatorsList(allCreators);
+
+      } catch (err) {
+        console.error("Error fetching creator directory:", err);
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ff3c3c; background: rgba(255,60,60,0.05); border: 1px dashed rgba(255,60,60,0.2); border-radius: 8px;">
+            <strong>Unable to load creators.</strong><br>
+            Please check back shortly or make sure the Supabase API is configured.
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Render creator cards in grid
+     */
+    function renderCreatorsList(creators) {
+      const grid = document.getElementById("creators-directory-grid");
+      grid.innerHTML = "";
+
+      if (creators.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-secondary);">
+            No matching creator profiles found. Try adjusting your filters.
+          </div>
+        `;
+        return;
+      }
+
+      creators.forEach(creator => {
+        const card = document.createElement("div");
+        card.className = "creator-card";
+        
+        // Form formats chips
+        let chipsHtml = "";
+        if (Array.isArray(creator.content_type)) {
+          chipsHtml = creator.content_type.map(format => `<span class="format-chip">${format}</span>`).join("");
+        }
+
+        // Social Buttons
+        let socialsHtml = "";
+        
+        // Helper to strip @
+        const cleanHandle = (handle) => handle ? handle.replace(/^@/, '') : '';
+
+        if (creator.twitter_handle) {
+          socialsHtml += `
+            <a href="https://x.com/${cleanHandle(creator.twitter_handle)}" target="_blank" rel="noreferrer" class="social-btn">
+              🐦 X/Twitter
+            </a>
+          `;
+        }
+        
+        if (creator.telegram_handle) {
+          socialsHtml += `
+            <a href="https://t.me/${cleanHandle(creator.telegram_handle)}" target="_blank" rel="noreferrer" class="social-btn">
+              ✈️ Telegram
+            </a>
+          `;
+        }
+
+        if (creator.youtube_channel) {
+          socialsHtml += `
+            <a href="${creator.youtube_channel}" target="_blank" rel="noreferrer" class="social-btn">
+              📺 YouTube
+            </a>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="creator-header">
+            <div class="creator-avatar">${creator.name.charAt(0).toUpperCase()}</div>
+            <div class="creator-title">
+              <h3>${creator.name}</h3>
+              <span>${creator.primary_platform} partner</span>
+            </div>
+          </div>
+          
+          <div class="creator-stats">
+            <div>
+              <small>Reach / Followers</small>
+              <strong>${creator.follower_count}</strong>
+            </div>
+            <div>
+              <small>Language</small>
+              <strong>${creator.language_primary}</strong>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <small style="color:var(--text-secondary); text-transform:uppercase; font-size:9px; font-family:var(--font-mono);">Supported Formats</small>
+            <div class="format-chips">
+              ${chipsHtml || '<span style="font-size:11px; color:var(--text-secondary)">Generic Posts</span>'}
+            </div>
+          </div>
+
+          ${socialsHtml ? `<div class="creator-socials">${socialsHtml}</div>` : ''}
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    /**
+     * Setup search and filters logic
+     */
+    function setupFilters() {
+      const searchInput = document.getElementById("search-input");
+      const platformFilter = document.getElementById("platform-filter");
+      const languageFilter = document.getElementById("language-filter");
+
+      const performFilter = () => {
+        const query = searchInput.value.toLowerCase().trim();
+        const selectedPlatform = platformFilter.value;
+        const selectedLanguage = languageFilter.value;
+
+        const filtered = allCreators.filter(creator => {
+          // 1. Search Query
+          const matchesQuery = 
+            creator.name.toLowerCase().includes(query) ||
+            (creator.twitter_handle && creator.twitter_handle.toLowerCase().includes(query)) ||
+            (creator.telegram_handle && creator.telegram_handle.toLowerCase().includes(query));
+
+          // 2. Platform
+          const matchesPlatform = selectedPlatform === "all" || creator.primary_platform === selectedPlatform;
+
+          // 3. Language
+          const matchesLanguage = selectedLanguage === "all" || creator.language_primary === selectedLanguage;
+
+          return matchesQuery && matchesPlatform && matchesLanguage;
+        });
+
+        renderCreatorsList(filtered);
+      };
+
+      searchInput.addEventListener("input", performFilter);
+      platformFilter.addEventListener("change", performFilter);
+      languageFilter.addEventListener("change", performFilter);
+    }
+  </script>
+</body>
+</html>
