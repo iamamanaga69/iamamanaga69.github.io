@@ -279,3 +279,15 @@
   border: 1px solid rgba(255, 60, 60, 0.2);
   color: #ff3c3c;
 }
+
+/* Main content padding adjustment to prevent header overlap */
+.influencer-main {
+  padding-top: calc(var(--nav-height) + 40px);
+  padding-bottom: 80px;
+}
+@media (max-width: 768px) {
+  .influencer-main {
+    padding-top: calc(var(--nav-height) + 24px);
+    padding-bottom: 40px;
+  }
+}
