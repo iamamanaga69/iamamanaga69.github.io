@@ -31,10 +31,13 @@ const Flexist = (() => {
     if (href.startsWith("http") || href.startsWith("mailto:") || href.startsWith("#") || href.startsWith("tel:")) {
       return href;
     }
-    if (href === "./" || href === "/") {
+    if (href.startsWith("/")) {
+      return href;
+    }
+    if (href === "./") {
       return "/";
     }
-    return basePrefix + href;
+    return "/" + href;
   }
 
   const navGroups = [
