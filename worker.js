@@ -123,6 +123,16 @@ export default {
     }
 
     const url = new URL(request.url);
+
+    // ── Webhook and registrations bypass IP rate limiting ──
+    if (url.pathname === "/telegram-webhook" && request.method === "POST") {
+      return handleTelegramWebhook(request, env, corsHeaders);
+    } else if (url.pathname === "/register-ticket" && request.method === "POST") {
+      return handleRegisterTicket(request, env, corsHeaders);
+    } else if (url.pathname === "/register-creator" && request.method === "POST") {
+      return handleRegisterCreator(request, env, corsHeaders);
+    }
+
     const ip = request.headers.get("CF-Connecting-IP") || "127.0.0.1";
 
     // ── RATE LIMITER (5 attempts per minute per IP via KV) ──
@@ -691,4 +701,256 @@ async function verifyTron(txHash, token, expectedAmount, env) {
   }
 
   return { verified: false, reason: "Unsupported TRON token selection." };
+}
+
+// ── Telegram Discussion Group Auto-Creation Handlers ──
+
+async function handleRegisterTicket(request, env, corsHeaders) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
+  }
+
+  const { ticketId, projectName, telegramHandle } = body;
+  if (!ticketId) {
+    return new Response(JSON.stringify({ error: "Missing ticketId" }), { status: 400, headers: corsHeaders });
+  }
+
+  const ticketKey = `ticket:${ticketId.trim().toUpperCase()}`;
+  const data = {
+    ticketId: ticketId.trim(),
+    projectName: (projectName || "Unknown Project").trim(),
+    telegramHandle: (telegramHandle || "").trim(),
+    timestamp: Date.now()
+  };
+
+  try {
+    await env.VERIFIED_TXIDS.put(ticketKey, JSON.stringify(data), { expirationTtl: 604800 }); // 7 days TTL
+    return new Response(JSON.stringify({ success: true }), { status: 200, headers: corsHeaders });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "KV write failure", details: err.message }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+async function handleRegisterCreator(request, env, corsHeaders) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "Invalid JSON body" }), { status: 400, headers: corsHeaders });
+  }
+
+  let { telegramHandle, name } = body;
+  if (!telegramHandle) {
+    return new Response(JSON.stringify({ error: "Missing telegramHandle" }), { status: 400, headers: corsHeaders });
+  }
+
+  let cleanHandle = telegramHandle.trim().replace(/^@/, "");
+  if (!cleanHandle) {
+    return new Response(JSON.stringify({ error: "Invalid telegramHandle" }), { status: 400, headers: corsHeaders });
+  }
+
+  const creatorKey = `creator:${cleanHandle.toLowerCase()}`;
+  const data = {
+    telegramHandle: cleanHandle,
+    name: (name || "Unknown Creator").trim(),
+    timestamp: Date.now()
+  };
+
+  try {
+    await env.VERIFIED_TXIDS.put(creatorKey, JSON.stringify(data), { expirationTtl: 604800 }); // 7 days TTL
+    return new Response(JSON.stringify({ success: true }), { status: 200, headers: corsHeaders });
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "KV write failure", details: err.message }), {
+      status: 500,
+      headers: corsHeaders
+    });
+  }
+}
+
+async function handleTelegramWebhook(request, env, corsHeaders) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_SUPERGROUP_ID) {
+    console.error("Telegram credentials missing in Worker environment variables.");
+    return new Response(JSON.stringify({ error: "Server Configuration Error" }), { status: 500, headers: corsHeaders });
+  }
+
+  let update;
+  try {
+    update = await request.json();
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Invalid JSON payload" }), { status: 400, headers: corsHeaders });
+  }
+
+  const message = update.message;
+  if (!message || !message.text) {
+    return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+  }
+
+  const chatId = message.chat.id;
+  const text = message.text.trim();
+
+  if (text.startsWith("/start")) {
+    const parts = text.split(/\s+/);
+    if (parts.length > 1) {
+      const payload = parts[1];
+      
+      if (payload.startsWith("inquiry_")) {
+        const ticketId = payload.substring("inquiry_".length).toUpperCase();
+        const ticketKey = `ticket:${ticketId}`;
+        const ticketDataStr = await env.VERIFIED_TXIDS.get(ticketKey);
+        
+        if (!ticketDataStr) {
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, chatId, 
+            `⚠️ <b>Access Denied</b>\n\nNo active ticket found for <b>${ticketId}</b>. To start a discussion group, please fill out the project inquiry form first:\n\n🌐 https://flexist.in/inquiry\n\nIf you have already submitted the form, please use the button on the success screen.`
+          );
+          return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+        }
+        
+        const ticketData = JSON.parse(ticketDataStr);
+        const topicKey = `topic:inquiry:${ticketId}`;
+        const existingTopicStr = await env.VERIFIED_TXIDS.get(topicKey);
+        
+        if (existingTopicStr) {
+          const existingTopic = JSON.parse(existingTopicStr);
+          await sendTopicLinks(env.TELEGRAM_BOT_TOKEN, chatId, ticketId, ticketData.projectName, existingTopic.inviteLink, env.TELEGRAM_SUPERGROUP_ID, existingTopic.threadId);
+          return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+        }
+        
+        try {
+          const topicName = `Inquiry: ${ticketId} (${ticketData.projectName})`;
+          const threadId = await createForumTopic(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, topicName);
+          const inviteLink = await createChatInviteLink(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, `Inquiry ${ticketId}`);
+          
+          await env.VERIFIED_TXIDS.put(topicKey, JSON.stringify({ threadId, inviteLink }));
+          
+          const founderAlert = `🔔 <b>New Project Discussion Started</b>\n\n<b>Ticket:</b> ${ticketId}\n<b>Project:</b> ${ticketData.projectName}\n<b>Founder Telegram:</b> ${ticketData.telegramHandle ? '@' + ticketData.telegramHandle.replace(/^@/, "") : 'Not provided'}\n\n<i>Waiting for founder/team to join the thread...</i>`;
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, founderAlert, threadId);
+          
+          await sendTopicLinks(env.TELEGRAM_BOT_TOKEN, chatId, ticketId, ticketData.projectName, inviteLink, env.TELEGRAM_SUPERGROUP_ID, threadId);
+        } catch (err) {
+          console.error("Error creating Telegram topic/invite:", err);
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, chatId, 
+            `❌ <b>Error</b>\n\nFailed to create discussion group automatically. Please contact us directly at @FlexistCrypto.`
+          );
+        }
+        return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+      }
+      
+      if (payload.startsWith("creator_")) {
+        const creatorHandle = payload.substring("creator_".length).toLowerCase().replace(/^@/, "");
+        const creatorKey = `creator:${creatorHandle}`;
+        const creatorDataStr = await env.VERIFIED_TXIDS.get(creatorKey);
+        
+        if (!creatorDataStr) {
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, chatId, 
+            `⚠️ <b>Access Denied</b>\n\nWe could not verify your application registration. To start a discussion group, please fill out the influencer application form first:\n\n🌐 https://flexist.in/influencer/signup\n\nIf you have already submitted the form, please use the button on the success screen.`
+          );
+          return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+        }
+        
+        const creatorData = JSON.parse(creatorDataStr);
+        const topicKey = `topic:creator:${creatorHandle}`;
+        const existingTopicStr = await env.VERIFIED_TXIDS.get(topicKey);
+        
+        if (existingTopicStr) {
+          const existingTopic = JSON.parse(existingTopicStr);
+          await sendTopicLinks(env.TELEGRAM_BOT_TOKEN, chatId, `@${creatorHandle}`, creatorData.name, existingTopic.inviteLink, env.TELEGRAM_SUPERGROUP_ID, existingTopic.threadId);
+          return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+        }
+        
+        try {
+          const topicName = `Creator: @${creatorHandle} (${creatorData.name})`;
+          const threadId = await createForumTopic(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, topicName);
+          const inviteLink = await createChatInviteLink(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, `Creator @${creatorHandle}`);
+          
+          await env.VERIFIED_TXIDS.put(topicKey, JSON.stringify({ threadId, inviteLink }));
+          
+          const founderAlert = `🔔 <b>New Creator Discussion Started</b>\n\n<b>Name:</b> ${creatorData.name}\n<b>Telegram:</b> @${creatorHandle}\n\n<i>Waiting for creator to join the thread...</i>`;
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, env.TELEGRAM_SUPERGROUP_ID, founderAlert, threadId);
+          
+          await sendTopicLinks(env.TELEGRAM_BOT_TOKEN, chatId, `@${creatorHandle}`, creatorData.name, inviteLink, env.TELEGRAM_SUPERGROUP_ID, threadId);
+        } catch (err) {
+          console.error("Error creating Telegram topic/invite for creator:", err);
+          await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, chatId, 
+            `❌ <b>Error</b>\n\nFailed to create discussion group automatically. Please contact us directly at @FlexistCrypto.`
+          );
+        }
+        return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+      }
+    }
+    
+    await sendTelegramMessage(env.TELEGRAM_BOT_TOKEN, chatId, 
+      `👋 <b>Welcome to Flexist Discussions!</b>\n\nTo automatically create a dedicated group topic for your discussion, please submit one of our forms:\n\n📁 <b>Project Inquiry:</b>\nhttps://flexist.in/inquiry\n\n📣 <b>Influencer/Creator Portal:</b>\nhttps://flexist.in/influencer/signup\n\nOnce completed, click the Telegram option shown on the success page.\n\n<i>Alternatively, you can chat directly with the founder at @FlexistCrypto.</i>`
+    );
+  }
+
+  return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+}
+
+async function sendTelegramMessage(token, chatId, text, threadId = null) {
+  if (!token) return;
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  const body = {
+    chat_id: chatId,
+    text: text,
+    parse_mode: "HTML"
+  };
+  if (threadId) {
+    body.message_thread_id = threadId;
+  }
+
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+}
+
+async function createForumTopic(token, supergroupId, name) {
+  const url = `https://api.telegram.org/bot${token}/createForumTopic`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: supergroupId,
+      name: name
+    })
+  });
+  const data = await res.json();
+  if (!data.ok) {
+    throw new Error(data.description || "Failed to create forum topic");
+  }
+  return data.result.message_thread_id;
+}
+
+async function createChatInviteLink(token, supergroupId, name) {
+  const url = `https://api.telegram.org/bot${token}/createChatInviteLink`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: supergroupId,
+      name: name,
+      member_limit: 1
+    })
+  });
+  const data = await res.json();
+  if (!data.ok) {
+    throw new Error(data.description || "Failed to create chat invite link");
+  }
+  return data.result.invite_link;
+}
+
+async function sendTopicLinks(token, chatId, id, name, inviteLink, supergroupId, threadId) {
+  const cleanGroupId = Math.abs(parseInt(supergroupId, 10)).toString().replace(/^100/, "");
+  const topicLink = `https://t.me/c/${cleanGroupId}/${threadId}`;
+
+  const messageText = `🚀 <b>Your Discussion Topic is Ready!</b>\n\nWe have created a dedicated discussion thread for <b>${name}</b> (${id}).\n\nFollow these 2 steps to join:\n\n1️⃣ <b>Join our Supergroup:</b>\n👉 <a href="${inviteLink}">Click here to join the group</a>\n\n2️⃣ <b>Enter your discussion thread:</b>\n👉 <a href="${topicLink}">Click here to go directly to your thread</a>\n\n<i>Note: The invite link is valid for 1 join only. Our team has been notified and is looking forward to chatting with you!</i>`;
+
+  await sendTelegramMessage(token, chatId, messageText);
 }

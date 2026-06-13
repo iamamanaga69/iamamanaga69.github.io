@@ -67,6 +67,10 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   <slot name="head" />
 </head>
 <body data-page={pageId}>
+  <!-- Floating Ambient Orbs -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
   <div data-site-nav>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-nav">
@@ -189,5 +193,6 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   </div>
 
   <script is:inline src="/scripts/global.js"></script>
+  <script is:inline src="/scripts/fx.js"></script>
 </body>
 </html>

@@ -34,6 +34,10 @@
   <link rel="preload" href="assets/images/flexist-hero-operator.png" as="image">
 </head>
 <body data-page="home">
+  <!-- Floating Ambient Orbs -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
   <div data-site-nav></div>
   <main id="main-content">
     <section class="home-hero">
@@ -60,9 +64,9 @@
             <figcaption>India growth support is live</figcaption>
           </figure>
           <div class="hero-command-grid">
-            <div><strong>5+</strong><span>Years In Crypto</span></div>
-            <div><strong>4+</strong><span>Projects Operated</span></div>
-            <div><strong>500+</strong><span>Members Grown</span></div>
+            <div><strong data-count-to="5" data-count-suffix="+">0+</strong><span>Years In Crypto</span></div>
+            <div><strong data-count-to="4" data-count-suffix="+">0+</strong><span>Projects Operated</span></div>
+            <div><strong data-count-to="500" data-count-suffix="+">0+</strong><span>Members Grown</span></div>
           </div>
         </aside>
       </div>
@@ -93,7 +97,7 @@
           <h2 class="section-title">India expansion needs more than campaign spend.</h2>
           <p class="section-copy">The goal is clarity: explain the India growth promise, show the benefits, answer the founder's questions, and make the next step obvious.</p>
         </div>
-        <div class="advantage-grid">
+        <div class="advantage-grid reveal-stagger">
           <article class="glass-card advantage-card reveal">
             <span class="watermark-text">01</span>
             <span>01 Speed</span>
@@ -160,7 +164,7 @@
           <h2 class="section-title">Built for the full India expansion cycle.</h2>
           <p class="section-copy">Use one service where you need help now, or combine them into one complete India growth plan.</p>
         </div>
-        <div class="grid-3">
+        <div class="grid-3 reveal-stagger">
           <article class="glass-card hoverable service-card reveal">
             <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M16 8a6 6 0 0 1 5 6"/></svg></div>
             <h3>Community Architecture</h3>
@@ -201,9 +205,9 @@
       </div>
     </section>
 
-    <section class="section india-showcase">
+    <section class="section india-showcase" data-parallax="0.03">
       <div class="container split-layout">
-        <div class="reveal">
+        <div class="reveal reveal-left">
           <span class="section-label">India Opportunity</span>
           <h2 class="section-title">Why India Is Your Next <span class="gradient-text">100,000 Users.</span></h2>
           <p>India is not one audience. It has trading groups, regional creators, builders, students, and early users. A good plan reaches the right people in the right order.</p>
@@ -214,7 +218,7 @@
           </div>
           <a class="ghost-button" href="flexistlabs">Open FlexistLabs &rarr;</a>
         </div>
-        <div class="glass-card map-shell reveal">
+        <div class="glass-card map-shell reveal reveal-right">
           <div class="terminal-head"><span>India Growth Map</span><span class="terminal-status">Ready</span></div>
           <div class="india-map" data-india-map>
             <svg viewBox="0 0 260 330" aria-label="Stylized India opportunity map">
@@ -238,7 +242,7 @@
           <span class="section-label">Growth Framework</span>
           <h2 class="section-title">Four steps from context to compounding growth.</h2>
         </div>
-        <div class="growth-flow growth-flow-four">
+        <div class="growth-flow growth-flow-four reveal-stagger">
           <article class="glass-card flow-step reveal">
             <span class="flow-index">01</span>
             <h3>Founder Brief</h3>
@@ -318,7 +322,7 @@
           <span class="section-label">Project Experience</span>
           <h2 class="section-title">Built inside live Web3 projects.</h2>
         </div>
-        <div class="timeline-preview">
+        <div class="timeline-preview reveal-stagger">
           <article class="glass-card milestone"><small>2020 - 2021</small><h3>FABWELT</h3><p>Moderated Telegram and Discord while helping users and working with the wider team.</p></article>
           <article class="glass-card milestone"><small>2021 - 2022</small><h3>RRG VENTURES</h3><p>Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></article>
           <article class="glass-card milestone"><small>MAR 2022 - NOV 2023</small><h3>UNIELON WALLET</h3><p>Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></article>
@@ -354,7 +358,7 @@
 
     <section class="section">
       <div class="container">
-        <div class="cta-block founder-contact reveal">
+        <div class="cta-block founder-contact reveal reveal-scale">
           <div>
             <span class="section-label">Founder Entry Point</span>
             <h2>Ready To Build Your India User Base?</h2>
@@ -375,7 +379,7 @@
     </section>
   </main>
   <div data-site-footer></div>
-  <script src="js/global.js"></script>
+  <script src="js/global.js"></script><script src="js/fx.js"></script>
   <script src="js/network-graph.js"></script>
   <script src="js/counters.js"></script>
   <script src="js/india-map.js"></script>

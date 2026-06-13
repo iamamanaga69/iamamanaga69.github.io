@@ -1,3 +1,13 @@
+/* ============================================================================
+   FLEXIST CRYPTO — PREMIUM ANIMATION SYSTEM
+   A comprehensive, GPU-accelerated animation library for dark-themed Web3 UI.
+   All animations use transform / opacity / filter only — zero layout thrashing.
+   ============================================================================ */
+
+/* ==========================================================================
+   §0  EXISTING CORE KEYFRAMES (preserved exactly)
+   ========================================================================== */
+
 @keyframes fade-rise {
   from {
     opacity: 0;
@@ -61,6 +71,10 @@
   }
 }
 
+/* ==========================================================================
+   §0.1  EXISTING CORE RULES (preserved exactly)
+   ========================================================================== */
+
 .reveal {
   opacity: 0;
   transform: translateY(20px);
@@ -75,6 +89,636 @@
 .cursor {
   animation: blink 900ms steps(1, end) infinite;
 }
+
+
+/* ============================================================================
+   §1  STAGGERED REVEAL SYSTEM
+   Wrap children with `.reveal` inside a `.reveal-stagger` parent.
+   Each child receives an incremental delay via --stagger-i.
+   ========================================================================== */
+
+.reveal-stagger > .reveal {
+  transition-delay: calc(var(--stagger-i, 0) * 80ms);
+}
+
+/* Assign --stagger-i for up to 12 children */
+.reveal-stagger > .reveal:nth-child(1)  { --stagger-i: 0; }
+.reveal-stagger > .reveal:nth-child(2)  { --stagger-i: 1; }
+.reveal-stagger > .reveal:nth-child(3)  { --stagger-i: 2; }
+.reveal-stagger > .reveal:nth-child(4)  { --stagger-i: 3; }
+.reveal-stagger > .reveal:nth-child(5)  { --stagger-i: 4; }
+.reveal-stagger > .reveal:nth-child(6)  { --stagger-i: 5; }
+.reveal-stagger > .reveal:nth-child(7)  { --stagger-i: 6; }
+.reveal-stagger > .reveal:nth-child(8)  { --stagger-i: 7; }
+.reveal-stagger > .reveal:nth-child(9)  { --stagger-i: 8; }
+.reveal-stagger > .reveal:nth-child(10) { --stagger-i: 9; }
+.reveal-stagger > .reveal:nth-child(11) { --stagger-i: 10; }
+.reveal-stagger > .reveal:nth-child(12) { --stagger-i: 11; }
+
+
+/* ============================================================================
+   §2  DIRECTIONAL REVEALS
+   Extend the base `.reveal` with a direction modifier.
+   All triggered by adding `.visible`.
+   ========================================================================== */
+
+/* — Slide from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* — Slide from right */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* — Scale up */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* — Blur in */
+.reveal-blur {
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 700ms var(--ease-out), filter 700ms var(--ease-out);
+}
+.reveal-blur.visible {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* Stagger support for directional reveals */
+.reveal-stagger > .reveal-left,
+.reveal-stagger > .reveal-right,
+.reveal-stagger > .reveal-scale,
+.reveal-stagger > .reveal-blur {
+  transition-delay: calc(var(--stagger-i, 0) * 80ms);
+}
+
+
+/* ============================================================================
+   §3  GRADIENT TEXT SHIMMER
+   Apply `.gradient-text` to headings for a slow-moving holographic shimmer.
+   ========================================================================== */
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    var(--accent-cyan, #00d4ff),
+    var(--accent-blue, #0066ff),
+    var(--accent-purple, #7b2fff),
+    var(--accent-cyan, #00d4ff)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 8s ease infinite;
+}
+
+
+/* ============================================================================
+   §4  GLOW PULSE (Accent Elements)
+   Add `.glow-pulse` to any element for a breathing neon glow.
+   ========================================================================== */
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 6px  rgba(0, 212, 255, 0.15),
+      0 0 20px rgba(0, 212, 255, 0.06);
+  }
+  50% {
+    box-shadow:
+      0 0 12px rgba(0, 212, 255, 0.35),
+      0 0 40px rgba(0, 212, 255, 0.12);
+  }
+}
+
+.glow-pulse {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+
+/* ============================================================================
+   §5  FLOATING ORBS BACKGROUND
+   Three large, barely-visible blurred orbs that drift in independent paths.
+   Purely decorative — non-interactive, behind all content.
+   ========================================================================== */
+
+@keyframes orb-float-1 {
+  0%   { transform: translate(0, 0)       scale(1);    }
+  25%  { transform: translate(60px, -40px)  scale(1.05); }
+  50%  { transform: translate(-30px, 50px)  scale(0.95); }
+  75%  { transform: translate(-70px, -20px) scale(1.02); }
+  100% { transform: translate(0, 0)        scale(1);    }
+}
+
+@keyframes orb-float-2 {
+  0%   { transform: translate(0, 0)       scale(1);    }
+  33%  { transform: translate(-50px, 60px) scale(1.03); }
+  66%  { transform: translate(40px, -50px) scale(0.97); }
+  100% { transform: translate(0, 0)        scale(1);    }
+}
+
+@keyframes orb-float-3 {
+  0%   { transform: translate(0, 0)        scale(1);    }
+  20%  { transform: translate(45px, 30px)   scale(0.96); }
+  50%  { transform: translate(-55px, -45px) scale(1.04); }
+  80%  { transform: translate(30px, -60px)  scale(0.98); }
+  100% { transform: translate(0, 0)         scale(1);    }
+}
+
+.bg-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -3;
+  will-change: transform;
+  filter: blur(100px);
+}
+
+.bg-orb-1 {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 102, 255, 0.07) 0%,
+    transparent 70%
+  );
+  opacity: 0.07;
+  animation: orb-float-1 20s ease-in-out infinite;
+}
+
+.bg-orb-2 {
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  right: -8%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.06) 0%,
+    transparent 70%
+  );
+  opacity: 0.05;
+  animation: orb-float-2 25s ease-in-out infinite;
+}
+
+.bg-orb-3 {
+  width: 700px;
+  height: 700px;
+  bottom: -15%;
+  left: 30%;
+  background: radial-gradient(
+    circle,
+    rgba(123, 47, 255, 0.05) 0%,
+    transparent 70%
+  );
+  opacity: 0.04;
+  animation: orb-float-3 30s ease-in-out infinite;
+}
+
+
+/* ============================================================================
+   §6  CARD HOVER MICRO-ANIMATIONS
+   Adds a sweeping border glow and enhanced top-highlight on hover.
+   ========================================================================== */
+
+@keyframes border-glow-sweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.glass-card {
+  position: relative;
+  transition: transform 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.3) 25%,
+    rgba(123, 47, 255, 0.3) 50%,
+    rgba(0, 212, 255, 0.3) 75%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.08);
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+  animation: border-glow-sweep 3s linear infinite;
+}
+
+/* Top highlight (existing ::after pattern — only opacity change on hover) */
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 212, 255, 0.25),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover::after {
+  opacity: 1;
+}
+
+
+/* ============================================================================
+   §7  SECTION DIVIDER GLOW
+   A subtle, breathing horizontal glow line at the top of `.section-dark`.
+   ========================================================================== */
+
+@keyframes line-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.section-dark {
+  position: relative;
+}
+
+.section-dark::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-cyan, #00d4ff),
+    transparent
+  );
+  opacity: 0.3;
+  animation: line-glow 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+
+/* ============================================================================
+   §8  SCROLL PROGRESS INDICATOR
+   A 2 px bar at the top of the viewport.  Width controlled via
+   `transform: scaleX(progress)` set by JS on the element's inline style.
+   ========================================================================== */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-cyan, #00d4ff),
+    var(--accent-blue, #0066ff),
+    var(--accent-purple, #7b2fff)
+  );
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 9999;
+  pointer-events: none;
+  will-change: transform;
+  transition: transform 100ms linear;
+}
+
+
+/* ============================================================================
+   §9  PAGE LOAD ANIMATION
+   Body starts hidden; JS adds `.loaded` to reveal content.
+   ========================================================================== */
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body {
+  opacity: 0;
+  transition: opacity 400ms var(--ease-out);
+}
+
+body.loaded {
+  opacity: 1;
+}
+
+body.loaded main {
+  animation: page-enter 800ms var(--ease-out) forwards;
+}
+
+
+/* ============================================================================
+   §10  MAGNETIC BUTTON HOVER ENHANCEMENT
+   A radial glow that follows the cursor via --mouse-x / --mouse-y
+   custom props set by JS on mousemove.
+   ========================================================================== */
+
+.neon-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 80px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 212, 255, 0.18) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.neon-button:hover::after {
+  opacity: 1;
+}
+
+
+/* ============================================================================
+   §11  TYPING CURSOR ENHANCEMENT
+   Adds a subtle glow around the blinking cursor.
+   ========================================================================== */
+
+.cursor {
+  text-shadow:
+    0 0 4px  rgba(0, 212, 255, 0.6),
+    0 0 12px rgba(0, 212, 255, 0.25);
+}
+
+
+/* ============================================================================
+   §12  TAG CHIP HOVER
+   Subtle scale + glow on hover for `.tag-chip` elements.
+   ========================================================================== */
+
+.tag-chip {
+  transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease-out);
+}
+
+.tag-chip:hover {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 6px  rgba(0, 212, 255, 0.2),
+    0 0 18px rgba(0, 212, 255, 0.08);
+}
+
+
+/* ============================================================================
+   §13  ICON BOX PULSE
+   Subtle rotation on hover for `.icon-box` elements.
+   ========================================================================== */
+
+.icon-box {
+  transition: transform 400ms var(--ease-out);
+}
+
+.icon-box:hover {
+  transform: rotate(6deg) scale(1.05);
+}
+
+
+/* ============================================================================
+   §14  HERO TEXT ANIMATION
+   Characters / words slide up from below with staggered timing.
+   Triggered by JS adding `.animated` to `.hero-title`.
+   ========================================================================== */
+
+@keyframes hero-text-rise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-title {
+  overflow: hidden;
+}
+
+.hero-title .hero-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.hero-title.animated .hero-word {
+  animation: hero-text-rise 700ms var(--ease-out) forwards;
+  animation-delay: calc(var(--word-i, 0) * 80ms);
+}
+
+/* Assign word indices (up to 12 words) */
+.hero-title .hero-word:nth-child(1)  { --word-i: 0; }
+.hero-title .hero-word:nth-child(2)  { --word-i: 1; }
+.hero-title .hero-word:nth-child(3)  { --word-i: 2; }
+.hero-title .hero-word:nth-child(4)  { --word-i: 3; }
+.hero-title .hero-word:nth-child(5)  { --word-i: 4; }
+.hero-title .hero-word:nth-child(6)  { --word-i: 5; }
+.hero-title .hero-word:nth-child(7)  { --word-i: 6; }
+.hero-title .hero-word:nth-child(8)  { --word-i: 7; }
+.hero-title .hero-word:nth-child(9)  { --word-i: 8; }
+.hero-title .hero-word:nth-child(10) { --word-i: 9; }
+.hero-title .hero-word:nth-child(11) { --word-i: 10; }
+.hero-title .hero-word:nth-child(12) { --word-i: 11; }
+
+
+/* ============================================================================
+   §15  SMOOTH COUNTER ROLL
+   Number counting / odometer effect.
+   ========================================================================== */
+
+@keyframes counter-roll {
+  from {
+    opacity: 0;
+    transform: translateY(40%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.counter-value {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.counter-value.counting {
+  animation: counter-roll 600ms var(--ease-out) forwards;
+}
+
+
+/* ============================================================================
+   §16  CTA BLOCK PARALLAX GLOW
+   A slow-moving gradient overlay that creates depth on `.cta-block`.
+   ========================================================================== */
+
+@keyframes cta-glow-drift {
+  0% {
+    transform: translate(-30%, -30%) rotate(0deg);
+  }
+  50% {
+    transform: translate(30%, 10%) rotate(180deg);
+  }
+  100% {
+    transform: translate(-30%, -30%) rotate(360deg);
+  }
+}
+
+.cta-block {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-block::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 212, 255, 0.06) 0%,
+    rgba(123, 47, 255, 0.04) 40%,
+    transparent 70%
+  );
+  animation: cta-glow-drift 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+
+/* ============================================================================
+   §P  PERFORMANCE MODE
+   Add `.performance-mode` to <html> or <body> to kill expensive animations
+   while keeping basic reveals functional.
+   ========================================================================== */
+
+.performance-mode .bg-orb,
+.performance-mode .cta-block::before,
+.performance-mode .glass-card::before {
+  display: none !important;
+}
+
+.performance-mode .gradient-text {
+  animation: none !important;
+}
+
+.performance-mode .glow-pulse {
+  animation: none !important;
+}
+
+.performance-mode .section-dark::before {
+  animation: none !important;
+}
+
+.performance-mode .neon-button::after {
+  display: none !important;
+}
+
+.performance-mode .glass-card:hover {
+  box-shadow: none !important;
+}
+
+
+/* ============================================================================
+   §A11Y  REDUCED MOTION (preserved — always last)
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -12,3 +12,8 @@ binding = "DB"
 database_name = "flexist-db"
 # Replace with the database_id returned by running: wrangler d1 create flexist-db
 database_id = "YOUR_D1_DATABASE_ID"
+
+[vars]
+# Telegram Bot and Supergroup configuration for auto-group discussions
+TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_SUPERGROUP_ID = "YOUR_TELEGRAM_SUPERGROUP_ID"

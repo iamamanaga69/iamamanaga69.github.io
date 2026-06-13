@@ -209,7 +209,7 @@
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../js/global.js"></script>
+  <script src="../js/global.js"></script><script src="../js/fx.js"></script>
   <script src="./js/auth.js"></script>
   
   <script>
@@ -320,6 +320,19 @@
           console.error("Magic link generation failed:", authError);
           // Don't fail the whole signup if magic link fails to send - the creator is saved.
         }
+
+        // Register the creator with the worker to allow Telegram group creation
+        const WORKER_URL = "https://flexist-payment-verifier.flexistcrypto.workers.dev";
+        fetch(`${WORKER_URL}/register-creator`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            telegramHandle: creatorData.telegram_handle,
+            name: creatorData.name
+          })
+        }).catch(err => console.error("Failed to register creator with verifier worker:", err));
 
         // Success message
         alertBox.innerHTML = `

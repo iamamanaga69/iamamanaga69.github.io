@@ -423,6 +423,20 @@ STEP 7: FOUNDER CONTACT
     if (discussBtn) {
       discussBtn.href = `https://t.me/FlexistGroupBot?start=inquiry_${ticketId}`;
     }
+
+    // Register ticket with worker in the background for spam-guarded Telegram creation
+    const WORKER_URL = "https://flexist-payment-verifier.flexistcrypto.workers.dev";
+    fetch(`${WORKER_URL}/register-ticket`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        ticketId: ticketId,
+        projectName: formData.projectName,
+        telegramHandle: formData.founderTelegram
+      })
+    }).catch((err) => console.error("Failed to register ticket with verifier worker:", err));
     
     form.hidden = true;
     document.querySelector("[data-inquiry-progress]").hidden = true;
