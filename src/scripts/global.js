@@ -22,7 +22,8 @@ const Flexist = (() => {
 
   const isSubfolder = window.location.pathname.includes("/plans/") || 
                       window.location.pathname.includes("/payment/") || 
-                      window.location.pathname.includes("/onboarding/");
+                      window.location.pathname.includes("/onboarding/") ||
+                      window.location.pathname.includes("/influencer/");
   const basePrefix = isSubfolder ? "../" : "";
 
   function resolveUrl(href) {
