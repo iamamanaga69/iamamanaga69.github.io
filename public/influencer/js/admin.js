@@ -7,7 +7,7 @@
  * secret key to a public repository.
  */
 
-// Placeholders - Aman will replace these
+// Placeholders - You will replace these
 const SUPABASE_SERVICE_KEY = 'SUPABASE_SERVICE_KEY';
 
 let supabaseAdmin = null;

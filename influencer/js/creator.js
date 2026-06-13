@@ -99,7 +99,7 @@ async function loadActiveCampaigns(creatorId) {
       container.innerHTML = `
         <div class="glass-card" style="padding: 40px; text-align: center; color: var(--text-secondary); width: 100%;">
           <p>No active campaigns assigned to you at the moment.</p>
-          <p style="font-size: 13px; margin-top: 8px;">Aman will assign you to campaigns when they match your profile.</p>
+          <p style="font-size: 13px; margin-top: 8px;">The Flexist team will assign you to campaigns when they match your profile.</p>
         </div>
       `;
       return;
@@ -161,7 +161,7 @@ async function loadActiveCampaigns(creatorId) {
         statusBadge = `<span class="badge-approved">Approved — Processing Payment</span>`;
         actionHtml = `
           <div style="font-size: 13px; color: var(--accent-green); background: rgba(0, 255, 136, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(0, 255, 136, 0.1);">
-            Task verified! Aman is processing your payment of ₹${parseFloat(assignment.payment_amount || campaign.budget_per_creator).toLocaleString('en-IN')}.
+            Task verified! Flexist is processing your payment of ₹${parseFloat(assignment.payment_amount || campaign.budget_per_creator).toLocaleString('en-IN')}.
           </div>
         `;
       }

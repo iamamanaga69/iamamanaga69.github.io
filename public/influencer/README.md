@@ -125,7 +125,7 @@ create policy "assignment_self" on campaign_assignments
      - Replace `'SUPABASE_SERVICE_KEY'` with your actual `service_role` key.
      
 > [!CAUTION]
-> The `service_role` key bypasses all security rules. **NEVER** share the admin URL or push a commit containing the actual `service_role` key to a public GitHub repository. Aman should keep this key local or restrict access.
+> The `service_role` key bypasses all security rules. **NEVER** share the admin URL or push a commit containing the actual `service_role` key to a public GitHub repository. You should keep this key local or restrict access.
 
 ---
 

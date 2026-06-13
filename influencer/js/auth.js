@@ -91,7 +91,7 @@
  * ============================================================================
  */
 
-// Placeholders for Supabase credentials - Aman will replace these
+// Placeholders for Supabase credentials - You will replace these
 const SUPABASE_URL = 'SUPABASE_URL';
 const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY';
 
@@ -203,7 +203,7 @@ async function requireAuth() {
           <div style="font-size: 3rem; margin-bottom: 15px;">⏳</div>
           <h1>Application Pending</h1>
           <p>Your creator profile application for <strong>${session.user.email}</strong> is currently under review.</p>
-          <p style="margin-top: 10px; color: var(--text-secondary);">Aman will review your profile and update your access. Please check back in 24-48 hours.</p>
+          <p style="margin-top: 10px; color: var(--text-secondary);">The Flexist team will review your profile and update your access. Please check back in 24-48 hours.</p>
           <p style="margin-top: 24px;">
             <button onclick="signOut()" class="ghost-button">Logout</button>
           </p>
@@ -220,7 +220,7 @@ async function requireAuth() {
           <div style="font-size: 3rem; margin-bottom: 15px;">❌</div>
           <h1>Application Declined</h1>
           <p>We regret to inform you that your creator partner application for <strong>${session.user.email}</strong> was not approved at this time.</p>
-          <p style="margin-top: 10px; color: var(--text-secondary);">If you believe this was an error, please reach out to Aman directly.</p>
+          <p style="margin-top: 10px; color: var(--text-secondary);">If you believe this was an error, please reach out to Flexist support directly.</p>
           <p style="margin-top: 24px;">
             <button onclick="signOut()" class="ghost-button">Logout</button>
           </p>
@@ -234,7 +234,7 @@ async function requireAuth() {
 }
 
 /**
- * Guards page for admin (Aman only)
+ * Guards page for admin (admin only)
  */
 async function requireAdmin() {
   const session = await getSession();
