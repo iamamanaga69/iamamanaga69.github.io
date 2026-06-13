@@ -28,17 +28,41 @@ const FlexistPayment = (() => {
      ═══════════════════════════════════════════════════════ */
   function initPaymentPage() {
     const urlParams = new URLSearchParams(window.location.search);
+    
+    // Default to Custom plan if no plan is specified
+    let { plan, type, amount } = getParams();
+    let isCustomPlan = false;
+
     if (!urlParams.has("plan")) {
-      const grid = document.querySelector(".checkout-layout-grid");
-      if (grid) grid.style.display = "none";
-      const fallback = document.getElementById("no-plan-fallback");
-      if (fallback) fallback.hidden = false;
-      const heroSub = document.getElementById("pay-hero-plan");
-      if (heroSub) heroSub.textContent = "Please select a plan to continue.";
-      return;
+      plan = "Custom";
+      type = "onetime";
+      amount = "0";
+      isCustomPlan = true;
+    } else if (plan.toLowerCase() === "custom") {
+      isCustomPlan = true;
     }
 
-    const { plan, type, amount } = getParams();
+    // Populate onboarding details from URL query parameters if present
+    const nameParam = urlParams.get("name");
+    const emailParam = urlParams.get("email");
+    const telegramParam = urlParams.get("telegram");
+    const projectParam = urlParams.get("project");
+    if (nameParam) {
+      const nameInput = document.getElementById("form-name");
+      if (nameInput) nameInput.value = nameParam;
+    }
+    if (emailParam) {
+      const emailInput = document.getElementById("form-email");
+      if (emailInput) emailInput.value = emailParam;
+    }
+    if (telegramParam) {
+      const telegramInput = document.getElementById("form-telegram");
+      if (telegramInput) telegramInput.value = telegramParam;
+    }
+    if (projectParam) {
+      const projectInput = document.getElementById("form-project");
+      if (projectInput) projectInput.value = projectParam;
+    }
 
     // Populate order summary
     const planEl = document.getElementById("order-plan");
@@ -46,7 +70,32 @@ const FlexistPayment = (() => {
     const amountEl = document.getElementById("order-amount");
     if (planEl) planEl.textContent = plan;
     if (typeEl) typeEl.textContent = formatType(type);
-    if (amountEl) amountEl.textContent = "$" + Number(amount).toLocaleString();
+    
+    if (isCustomPlan) {
+      // Show custom amount field in the form
+      const amountRow = document.getElementById("custom-amount-row");
+      if (amountRow) amountRow.style.display = "block";
+      const amountInput = document.getElementById("form-amount");
+      if (amountInput) {
+        amountInput.required = true;
+        if (amount && amount !== "0") {
+          amountInput.value = amount;
+          if (amountEl) amountEl.textContent = "$" + Number(amount).toLocaleString();
+        } else {
+          if (amountEl) amountEl.textContent = "—";
+        }
+        
+        // Dynamically update Order Summary amount on input
+        amountInput.addEventListener("input", () => {
+          const val = amountInput.value || "0";
+          if (amountEl) {
+            amountEl.textContent = val !== "0" && val !== "" ? "$" + Number(val).toLocaleString() : "—";
+          }
+        });
+      }
+    } else {
+      if (amountEl) amountEl.textContent = "$" + Number(amount).toLocaleString();
+    }
 
     // Update change-plan link anchor
     const changeLink = document.getElementById("change-plan-link");
@@ -60,7 +109,7 @@ const FlexistPayment = (() => {
 
     // Hero subtitle
     const heroSub = document.getElementById("pay-hero-plan");
-    if (heroSub) heroSub.textContent = plan !== "Custom" ? `Plan: ${plan}` : "";
+    if (heroSub) heroSub.textContent = plan !== "Custom" ? `Plan: ${plan}` : "Plan: Custom Invoice";
 
     const form = document.getElementById("checkout-form");
     if (form) {
@@ -78,6 +127,14 @@ const FlexistPayment = (() => {
         const fd = new FormData(form);
         const data = Object.fromEntries(fd.entries());
 
+        // For custom plan, get amount directly from form input
+        const finalAmount = isCustomPlan ? data.amount : amount;
+
+        if (isCustomPlan && (!finalAmount || parseFloat(finalAmount) <= 0)) {
+          alert("Please enter a valid payment amount.");
+          return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<span class="pay-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:rotate 800ms linear infinite;vertical-align:middle;margin-right:8px"></span> Redirecting to secure payment checkout...';
 
@@ -89,7 +146,7 @@ const FlexistPayment = (() => {
             email: data.email,
             telegram: data.telegram,
             project: data.project,
-            amount: amount
+            amount: finalAmount
           };
 
           const res = await fetch(`${WORKER_URL}/create-nowpayment-invoice`, {
@@ -111,7 +168,7 @@ const FlexistPayment = (() => {
             telegram: data.telegram,
             projectName: data.project,
             plan: plan,
-            amount_sent: amount,
+            amount_sent: finalAmount,
             chain: "NOWPayments",
             token: "crypto",
             txid: "",
