@@ -586,7 +586,7 @@ body.loaded main {
 }
 
 .hero-title {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-title .hero-word {
