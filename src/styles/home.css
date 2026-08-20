@@ -1069,3 +1069,197 @@
 .accordion-item.open .faq-icon::before {
   background-color: var(--accent-green);
 }
+
+/* ============================================================================
+   INDIA GROWTH SIGNAL MAP — homepage centerpiece
+   ========================================================================= */
+.signal-section {
+  overflow: hidden;
+}
+
+.signal-layout {
+  align-items: center;
+  display: grid;
+  gap: 60px;
+  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.06fr);
+}
+
+.signal-copy .section-title {
+  margin-bottom: 20px;
+}
+
+.signal-hint {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  margin: 20px 0 22px;
+}
+
+.signal-cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.signal-chip {
+  background: var(--ghost-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 99px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  padding: 9px 15px;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.signal-chip:hover,
+.signal-chip:focus-visible {
+  border-color: var(--border-glow);
+  color: var(--accent-cyan);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.signal-chip.active {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+
+.signal-map {
+  background: linear-gradient(160deg, var(--glass-start), var(--glass-end));
+  border: 1px solid var(--border-glow);
+  border-radius: 20px;
+  box-shadow: var(--glow-blue);
+  overflow: hidden;
+  padding: 18px 18px 20px;
+  position: relative;
+}
+
+.signal-map-head {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  justify-content: space-between;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.terminal-status {
+  align-items: center;
+  color: var(--accent-green);
+  display: inline-flex;
+  gap: 7px;
+}
+
+.terminal-status::before {
+  animation: pulse 2s ease-in-out infinite;
+  background: var(--accent-green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-green);
+  content: "";
+  height: 7px;
+  width: 7px;
+}
+
+.signal-canvas-wrap {
+  aspect-ratio: 1 / 1;
+  margin: 14px 0 16px;
+  position: relative;
+  width: 100%;
+}
+
+.signal-canvas-wrap canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.signal-readout {
+  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  gap: 6px;
+  padding-top: 16px;
+}
+
+.signal-readout strong {
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  letter-spacing: -0.03em;
+}
+
+.signal-readout > span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.signal-channels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.signal-channels span {
+  background: var(--ghost-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  text-transform: uppercase;
+}
+
+/* ============================================================================
+   EXPERIENCE TIMELINE — horizontal scroll-snap rail (no viewport overflow)
+   ========================================================================= */
+.timeline-rail {
+  display: flex;
+  gap: 18px;
+  margin-top: 8px;
+  overflow-x: auto;
+  padding: 26px 2px 22px;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+}
+
+.timeline-rail .milestone {
+  border-top: 2px solid rgba(var(--network-node-rgb), 0.5);
+  flex: 0 0 clamp(240px, 78vw, 288px);
+  min-width: 0;
+  position: relative;
+  scroll-snap-align: start;
+}
+
+.timeline-rail .milestone::after {
+  background: var(--accent-cyan);
+  border: 2px solid var(--bg-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent-cyan);
+  content: "";
+  height: 11px;
+  left: 22px;
+  top: -7px;
+  width: 11px;
+}
+
+@media (max-width: 900px) {
+  .signal-layout {
+    gap: 40px;
+    grid-template-columns: 1fr;
+  }
+
+  .signal-map {
+    max-width: 520px;
+    margin-inline: auto;
+    width: 100%;
+  }
+}

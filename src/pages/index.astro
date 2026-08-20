@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import homepageData from '../data/homepage.json';
+import { INDIA_OUTLINE } from '../data/indiaOutline.js';
 import '../styles/home.css';
 
 const homeSchema = [
@@ -38,15 +39,15 @@ const homeSchema = [
         name: 'Is this only community management?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'No. Community is where trust starts, but FLEXIST also helps with creators, ambassadors, partnerships, support, and user retention.'
+          text: 'No. Community is where trust starts, but Flexist also helps with creators, ambassadors, partnerships, support, and user retention.'
         }
       },
       {
         '@type': 'Question',
-        name: 'Can early-stage projects work with FLEXIST?',
+        name: 'Can early-stage projects work with Flexist?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. FLEXIST works best when a project has a clear product thesis and wants a serious India plan before spending on disconnected campaigns.'
+          text: 'Yes. Flexist works best when a project has a clear product thesis and wants a serious India plan before spending on disconnected campaigns.'
         }
       },
       {
@@ -79,39 +80,35 @@ const homeSchema = [
           <h1 class="hero-title gradient-text"><Fragment set:html={homepageData.hero_title} /></h1>
           <p class="hero-tagline">{homepageData.hero_tagline}</p>
           <p class="hero-copy">{homepageData.hero_copy}</p>
-          <ul class="hero-proof-list" aria-label="FLEXIST launch promises">
-            <li>Simple India growth plan</li>
+          <ul class="hero-proof-list" aria-label="What Flexist delivers">
+            <li>A clear, sequenced India growth plan</li>
             <li>Telegram-first community trust</li>
-            <li>Creators, ambassadors, and partnerships</li>
+            <li>Creators, ambassadors, and partnerships as one system</li>
           </ul>
           <div class="button-row">
             <a class="neon-button" href="/inquiry">Start India Expansion <span>&rarr;</span></a>
             <a class="ghost-button" href="/flexistlabs#assessment">Open FlexistLabs</a>
           </div>
         </div>
-        <aside class="hero-command-card glass-card reveal" aria-label="India growth overview">
+        <aside class="hero-command-card glass-card reveal" aria-label="Flexist India growth desk">
           <figure class="hero-brand-art">
             <img src="/assets/images/flexist-hero-operator.png" alt="Flexist Web3 marketing agency India growth identity" loading="eager" fetchpriority="high">
-            <figcaption>India growth support is live</figcaption>
+            <figcaption>India growth desk — live</figcaption>
           </figure>
-          <div class="hero-command-grid">
-            <div><strong>{homepageData.stats.years}</strong><span>Years In Crypto</span></div>
-            <div><strong>{homepageData.stats.projects}</strong><span>Projects Operated</span></div>
-            <div><strong>{homepageData.stats.members}</strong><span>Members Grown</span></div>
-          </div>
         </aside>
       </div>
       <div class="scroll-cue">Explore the growth system</div>
     </section>
 
-    <div class="logo-marquee proof-marquee" aria-label="Projects and ecosystems">
+    <div class="logo-marquee proof-marquee" aria-label="Projects and ecosystems operated">
       <div class="logo-track">
+        {homepageData.marquee_projects.map((proj) => <span>{proj}</span>)}
         {homepageData.marquee_projects.map((proj) => <span>{proj}</span>)}
         {homepageData.marquee_projects.map((proj) => <span>{proj}</span>)}
       </div>
     </div>
 
-    <section class="metric-strip" aria-label="FLEXIST metrics">
+    <section class="metric-strip" aria-label="Flexist track record">
       <div class="container metric-grid">
         <div class="stat-counter"><strong data-counter="years">5.5+</strong><span>Years In Crypto</span></div>
         <div class="stat-counter"><strong data-counter="projects">5+</strong><span>Projects Operated</span></div>
@@ -121,79 +118,48 @@ const homeSchema = [
       </div>
     </section>
 
-    <section class="section section-tight">
-      <div class="container">
-        <div class="section-header centered reveal">
-          <span class="section-label">Why Founders Use FLEXIST</span>
-          <h2 class="section-title">India expansion needs more than campaign spend.</h2>
-          <p class="section-copy">The goal is clarity: explain the India growth promise, show the benefits, answer the founder's questions, and make the next step obvious.</p>
+    <section class="section signal-section" id="india">
+      <div class="container signal-layout" data-signal-map>
+        <div class="signal-copy reveal">
+          <span class="section-label">The India Opportunity</span>
+          <h2 class="section-title">Your next <span class="gradient-text">100,000 users</span> are already in India.</h2>
+          <p>India is not one audience. It is trading desks in Delhi, builders in Bengaluru, exchanges in Mumbai, and fast-moving retail groups from Kolkata to Chennai. Reaching them takes the right channel, in the right city, in the right order.</p>
+          <p class="signal-hint">Hover a city to read its growth signal — or watch the map find them for you.</p>
+          <div class="signal-cities" data-signal-cities aria-label="Explore India growth signals by city">
+            <button class="signal-chip" type="button" data-city="delhi">Delhi NCR</button>
+            <button class="signal-chip" type="button" data-city="up">Uttar Pradesh</button>
+            <button class="signal-chip" type="button" data-city="ahmedabad">Ahmedabad</button>
+            <button class="signal-chip" type="button" data-city="mumbai">Mumbai</button>
+            <button class="signal-chip" type="button" data-city="kolkata">Kolkata</button>
+            <button class="signal-chip" type="button" data-city="hyderabad">Hyderabad</button>
+            <button class="signal-chip" type="button" data-city="bengaluru">Bengaluru</button>
+            <button class="signal-chip" type="button" data-city="chennai">Chennai</button>
+          </div>
+          <a class="neon-button" href="/services/india-market-entry-services">See the India play <span>&rarr;</span></a>
         </div>
-        <div class="advantage-grid">
-          <article class="glass-card advantage-card reveal">
-            <span class="watermark-text">01</span>
-            <span>01 Speed</span>
-            <h3>Launch with fewer false starts.</h3>
-            <p>Start from a tested India growth map instead of guessing which channel, creator, or community move should come first.</p>
-          </article>
-          <article class="glass-card advantage-card reveal">
-            <span class="watermark-text">02</span>
-            <span>02 Trust</span>
-            <h3>Build credibility before volume.</h3>
-            <p>Indian crypto users convert when support, Telegram presence, and social proof feel real. Trust comes before scale.</p>
-          </article>
-          <article class="glass-card advantage-card reveal">
-            <span class="watermark-text">03</span>
-            <span>03 Clear Work</span>
-            <h3>Keep every growth effort connected.</h3>
-            <p>Community, influencers, ambassadors, and partnerships are not separate vendors. They are one acquisition system.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark">
-      <div class="container question-layout">
-        <div class="section-header reveal">
-          <span class="section-label">Founder Questions</span>
-          <h2 class="section-title">The first call should solve the real bottleneck.</h2>
-          <p class="section-copy">Before pushing budget, FLEXIST helps founders pressure-test the questions that decide whether India becomes a real channel or just another noisy campaign.</p>
-          <a class="neon-button" href="/inquiry">Open Founder Inquiry</a>
-        </div>
-        <div class="question-board reveal">
-          <p>How do we enter Indian Telegram culture without looking like outsiders?</p>
-          <p>Which creators should explain our product, and which ones should only create awareness?</p>
-          <p>What should ambassadors actually do beyond reposting announcements?</p>
-          <p>How do we turn early Indian users into long-term community signal?</p>
-          <p>Where should our first 90 days of India budget go?</p>
+        <div class="signal-map reveal">
+          <div class="signal-map-head"><span>India Growth Signal</span><span class="terminal-status">Live</span></div>
+          <div class="signal-canvas-wrap">
+            <canvas data-signal-canvas aria-hidden="true"></canvas>
+            <svg class="signal-outline-src" viewBox="0 0 1024 1024" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+              <path id="india-outline" d={INDIA_OUTLINE.d}></path>
+            </svg>
+          </div>
+          <div class="signal-readout" data-signal-readout>
+            <strong data-readout-name>Delhi NCR</strong>
+            <span data-readout-audience>Founder, trading and policy circles</span>
+            <div class="signal-channels" data-readout-channels></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container split-layout">
-        <div class="manifesto-copy reveal">
-          <span class="section-label">What FLEXIST Is</span>
-          <h2 class="section-title">Not just promotion.<br><span class="gradient-text">A real growth partner.</span></h2>
-          <p>FLEXIST was built from the ground up inside real crypto communities. Not from a course, not from a YouTube video - from years of work inside live Web3 projects, navigating Telegram communities, sourcing collabs, running ambassador programs, and helping projects grow real user bases in India.</p>
-          <p>If you're a crypto project that wants users, not just wallet addresses - community members, not just Telegram joins - you need a partner who understands how India's crypto culture actually works. That's what FLEXIST offers.</p>
-        </div>
-        <div class="terminal-box capability-console reveal">
-          <div class="terminal-head"><span>Growth Services</span><span class="terminal-status">Ready</span></div>
-          <div class="console-row"><span>Community building</span><i></i></div>
-          <div class="console-row"><span>Creator campaigns</span><i></i></div>
-          <div class="console-row"><span>Ambassador programs</span><i></i></div>
-          <div class="console-row"><span>Partnership support</span><i></i></div>
-          <div class="console-row"><span>India market guidance</span><i></i></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark">
+    <section class="section section-dark" id="services">
       <div class="container">
         <div class="section-header reveal">
           <span class="section-label">Main Growth Services</span>
           <h2 class="section-title">Built for the full India expansion cycle.</h2>
-          <p class="section-copy">Use one service where you need help now, or combine them into one complete India growth plan.</p>
+          <p class="section-copy">Flexist was built inside live Web3 communities — not from a course. Community, creators, ambassadors, and partnerships run as one acquisition system. Use one service now, or combine them into a complete India growth plan.</p>
         </div>
         <div class="grid-3">
           <article class="glass-card hoverable service-card reveal">
@@ -236,38 +202,7 @@ const homeSchema = [
       </div>
     </section>
 
-    <section class="section india-showcase">
-      <div class="container split-layout">
-        <div class="reveal">
-          <span class="section-label">India Opportunity</span>
-          <h2 class="section-title">Why India Is Your Next <span class="gradient-text">100,000 Users.</span></h2>
-          <p>India is not one audience. It has trading groups, regional creators, builders, students, and early users. A good plan reaches the right people in the right order.</p>
-          <div class="chip-row">
-            <span class="tag-chip signal">100M+ Market Potential</span>
-            <span class="tag-chip">Telegram Native</span>
-            <span class="tag-chip">YouTube Led Discovery</span>
-          </div>
-          <a class="ghost-button" href="/services/india-market-entry-services">Open FlexistLabs &rarr;</a>
-        </div>
-        <div class="glass-card map-shell reveal">
-          <div class="terminal-head"><span>India Growth Map</span><span class="terminal-status">Ready</span></div>
-          <div class="india-map" data-india-map>
-            <svg viewBox="0 0 260 330" aria-label="Stylized India opportunity map">
-              <path data-state="delhi" tabindex="0" d="M104 76 128 69l17 14-10 19-25 3-15-14Z"/>
-              <path data-state="maharashtra" tabindex="0" d="M57 174 122 161l24 28-25 35-56-12-19-21Z"/>
-              <path data-state="karnataka" tabindex="0" d="m82 223 48 2 12 55-36 26-26-33Z"/>
-              <path data-state="gujarat" tabindex="0" d="m30 134 56-13 30 35-59 18-31-20Z"/>
-              <path data-state="westbengal" tabindex="0" d="m174 144 36 14-13 49-29-17-8-28Z"/>
-              <path data-state="telangana" tabindex="0" d="m127 190 39-8 18 34-31 29-24-21Z"/>
-              <path data-state="tamilnadu" tabindex="0" d="m142 246 35 9-8 61-29 10-11-45Z"/>
-            </svg>
-            <div class="map-tooltip" data-map-tooltip></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark">
+    <section class="section" id="framework">
       <div class="container">
         <div class="section-header centered reveal">
           <span class="section-label">Growth Framework</span>
@@ -298,110 +233,63 @@ const homeSchema = [
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-label">Why Not Generic Growth</span>
-          <h2 class="section-title">FLEXIST vs disconnected campaign execution.</h2>
-        </div>
-        <div class="comparison-grid">
-          <article class="glass-card compare-column negative reveal">
-            <h3>Generic Web3 Marketing</h3>
-            <ul>
-              <li>One-off posts without community follow-through</li>
-              <li>Telegram support treated as moderation only</li>
-              <li>Ambassadors rewarded for noise</li>
-              <li>Founder receives screenshots, not market signal</li>
-            </ul>
-          </article>
-          <div class="vs-divider">VS</div>
-          <article class="glass-card compare-column positive reveal">
-            <h3>FLEXIST India Growth Partner</h3>
-            <ul>
-              <li>Channel sequence designed around Indian user behavior</li>
-              <li>Telegram becomes the place where users build trust</li>
-              <li>Ambassadors get clear contribution lanes</li>
-              <li>Founder sees priorities, gaps, and next execution moves</li>
-            </ul>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark">
-      <div class="container">
-        <div class="glass-card readiness-mini reveal">
-          <div>
-            <span class="section-label">Quick India Check</span>
-            <h2>How India-ready is your project?</h2>
-            <p>Answer two quick questions, then use the full form for a clearer India plan.</p>
-          </div>
-          <form class="readiness-form" data-mini-readiness>
-            <div class="field"><label for="mini-project-name">Project name</label><input id="mini-project-name" name="project" placeholder="Project name" required></div>
-            <div class="field"><label for="mini-chain">Blockchain</label><select id="mini-chain" name="chain"><option>Ethereum</option><option>Solana</option><option>BNB Chain</option><option>Base</option><option>Polygon</option><option>Other</option></select></div>
-            <button class="neon-button" type="submit">Check India Fit</button>
-            <div class="loading-track" data-mini-track><span></span></div>
-            <div class="readiness-result" data-mini-result></div>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
+    <section class="section section-dark" id="experience">
       <div class="container">
         <div class="section-header reveal">
           <span class="section-label">Project Experience</span>
           <h2 class="section-title">Built inside live Web3 projects.</h2>
+          <p class="section-copy">Real communities, real users, real momentum — across five years of hands-on Web3 work.</p>
         </div>
-        <div class="timeline-preview">
-          <article class="glass-card milestone"><small>2020 - 2021</small><h3>FABWELT</h3><p>Moderated Telegram and Discord while helping users and working with the wider team.</p></article>
-          <article class="glass-card milestone"><small>2021 - 2022</small><h3>RRG VENTURES</h3><p>Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></article>
-          <article class="glass-card milestone"><small>MAR 2022 - NOV 2023</small><h3>UNIELON WALLET</h3><p>Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></article>
-          <article class="glass-card milestone"><small>JUL 2023 - DEC 2024</small><h3>UXUY WALLET</h3><p>Promoted the project on X while supporting users across Telegram and Discord.</p></article>
-          <article class="glass-card milestone"><small>JUL 2024 - PRESENT</small><h3>MAESTRO BOTS</h3><p>Supported India-focused ambassador work and translated product momentum into local market trust.</p></article>
+        <div class="timeline-rail" role="list">
+          <article class="glass-card milestone" role="listitem"><small>2020 &ndash; 2021</small><h3>Fabwelt</h3><p>Moderated Telegram and Discord while helping users and working with the wider team.</p></article>
+          <article class="glass-card milestone" role="listitem"><small>2021 &ndash; 2022</small><h3>RRG Ventures</h3><p>Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></article>
+          <article class="glass-card milestone" role="listitem"><small>Mar 2022 &ndash; Nov 2023</small><h3>Unielon Wallet</h3><p>Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></article>
+          <article class="glass-card milestone" role="listitem"><small>Jul 2023 &ndash; Dec 2024</small><h3>UXUY Wallet</h3><p>Promoted the project on X while supporting users across Telegram and Discord.</p></article>
+          <article class="glass-card milestone" role="listitem"><small>Jul 2024 &ndash; Present</small><h3>Maestro Bots</h3><p>Supported India-focused ambassador work and translated product momentum into local trust.</p></article>
         </div>
         <div class="button-row"><a class="ghost-button" href="/experience">View Full Experience &rarr;</a></div>
       </div>
     </section>
 
-    <section class="section section-dark">
+    <section class="section" id="faq">
       <div class="container faq-layout">
         <div class="section-header reveal">
           <span class="section-label">Founder FAQ</span>
           <h2 class="section-title">Common questions before entering India.</h2>
+          <p class="section-copy">Still deciding? These are the questions founders ask on the first call.</p>
         </div>
         <div class="accordion reveal">
           <article class="accordion-item open">
             <button class="accordion-toggle" type="button" aria-expanded="true">Is this only community management? <span class="faq-icon"></span></button>
-            <div class="accordion-panel"><p>No. Community is where trust starts, but FLEXIST also helps with creators, ambassadors, partnerships, support, and user retention.</p></div>
+            <div class="accordion-panel"><p>No. Community is where trust starts, but Flexist also helps with creators, ambassadors, partnerships, support, and user retention.</p></div>
           </article>
           <article class="accordion-item">
-            <button class="accordion-toggle" type="button" aria-expanded="false">Can early-stage projects work with FLEXIST? <span class="faq-icon"></span></button>
+            <button class="accordion-toggle" type="button" aria-expanded="false">Can early-stage projects work with Flexist? <span class="faq-icon"></span></button>
             <div class="accordion-panel"><p>Yes, if the project has a clear product thesis and wants a serious India plan before spending budget on disconnected campaigns.</p></div>
           </article>
           <article class="accordion-item">
             <button class="accordion-toggle" type="button" aria-expanded="false">What is the best first step? <span class="faq-icon"></span></button>
-            <div class="accordion-panel"><p>Run the quick India check or open the founder inquiry form. The goal is to understand your biggest priority first.</p></div>
+            <div class="accordion-panel"><p>Open the founder inquiry form or use FlexistLabs to share your category, stage, budget, and biggest India priority.</p></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-dark">
       <div class="container">
         <div class="cta-block founder-contact reveal">
           <div>
             <span class="section-label">Founder Entry Point</span>
-            <h2>Ready To Build Your India User Base?</h2>
-            <p>Every week without an India strategy is a week of lost users. Bring the project context, target, timeline, and bottleneck. FLEXIST will route it into an execution plan.</p>
+            <h2>Ready to build your India user base?</h2>
+            <p>Every week without an India strategy is a week of lost users. Bring the project context, target, timeline, and bottleneck. Flexist routes it into an execution plan.</p>
             <div class="button-row">
-              <a class="neon-button" href="/inquiry">Open Founder Inquiry Portal</a>
-              <a class="ghost-button" href="/contact">Contact FLEXIST</a>
+              <a class="neon-button" href="/inquiry">Open Founder Inquiry <span>&rarr;</span></a>
+              <a class="ghost-button" href="/contact">Contact Flexist</a>
             </div>
           </div>
           <div class="founder-contact-card">
-            <img src="/assets/images/flexist-avatar-192.png" alt="FLEXIST Avatar" loading="lazy">
-            <strong>FLEXIST</strong>
+            <img src="/assets/images/flexist-avatar-192.png" alt="Flexist avatar" loading="lazy">
+            <strong>Flexist</strong>
             <span>Private Web3 growth desk</span>
             <a href="mailto:FlexistCrypto@gmail.com">FlexistCrypto@gmail.com</a>
           </div>

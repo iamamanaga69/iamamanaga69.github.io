@@ -74,7 +74,7 @@ const Flexist = (() => {
     {
       title: "Platform",
       links: [
-        ["About FLEXIST", "about"],
+        ["About Flexist", "about"],
         ["Experience", "experience"],
         ["Contact", "contact"]
       ]
@@ -145,13 +145,13 @@ const Flexist = (() => {
         <a class="skip-link" href="#main-content">Skip to content</a>
         <header class="site-nav">
           <div class="container nav-inner">
-            <a class="brand brand-premium" href="${resolveUrl('./')}" aria-label="FLEXIST home">
+            <a class="brand brand-premium" href="${resolveUrl('./')}" aria-label="Flexist home">
               <span class="brand-mark">
-                <img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="FLEXIST Logo">
+                <img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="Flexist Logo">
                 <i></i>
               </span>
               <span class="brand-copy">
-                <span class="wordmark gradient-text">FLEXIST</span>
+                <span class="wordmark gradient-text">Flexist</span>
                 <small>Web3 India Labs</small>
               </span>
             </a>
@@ -182,7 +182,7 @@ const Flexist = (() => {
         <footer class="footer">
           <div class="container footer-grid">
             <div>
-              <a class="brand brand-premium" href="${resolveUrl('./')}"><span class="brand-mark"><img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="FLEXIST Logo" loading="lazy"><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">FLEXIST</span><small>Web3 India Labs</small></span></a>
+              <a class="brand brand-premium" href="${resolveUrl('./')}"><span class="brand-mark"><img class="brand-avatar" src="${resolveUrl('assets/images/flexist-avatar-192.png')}" alt="Flexist Logo" loading="lazy"><i></i></span><span class="brand-copy"><span class="wordmark gradient-text">Flexist</span><small>Web3 India Labs</small></span></a>
               <p class="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
@@ -208,7 +208,7 @@ const Flexist = (() => {
             </div>
           </div>
           <div class="container footer-bottom">
-            <span>&copy; ${new Date().getFullYear()} FLEXIST</span>
+            <span>&copy; ${new Date().getFullYear()} Flexist</span>
             <span>Built for Web3 founders growing in India</span>
           </div>
         </footer>`;
@@ -244,15 +244,29 @@ const Flexist = (() => {
   function bindReveals() {
     const targets = document.querySelectorAll(".reveal");
     if (!targets.length) return;
+    const show = (el) => el.classList.add("visible");
+    // No IntersectionObserver support: reveal everything up front.
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach(show);
+      return;
+    }
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
+          show(entry.target);
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.14 });
-    targets.forEach((target) => observer.observe(target));
+    const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+    targets.forEach((target) => {
+      // Failsafe: elements already in (or straddling) the viewport on load —
+      // including any taller than the viewport that never reach the 14%
+      // threshold — are revealed immediately instead of staying hidden.
+      const rect = target.getBoundingClientRect();
+      if (rect.top < vh && rect.bottom > 0) show(target);
+      else observer.observe(target);
+    });
   }
 
   function bindAccordions() {

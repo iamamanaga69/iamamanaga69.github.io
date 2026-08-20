@@ -3,8 +3,11 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "copy:scripts": "node -e \"require('fs').cpSync('src/scripts','public/scripts',{recursive:true})\"",
+    "predev": "npm run copy:scripts",
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "npm run copy:scripts",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /influencer/
+Disallow: /admin/
+Disallow: /onboarding/
+Disallow: /payment/status
+Disallow: /payment/thank-you
+
 Sitemap: https://flexist.in/sitemap.xml

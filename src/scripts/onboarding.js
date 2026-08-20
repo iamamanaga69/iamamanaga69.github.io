@@ -1,5 +1,5 @@
 /* ===================================================================
-   FLEXIST — Onboarding JavaScript
+   Flexist — Onboarding JavaScript
    Brief form, portal data, checklist persistence, welcome page
    =================================================================== */
 (() => {
@@ -96,7 +96,7 @@
       try {
         const payload = new FormData();
         payload.append("access_key", WEB3FORMS_KEY);
-        payload.append("subject", "FLEXIST Brief: " + (data.project_name || "Unknown"));
+        payload.append("subject", "Flexist Brief: " + (data.project_name || "Unknown"));
         Object.entries(data).forEach(([k, v]) => payload.append(k, v));
 
         await fetch("https://api.web3forms.com/submit", {

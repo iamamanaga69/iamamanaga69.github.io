@@ -1,13 +1,29 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/plans.css';
+
+const planSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'India Entry Plan',
+  serviceType: 'Web3 marketing and community growth',
+  provider: { '@type': 'Organization', name: 'Flexist', url: 'https://flexist.in' },
+  areaServed: { '@type': 'Country', name: 'India' },
+  description: 'India Entry plan — the ideal starting point for pre-launch Web3 projects entering the Indian market.',
+  url: 'https://flexist.in/plans/india-entry',
+  offers: [
+    { '@type': 'Offer', name: 'One-Time Setup', price: '500', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-entry' },
+    { '@type': 'Offer', name: 'Monthly Retainer', price: '350', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-entry' },
+  ],
+};
 ---
 
 <Layout
-  title="India Entry Plan | FLEXIST"
+  title="India Entry Plan | Flexist"
   description="India Entry plan — the ideal starting point for pre-launch Web3 projects entering the Indian market."
   canonical="https://flexist.in/plans/india-entry"
   pageId="plans"
+  schema={planSchema}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com">

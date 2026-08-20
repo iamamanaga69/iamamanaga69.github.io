@@ -155,9 +155,15 @@ const FlexistPayment = (() => {
             body: JSON.stringify(payload)
           });
 
-          const result = await res.json();
-          if (!res.ok) {
-            throw new Error(result.error || "Failed to initiate checkout session.");
+          let result = {};
+          try {
+            result = await res.json();
+          } catch (_) {
+            // Worker unreachable or returned non-JSON (e.g. a 404 "Not Found" page).
+            result = {};
+          }
+          if (!res.ok || !result.invoiceUrl) {
+            throw new Error(result.error || "checkout-unavailable");
           }
 
           // Save transaction to local cache for status history
@@ -198,7 +204,11 @@ const FlexistPayment = (() => {
             errorEl.style.textAlign = "center";
             form.appendChild(errorEl);
           }
-          errorEl.textContent = `Checkout Failed: ${err.message}`;
+          const known = err && err.message && err.message !== "checkout-unavailable";
+          const detail = known
+            ? `<span style="display:block;margin-bottom:8px;font-weight:600">${err.message}</span>`
+            : "";
+          errorEl.innerHTML = `${detail}Automatic checkout is temporarily unavailable. To finish your payment, message us on <a href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer" style="color:var(--accent-cyan);font-weight:600;text-decoration:underline">Telegram @FlexistCrypto</a> or email <a href="mailto:FlexistCrypto@gmail.com" style="color:var(--accent-cyan);font-weight:600;text-decoration:underline">FlexistCrypto@gmail.com</a> and we'll set it up for you personally.`;
           errorEl.hidden = false;
         }
       });

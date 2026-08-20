@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="success-card" style="opacity: 0; transform: translateY(10px);">
         <div class="success-icon">✓</div>
         <h3>Message received.</h3>
-        <p>FLEXIST will reply within 24 hours. Check your inbox or Telegram.</p>
+        <p>Flexist will reply within 24 hours. Check your inbox or Telegram.</p>
         <a class="ghost-button" href="./">Go back to Homepage</a>
       </div>
     `;

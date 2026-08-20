@@ -1,5 +1,5 @@
 /* ===================================================================
-   FLEXIST — Plans Page JavaScript
+   Flexist — Plans Page JavaScript
    Price toggle, active state management, smooth scroll
    =================================================================== */
 (() => {

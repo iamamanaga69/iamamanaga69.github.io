@@ -1,13 +1,28 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/plans.css';
+
+const planSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'India Partner Plan',
+  serviceType: 'Web3 marketing and community growth',
+  provider: { '@type': 'Organization', name: 'Flexist', url: 'https://flexist.in' },
+  areaServed: { '@type': 'Country', name: 'India' },
+  description: 'India Partner plan — full India ownership for Web3 projects that want a dedicated growth partner with unlimited KOL campaigns, partnerships, and weekly founder calls.',
+  url: 'https://flexist.in/plans/india-partner',
+  offers: [
+    { '@type': 'Offer', name: 'Monthly Retainer', price: '1800', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-partner' },
+  ],
+};
 ---
 
 <Layout
-  title="India Partner Plan | FLEXIST"
+  title="India Partner Plan | Flexist"
   description="India Partner plan — full India ownership for Web3 projects that want a dedicated growth partner with unlimited KOL campaigns, partnerships, and weekly founder calls."
   canonical="https://flexist.in/plans/india-partner"
   pageId="plans"
+  schema={planSchema}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,11 +83,11 @@ import '../../styles/plans.css';
               </li>
               <li>
                 <span class="feature-bullet">✓</span>
-                <span><strong>Full Network Access</strong> — Introductions to FLEXIST's Indian Web3 network: founders, exchanges, VCs, and media.</span>
+                <span><strong>Full Network Access</strong> — Introductions to Flexist's Indian Web3 network: founders, exchanges, VCs, and media.</span>
               </li>
               <li>
                 <span class="feature-bullet">✓</span>
-                <span><strong>Weekly Founder Call</strong> — Direct weekly sync with FLEXIST on strategy, execution, and market intelligence.</span>
+                <span><strong>Weekly Founder Call</strong> — Direct weekly sync with Flexist on strategy, execution, and market intelligence.</span>
               </li>
             </ul>
           </div>

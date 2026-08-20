@@ -1,13 +1,29 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/plans.css';
+
+const planSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'India Growth Plan',
+  serviceType: 'Web3 marketing and community growth',
+  provider: { '@type': 'Organization', name: 'Flexist', url: 'https://flexist.in' },
+  areaServed: { '@type': 'Country', name: 'India' },
+  description: 'India Growth plan — the most popular plan for Web3 projects scaling their India presence with full community, KOL, and ambassador programs.',
+  url: 'https://flexist.in/plans/india-growth',
+  offers: [
+    { '@type': 'Offer', name: 'One-Time Setup', price: '1200', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-growth' },
+    { '@type': 'Offer', name: 'Monthly Retainer', price: '800', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-growth' },
+  ],
+};
 ---
 
 <Layout
-  title="India Growth Plan | FLEXIST"
+  title="India Growth Plan | Flexist"
   description="India Growth plan — the most popular plan for Web3 projects scaling their India presence with full community, KOL, and ambassador programs."
   canonical="https://flexist.in/plans/india-growth"
   pageId="plans"
+  schema={planSchema}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +80,7 @@ import '../../styles/plans.css';
               </li>
               <li>
                 <span class="feature-bullet">✓</span>
-                <span><strong>Bi‑Weekly Strategy Call</strong> — Direct access to FLEXIST for alignment, feedback, and growth optimization.</span>
+                <span><strong>Bi‑Weekly Strategy Call</strong> — Direct access to Flexist for alignment, feedback, and growth optimization.</span>
               </li>
               <li>
                 <span class="feature-bullet">✓</span>

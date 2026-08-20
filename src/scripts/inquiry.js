@@ -88,10 +88,10 @@ document.addEventListener("DOMContentLoaded", () => {
     6: {
       tip: "Select everything you need — we'll prioritise based on your stage.",
       context: "Combining community architecture with influencer outreach creates the best flywheel.",
-      next: "FLEXIST customizes execution based on your specific mix of selected support."
+      next: "Flexist customizes execution based on your specific mix of selected support."
     },
     7: {
-      tip: "Almost done. Your details go straight to the FLEXIST growth desk.",
+      tip: "Almost done. Your details go straight to the Flexist growth desk.",
       context: "We verify your Telegram handle to schedule the initial alignment call.",
       next: "Expect a response and your full India Strategy proposal within 24 hours."
     }
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderList("actionsList", result.actions);
 
     // Build plain-text detailed email summary
-    const emailBody = `FLEXIST FOUNDER INQUIRY SUMMARY
+    const emailBody = `Flexist FOUNDER INQUIRY SUMMARY
 ----------------------------------------
 Ticket ID: ${ticketId}
 India Readiness Score: ${score}/100
@@ -415,7 +415,7 @@ STEP 7: FOUNDER CONTACT
 - Telegram Handle: ${formData.founderTelegram || "Not specified"}
 - Additional Context: ${formData.context || "None provided"}`;
 
-    const subject = `FLEXIST Inquiry — ${formData.projectName}`;
+    const subject = `Flexist Inquiry — ${formData.projectName}`;
     document.getElementById("ticketEmail").href = `mailto:FlexistCrypto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     
     // Set Telegram Group Bot start link with ticket ID parameter
