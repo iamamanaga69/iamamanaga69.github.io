@@ -1,4 +1,4 @@
-# FLEXIST Website Manager Guide
+# Flexist Website Manager Guide
 
 This guide explains how to run your new Astro website locally on your computer and edit the content visually using the browser-based admin dashboard.
 
@@ -52,7 +52,7 @@ To make your local changes live on the internet:
    git commit -m "Update site content"
    git push origin main
    ```
-Once pushed, Vercel will automatically detect the changes, build the site, and update the live website at **flexist.in**.
+Once pushed, GitHub Actions will automatically build the Astro site and deploy it to GitHub Pages, updating the live website at **flexist.in** within 1–2 minutes.
 
 ---
 
@@ -85,4 +85,4 @@ On the left sidebar, you will see a list of sections:
 4. Click the **Publish** button at the top right when you are finished.
 
 **What happens next?**
-As soon as you click **Publish**, the CMS writes the new content directly to your GitHub repository. Vercel detects this commit, automatically rebuilds the Astro project in the background, and pushes the updates live to **flexist.in** within 1–2 minutes!
+As soon as you click **Publish**, the CMS writes the new content directly to your GitHub repository. GitHub Actions detects this commit, automatically rebuilds the Astro project, and deploys the updates live to **flexist.in** within 1–2 minutes!

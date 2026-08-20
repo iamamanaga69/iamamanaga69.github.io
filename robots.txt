@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /influencer/
-Sitemap: https://flexist.in/sitemap.xml
