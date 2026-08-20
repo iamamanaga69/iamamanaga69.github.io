@@ -4,6 +4,8 @@ import '../styles/components.css';
 import '../styles/animations.css';
 import '../styles/pages.css';
 import '../styles/mobile-fixes.css';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title: string;
@@ -63,7 +65,12 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   <link rel="icon" type="image/png" href="/assets/images/flexist-avatar-192.png">
   {preloadImage && <link rel="preload" href={preloadImage} as="image">}
   {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
-  
+
+  <!-- Brand fonts (loaded globally so every page renders in the correct typefaces) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+
   <slot name="head" />
 </head>
 <body data-page={pageId}>
@@ -194,5 +201,8 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
 
   <script is:inline src="/scripts/global.js"></script>
   <script is:inline src="/scripts/fx.js"></script>
+
+  <Analytics />
+  <SpeedInsights />
 </body>
 </html>
