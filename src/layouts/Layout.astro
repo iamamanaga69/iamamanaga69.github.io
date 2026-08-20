@@ -4,6 +4,7 @@ import '../styles/components.css';
 import '../styles/animations.css';
 import '../styles/pages.css';
 import '../styles/mobile-fixes.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -64,6 +65,7 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   {preloadImage && <link rel="preload" href={preloadImage} as="image">}
   {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
   
+  <Analytics />
   <slot name="head" />
 </head>
 <body data-page={pageId}>
