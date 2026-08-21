@@ -32,10 +32,10 @@
   --cta-end: rgba(2, 4, 8, 0.94);
   --network-node-rgb: 0, 212, 255;
   --network-edge-rgb: 0, 102, 255;
-  --font-display: "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", "Space Grotesk", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --font-accent: "Syne", "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-accent: "Syne", "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --nav-height: 76px;
   --container: 1200px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
