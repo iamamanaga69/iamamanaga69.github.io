@@ -67,17 +67,19 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   {schemaJson && <script type="application/ld+json" set:html={schemaJson} />}
 
   <!-- Brand fonts (loaded globally so every page renders in the correct typefaces) -->
+  <!-- Loaded non-render-blocking: text paints immediately in fallback, then swaps in. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=Syne:wght@600;700&display=swap" rel="stylesheet"></noscript>
 
   <slot name="head" />
 </head>
 <body data-page={pageId}>
-  <!-- Floating Ambient Orbs -->
+  <!-- Floating Ambient Orbs (kept minimal for a calmer, premium feel) -->
   <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
   <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
-  <div class="bg-orb bg-orb-3" aria-hidden="true"></div>
   <div data-site-nav>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-nav">
@@ -199,8 +201,8 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
     </footer>
   </div>
 
-  <script is:inline src="/scripts/global.js"></script>
-  <script is:inline src="/scripts/fx.js"></script>
+  <script is:inline defer src="/scripts/global.js"></script>
+  <script is:inline defer src="/scripts/fx.js"></script>
 
   <Analytics />
   <SpeedInsights />

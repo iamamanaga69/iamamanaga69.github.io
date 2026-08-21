@@ -42,10 +42,11 @@
 
 .value-list li::before {
   color: var(--accent-cyan);
-  content: "//";
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  padding-top: 3px;
+  content: "\2713";
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding-top: 2px;
 }
 
 .compare-grid {
@@ -70,7 +71,7 @@
 
 .compare-card.negative .value-list li::before {
   color: var(--accent-red);
-  content: "x";
+  content: "\2715";
 }
 
 .compare-card.positive {
@@ -166,7 +167,7 @@
   display: block;
   font-family: var(--font-mono);
   font-size: 2.2rem;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.03em;
   margin-bottom: 8px;
 }
 

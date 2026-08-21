@@ -308,21 +308,34 @@ const FlexistFX = (() => {
       let cx = mx;
       let cy = my;
       let rafId = null;
-
-      const onMove = (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-      };
+      let running = false;
 
       const tick = () => {
         cx = lerp(cx, mx, 0.08);
         cy = lerp(cy, my, 0.08);
         glow.style.transform = `translate(-50%, -50%) translate(${cx}px, ${cy}px)`;
+        // Idle out once we've caught up to the pointer — no point re-compositing
+        // an expensive blurred gradient every frame while the mouse is still.
+        if (Math.abs(cx - mx) < 0.5 && Math.abs(cy - my) < 0.5) {
+          running = false;
+          return;
+        }
         rafId = requestAnimationFrame(tick);
       };
 
+      const start = () => {
+        if (running) return;
+        running = true;
+        rafId = requestAnimationFrame(tick);
+      };
+
+      const onMove = (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        start();
+      };
+
       window.addEventListener('mousemove', onMove, { passive: true });
-      rafId = requestAnimationFrame(tick);
 
       onCleanup(() => {
         window.removeEventListener('mousemove', onMove);

@@ -94,7 +94,7 @@
   display: block;
   font-family: var(--font-mono);
   font-size: 1.32rem;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
 }
 
 .hero-command-grid span {
@@ -546,7 +546,7 @@
   display: block;
   font-family: var(--font-mono);
   font-size: clamp(2rem, 4vw, 3.8rem);
-  letter-spacing: -0.1em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 

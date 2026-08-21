@@ -23,7 +23,7 @@ const NetworkGraph = (() => {
       canvas.width = width * ratio;
       canvas.height = height * ratio;
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
-      const count = window.isLowEnd ? 14 : Math.min(88, Math.max(34, Math.floor(width / 18)));
+      const count = window.isLowEnd ? 12 : Math.min(56, Math.max(22, Math.floor(width / 26)));
       nodes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -52,16 +52,16 @@ const NetworkGraph = (() => {
 
         context.beginPath();
         context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        context.fillStyle = `rgba(${nodeRgb}, 0.75)`;
+        context.fillStyle = `rgba(${nodeRgb}, 0.5)`;
         context.fill();
 
         nodes.slice(index + 1).forEach((other) => {
           const gap = Math.hypot(node.x - other.x, node.y - other.y);
-          if (gap < 130) {
+          if (gap < 118) {
             context.beginPath();
             context.moveTo(node.x, node.y);
             context.lineTo(other.x, other.y);
-            context.strokeStyle = `rgba(${edgeRgb}, ${0.18 * (1 - gap / 130)})`;
+            context.strokeStyle = `rgba(${edgeRgb}, ${0.12 * (1 - gap / 118)})`;
             context.stroke();
           }
         });

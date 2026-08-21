@@ -66,7 +66,7 @@
 
 .glass-card.hoverable:hover {
   border-color: var(--accent-cyan);
-  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.15);
+  box-shadow: var(--card-shadow-hover), 0 6px 26px rgba(0, 212, 255, 0.16);
   transform: translateY(-4px);
 }
 
@@ -228,11 +228,13 @@
 }
 
 .terminal-box {
-  background: var(--terminal-surface);
+  background: linear-gradient(155deg, var(--glass-start), var(--glass-end));
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
-  font-family: var(--font-mono);
-  padding: 22px;
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+  font-family: var(--font-body);
+  padding: 26px 28px;
+  position: relative;
 }
 
 .terminal-head {

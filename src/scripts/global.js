@@ -315,13 +315,18 @@ const Flexist = (() => {
 
   function init() {
     applyTheme(getPreferredTheme());
-    renderShell();
+    // Nav + footer are server-rendered in Layout.astro; no client re-render
+    // needed. (renderShell remains available but is intentionally not called
+    // to avoid discarding/rebuilding correct markup and causing layout shift.)
     bindTheme();
     bindNav();
     bindReveals();
     bindAccordions();
     bindSubscribe();
-    loadCalendlyBadge();
+    // Defer the third-party Calendly widget until the browser is idle so it
+    // doesn't compete with initial page load / LCP. Badge still appears.
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
+    idle(loadCalendlyBadge);
   }
 
   return { init };

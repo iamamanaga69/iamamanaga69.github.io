@@ -277,10 +277,10 @@
   left: -5%;
   background: radial-gradient(
     circle,
-    rgba(0, 102, 255, 0.07) 0%,
+    rgba(0, 102, 255, 0.1) 0%,
     transparent 70%
   );
-  opacity: 0.07;
+  opacity: 0.6;
   animation: orb-float-1 20s ease-in-out infinite;
 }
 
@@ -291,10 +291,10 @@
   right: -8%;
   background: radial-gradient(
     circle,
-    rgba(0, 212, 255, 0.06) 0%,
+    rgba(0, 212, 255, 0.09) 0%,
     transparent 70%
   );
-  opacity: 0.05;
+  opacity: 0.5;
   animation: orb-float-2 25s ease-in-out infinite;
 }
 
@@ -329,6 +329,7 @@
 
 .glass-card {
   position: relative;
+  box-shadow: var(--card-shadow);
   transition: transform 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
 }
 
@@ -363,7 +364,7 @@
 
 .glass-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.08);
+  box-shadow: var(--card-shadow-hover), 0 8px 30px rgba(0, 212, 255, 0.1);
 }
 
 .glass-card:hover::before {
