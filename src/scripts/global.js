@@ -20,9 +20,7 @@ const Flexist = (() => {
   const route = document.body.dataset.page || "home";
   const themeKey = "flexist-theme";
 
-  const isSubfolder = window.location.pathname.includes("/plans/") || 
-                      window.location.pathname.includes("/payment/") || 
-                      window.location.pathname.includes("/onboarding/") ||
+  const isSubfolder = window.location.pathname.includes("/plans/") ||
                       window.location.pathname.includes("/influencer/");
   const basePrefix = isSubfolder ? "../" : "";
 
@@ -52,8 +50,7 @@ const Flexist = (() => {
         ["plans", "plans/", "Compare Plans", "Bundled India growth packages"],
         ["india-entry", "plans/india-entry", "India Entry", "Pre-launch essentials"],
         ["india-growth", "plans/india-growth", "India Growth", "Full community and campaigns"],
-        ["india-partner", "plans/india-partner", "India Partner", "Total India ownership"],
-        ["payment", "payment/", "Make Payment", "Secure crypto payment"]
+        ["india-partner", "plans/india-partner", "India Partner", "Total India ownership"]
       ]
     },
     { key: "experience", href: "experience", label: "Experience" },

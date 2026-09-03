@@ -100,14 +100,13 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
           <a class={pageId === 'services' ? 'active' : ''} href="/services">Services</a>
           <a class={pageId === 'resources' ? 'active' : ''} href="/resources">Resources</a>
           
-          <div class={`nav-group ${['plans', 'india-entry', 'india-growth', 'india-partner', 'payment'].includes(pageId) ? 'active' : ''}`}>
-            <a class={`nav-group-label ${['plans', 'india-entry', 'india-growth', 'india-partner', 'payment'].includes(pageId) ? 'active' : ''}`} href="/plans">Plans</a>
+          <div class={`nav-group ${['plans', 'india-entry', 'india-growth', 'india-partner'].includes(pageId) ? 'active' : ''}`}>
+            <a class={`nav-group-label ${['plans', 'india-entry', 'india-growth', 'india-partner'].includes(pageId) ? 'active' : ''}`} href="/plans">Plans</a>
             <div class="nav-panel" aria-label="Plans links">
               <a class={pageId === 'plans' ? 'active' : ''} href="/plans"><strong>Compare Plans</strong><small>Bundled India growth packages</small></a>
               <a class={pageId === 'india-entry' ? 'active' : ''} href="/plans/india-entry"><strong>India Entry</strong><small>Pre-launch essentials</small></a>
               <a class={pageId === 'india-growth' ? 'active' : ''} href="/plans/india-growth"><strong>India Growth</strong><small>Full community and campaigns</small></a>
               <a class={pageId === 'india-partner' ? 'active' : ''} href="/plans/india-partner"><strong>India Partner</strong><small>Total India ownership</small></a>
-              <a class={pageId === 'payment' ? 'active' : ''} href="/payment"><strong>Make Payment</strong><small>Secure crypto payment</small></a>
             </div>
           </div>
 

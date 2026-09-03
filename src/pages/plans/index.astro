@@ -73,14 +73,7 @@ import '../../styles/plans.css';
                   {plan.features.map(feat => <li><strong><em>{feat}</em></strong></li>)}
                 </ul>
                 <div class="plan-ctas">
-                  {isPartner ? (
-                    <a class="neon-button" href={`/payment/?plan=IndiaPartner&type=monthly&amount=${plan.price_monthly.replace(/[^0-9]/g, '')}`}>Monthly {plan.price_monthly} →</a>
-                  ) : (
-                    <>
-                      <a class="neon-button" href={`/payment/?plan=${plan.name.replace(/\s+/g, '')}&type=onetime&amount=${plan.price_one.replace(/[^0-9]/g, '')}`} data-cta-onetime>One‑Time {plan.price_one} →</a>
-                      <a class="neon-button" href={`/payment/?plan=${plan.name.replace(/\s+/g, '')}&type=monthly&amount=${plan.price_monthly.replace(/[^0-9]/g, '')}`}>Monthly {plan.price_monthly} →</a>
-                    </>
-                  )}
+                  <a class="neon-button" href="/inquiry">Start {plan.name} →</a>
                 </div>
                 <a class="plan-link" href={`/plans/${plan.id}`}>See Full Plan →</a>
               </article>
