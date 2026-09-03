@@ -408,7 +408,7 @@
 }
 
 .hero-grid {
-  align-items: center;
+  align-items: start;
   display: grid;
   gap: 36px;
   grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
