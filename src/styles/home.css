@@ -1264,3 +1264,132 @@
     width: 100%;
   }
 }
+
+/* ============================================================
+   Homepage polish & depth — bolder hero, richer sections
+   (appended; scoped so no other page is affected)
+   ============================================================ */
+
+/* Live pulsing "available now" dot on the hero eyebrow pill */
+.section-label.hero-live::before {
+  background: var(--accent-green);
+  box-shadow: 0 0 10px var(--accent-green);
+  animation: heroLivePulse 1.9s ease-in-out infinite;
+}
+@keyframes heroLivePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+/* Animated, richer hero-title gradient */
+.home-hero .hero-title.gradient-text {
+  background: linear-gradient(100deg, var(--text-primary) 0%, var(--accent-cyan) 34%, #5b8cff 52%, var(--accent-purple) 70%, var(--accent-cyan) 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: heroGradientPan 11s ease-in-out infinite;
+}
+@keyframes heroGradientPan {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Trust line beneath the hero CTAs */
+.hero-trustline {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  margin: 20px 0 0;
+}
+.hero-trustline span { color: var(--accent-cyan); }
+
+/* Floating proof badge over the hero image */
+.hero-float-badge {
+  position: absolute;
+  left: -14px;
+  bottom: -14px;
+  display: grid;
+  gap: 3px;
+  padding: 12px 16px;
+  background: var(--terminal-surface);
+  border: 1px solid var(--border-glow);
+  border-radius: 12px;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.85), 0 0 22px rgba(0, 255, 136, 0.1);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  z-index: 3;
+}
+.hero-float-badge strong {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.hero-float-badge span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Depth: soft resting shadow on every homepage card for a premium lift */
+[data-page="home"] .glass-card { box-shadow: var(--card-shadow); }
+
+/* Metric strip: fix the empty 5th column + add subtle hover life */
+[data-page="home"] .metric-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+[data-page="home"] .stat-counter { transition: background 300ms var(--ease-out); }
+[data-page="home"] .stat-counter:hover { background: rgba(0, 212, 255, 0.03); }
+[data-page="home"] .stat-counter:hover strong { text-shadow: 0 0 22px rgba(0, 255, 136, 0.4); }
+
+/* Service cards: soft glow wash + icon lift on hover */
+.service-card { overflow: hidden; }
+.service-card .icon-box { transition: transform 350ms var(--ease-out), box-shadow 350ms var(--ease-out); }
+.service-card:hover .icon-box { transform: translateY(-2px); box-shadow: 0 0 24px rgba(0, 212, 255, 0.28); }
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 80% at 50% -10%, rgba(0, 212, 255, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 350ms var(--ease-out);
+  pointer-events: none;
+}
+.service-card:hover::before { opacity: 1; }
+
+/* Advantage cards: gradient edge accent revealed on hover */
+.advantage-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(var(--accent-cyan), var(--accent-purple));
+  opacity: 0;
+  transition: opacity 350ms var(--ease-out);
+}
+.advantage-card:hover::before { opacity: 1; }
+
+/* Comparison columns share equal height */
+.comparison-grid { align-items: stretch; }
+.comparison-grid .compare-column { height: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero .hero-title.gradient-text,
+  .section-label.hero-live::before { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .hero-float-badge { left: 10px; bottom: 10px; padding: 10px 13px; }
+  .hero-float-badge strong { font-size: 1.2rem; }
+  [data-page="home"] .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-page="home"] .metric-grid .stat-counter { border-right: 0; }
+  [data-page="home"] .metric-grid .stat-counter:nth-child(odd) { border-right: 1px solid var(--border-subtle); }
+  [data-page="home"] .metric-grid .stat-counter:nth-child(-n+2) { border-bottom: 1px solid var(--border-subtle); }
+}
