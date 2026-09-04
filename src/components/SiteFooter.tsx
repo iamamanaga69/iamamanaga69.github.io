@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { site } from '@/lib/site';
 
 export function SiteFooter() {
   return (
@@ -7,18 +8,18 @@ export function SiteFooter() {
         <div className="container footer-grid">
           <div>
             <Link className="brand brand-premium" href="/"><span className="brand-mark"><img className="brand-avatar" src="/assets/images/flexist-avatar-192.png" alt="Flexist Logo" loading="lazy" /><i></i></span><span className="brand-copy"><span className="wordmark gradient-text">Flexist</span><small>Web3 India Labs</small></span></Link>
-            <p className="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
+            <p className="footer-copy">{site.footerCopy}</p>
             <div className="social-links">
-              <a className="social-icon" href="https://t.me/FlexistCrypto" target="_blank" rel="noreferrer" aria-label="Telegram">
+              <a className="social-icon" href={site.telegram} target="_blank" rel="noreferrer" aria-label="Telegram">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3 11.2l6.8 2.4L17 8.2l-5.4 6.8.2 5.1 3.1-3.5 4.2 3L21 4Z"></path></svg><span>Telegram</span>
               </a>
-              <a className="social-icon" href="https://x.com/flexistcrypto" target="_blank" rel="noreferrer" aria-label="X">
+              <a className="social-icon" href={site.x} target="_blank" rel="noreferrer" aria-label="X">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 4 12.4 16H20L7.6 4H4Zm16 0-7.3 8.2M11.4 15.2 4 20"></path></svg><span>X</span>
               </a>
-              <a className="social-icon" href="https://linktr.ee/FlexistWeb3" target="_blank" rel="noreferrer" aria-label="Linktree">
+              <a className="social-icon" href={site.linktree} target="_blank" rel="noreferrer" aria-label="Linktree">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5M4 12h16"></path></svg><span>Linktree</span>
               </a>
-              <a className="social-icon" href="mailto:FlexistCrypto@gmail.com" aria-label="Email">
+              <a className="social-icon" href={site.emailHref} aria-label="Email">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7"></path></svg><span>Email</span>
               </a>
             </div>
