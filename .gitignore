@@ -6,3 +6,7 @@ public/scripts/
 .env*.local
 .DS_Store
 *.log
+
+# build artifacts / stray files
+tsconfig.tsbuildinfo
+/*.png
