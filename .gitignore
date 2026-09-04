@@ -1,13 +1,8 @@
-# Dependencies
 node_modules/
-
-# Build outputs
+.next/
 dist/
-.vercel/
-.astro/
 public/scripts/
-
-# IDE / System files
+.env.local
+.env*.local
 .DS_Store
-*.local
-Thumbs.db
+*.log
