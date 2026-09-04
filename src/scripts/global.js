@@ -329,4 +329,5 @@ const Flexist = (() => {
   return { init };
 })();
 
-document.addEventListener("DOMContentLoaded", Flexist.init);
+if (document.readyState !== "loading") Flexist.init();
+else document.addEventListener("DOMContentLoaded", Flexist.init);

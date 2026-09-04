@@ -607,4 +607,5 @@ const FlexistFX = (() => {
 })();
 
 // Auto-initialise when the DOM is ready.
-document.addEventListener('DOMContentLoaded', FlexistFX.init);
+if (document.readyState !== 'loading') FlexistFX.init();
+else document.addEventListener('DOMContentLoaded', FlexistFX.init);

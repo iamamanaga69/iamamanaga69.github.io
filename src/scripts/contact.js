@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+(document.readyState !== "loading" ? (cb => cb()) : (cb => document.addEventListener("DOMContentLoaded", cb)))(() => {
   const form = document.querySelector("[data-contact-form]");
   const note = document.querySelector("[data-contact-note]");
   const clock = document.querySelector("[data-ist-clock]");
