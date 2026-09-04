@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /studio/
 
 Sitemap: https://flexist.in/sitemap.xml
