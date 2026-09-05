@@ -185,7 +185,18 @@
             const isActive = tab.getAttribute("href") === `#${id}`;
             tab.classList.toggle("active", isActive);
             if (isActive) {
-              tab.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+              // Keep the active chip centered ONLY within the horizontal tab
+              // strip (mobile), by scrolling that strip — never the page.
+              // scrollIntoView() previously hijacked the document scroll on
+              // desktop on every section change, fighting the user's own
+              // scroll and making the services page feel like it was stuck.
+              const bar = tab.parentElement;
+              if (bar && bar.scrollWidth > bar.clientWidth + 1) {
+                bar.scrollTo({
+                  left: tab.offsetLeft - (bar.clientWidth - tab.offsetWidth) / 2,
+                  behavior: "smooth"
+                });
+              }
             }
           });
         }

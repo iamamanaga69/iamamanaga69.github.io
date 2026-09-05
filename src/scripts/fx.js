@@ -360,6 +360,16 @@ const FlexistFX = (() => {
       titles.forEach((title) => {
         // Avoid re-processing
         if (title.dataset.fxSplit === 'true') return;
+
+        // Skip gradient (background-clip:text) titles. Splitting them into
+        // per-letter spans breaks the clip mask in WebKit/Blink: the glyphs
+        // end up in transformed, overflow-hidden child spans that inherit the
+        // parent's transparent text-fill, so the clipped gradient has nothing
+        // to paint and the whole heading renders invisible. These titles keep
+        // their native markup (including <br>) and come alive via the CSS
+        // gradient-pan animation instead.
+        if (title.classList.contains('gradient-text')) return;
+
         title.dataset.fxSplit = 'true';
 
         const text = title.textContent.trim();
