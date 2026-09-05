@@ -955,8 +955,10 @@
   }
 
   .hero-title {
-    font-size: clamp(4.7rem, 26vw, 7rem);
-    line-height: 0.8;
+    /* Large-phone / tablet band. Kept in sync with the mobile-fixes layer
+       so the hero never balloons past the viewport on any mobile width. */
+    font-size: clamp(2.6rem, 6vw, 3.4rem);
+    line-height: 0.85;
   }
 
   .metric-grid {
@@ -1008,11 +1010,15 @@
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: clamp(2.8rem, 20vw, 4.5rem) !important;
+    /* Phone hero. 20vw/4.5rem previously rendered ~72px, overflowing the
+       viewport (and getting clipped by overflow-x:hidden). This scales
+       ~35px on small phones → ~43px near 480px, so long words like
+       "Community" fit comfortably. */
+    font-size: clamp(2.2rem, 9vw, 3rem) !important;
   }
 
   .hero-tagline {
-    font-size: 1.5rem !important;
+    font-size: 1.25rem !important;
   }
 
   .logo-track span {
