@@ -29,36 +29,6 @@ const homeSchema = [
     name: 'Flexist',
     url: 'https://flexist.in',
     description: "India's Web3 marketing agency for crypto community growth, KOL campaigns, ambassador programs, and market entry."
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: [
-      {
-        '@type': 'Question',
-        name: 'Is this only community management?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'No. Community is where trust starts, but Flexist also helps with creators, ambassadors, partnerships, support, and user retention.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'Can early-stage projects work with Flexist?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Yes. Flexist works best when a project has a clear product thesis and wants a serious India plan before spending on disconnected campaigns.'
-        }
-      },
-      {
-        '@type': 'Question',
-        name: 'What is the best first step?',
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: 'Open the founder inquiry form or use FlexistLabs to share your category, stage, budget, community, and India growth target.'
-        }
-      }
-    ]
   }
 ];
 ---
@@ -80,11 +50,6 @@ const homeSchema = [
           <h1 class="hero-title gradient-text"><Fragment set:html={homepageData.hero_title} /></h1>
           <p class="hero-tagline">{homepageData.hero_tagline}</p>
           <p class="hero-copy">{homepageData.hero_copy}</p>
-          <ul class="hero-proof-list" aria-label="What Flexist delivers">
-            <li>An honest read on whether India is worth it for your project</li>
-            <li>Communities where real people reply — not bots or airdrop farmers</li>
-            <li>One team across creators, ambassadors, and partnerships</li>
-          </ul>
           <div class="button-row">
             <a class="neon-button" href="/inquiry">Start India Expansion <span>&rarr;</span></a>
             <a class="ghost-button" href="/flexistlabs#assessment">Open FlexistLabs</a>
@@ -206,38 +171,7 @@ const homeSchema = [
       </div>
     </section>
 
-    <section class="section" id="framework">
-      <div class="container">
-        <div class="section-header centered reveal">
-          <span class="section-label">Growth Framework</span>
-          <h2 class="section-title">Four steps from first call to steady growth.</h2>
-        </div>
-        <div class="growth-flow growth-flow-four">
-          <article class="glass-card flow-step reveal">
-            <span class="flow-index">01</span>
-            <h3>Founder Brief</h3>
-            <p>We map your category, stage, user target, budget, and India bottleneck.</p>
-          </article>
-          <article class="glass-card flow-step reveal">
-            <span class="flow-index">02</span>
-            <h3>Market Workshop</h3>
-            <p>We decide which channels to run first, and in what order, based on your launch and budget.</p>
-          </article>
-          <article class="glass-card flow-step reveal">
-            <span class="flow-index">03</span>
-            <h3>Execution Sprint</h3>
-            <p>Campaigns and communities go live, and we report what's actually working — not vanity numbers.</p>
-          </article>
-          <article class="glass-card flow-step reveal">
-            <span class="flow-index">04</span>
-            <h3>Retention Loop</h3>
-            <p>We keep the users you win and turn the active ones into people who bring others in.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark" id="difference">
+    <section class="section" id="difference">
       <div class="container">
         <div class="section-header centered reveal">
           <span class="section-label">The Flexist Difference</span>
@@ -261,80 +195,6 @@ const homeSchema = [
             <span>One accountable team</span>
             <h3>Every growth lever, run from one desk.</h3>
             <p>No stitching five vendors into one story. Community, KOLs, ambassadors, and partnerships move together — and we report what is actually working.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="why-flexist">
-      <div class="container">
-        <div class="section-header centered reveal">
-          <span class="section-label">Why Founders Switch</span>
-          <h2 class="section-title">The difference you feel by <span class="gradient-text">week two</span>.</h2>
-        </div>
-        <div class="comparison-grid reveal">
-          <div class="glass-card compare-column negative">
-            <h3>A generic agency</h3>
-            <ul>
-              <li>One message blasted to "India" like it is a single audience</li>
-              <li>Follower spikes that quietly leave once the campaign ends</li>
-              <li>Five vendors, five dashboards, no one owning the result</li>
-              <li>KOLs picked by follower count, not by who your users trust</li>
-              <li>Reports full of impressions, light on real members</li>
-            </ul>
-          </div>
-          <span class="vs-divider">VS</span>
-          <div class="glass-card compare-column positive">
-            <h3>Flexist</h3>
-            <ul>
-              <li>The right city, channel, and language for each part of India</li>
-              <li>Communities built to keep the users you actually win</li>
-              <li>One accountable team across every growth lever</li>
-              <li>Creators matched to campaign intent and real audience trust</li>
-              <li>Straight reporting on members, activity, and retention</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-dark" id="experience">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="section-label">Project Experience</span>
-          <h2 class="section-title">Built inside live Web3 projects.</h2>
-          <p class="section-copy">Real communities, real users, real momentum — across five years of hands-on Web3 work.</p>
-        </div>
-        <div class="timeline-rail" role="list">
-          <article class="glass-card milestone" role="listitem"><small>2020 &ndash; 2021</small><h3>Fabwelt</h3><p>Moderated Telegram and Discord while helping users and working with the wider team.</p></article>
-          <article class="glass-card milestone" role="listitem"><small>2021 &ndash; 2022</small><h3>RRG Ventures</h3><p>Handled community allocations, sourced campaign marketers, and managed collaboration flow.</p></article>
-          <article class="glass-card milestone" role="listitem"><small>Mar 2022 &ndash; Nov 2023</small><h3>Unielon Wallet</h3><p>Grew Telegram discussion by 500+ active members and managed the social content rhythm.</p></article>
-          <article class="glass-card milestone" role="listitem"><small>Jul 2023 &ndash; Dec 2024</small><h3>UXUY Wallet</h3><p>Promoted the project on X while supporting users across Telegram and Discord.</p></article>
-          <article class="glass-card milestone" role="listitem"><small>Jul 2024 &ndash; Present</small><h3>Maestro Bots</h3><p>Supported India-focused ambassador work and translated product momentum into local trust.</p></article>
-        </div>
-        <div class="button-row"><a class="ghost-button" href="/experience">View Full Experience &rarr;</a></div>
-      </div>
-    </section>
-
-    <section class="section" id="faq">
-      <div class="container faq-layout">
-        <div class="section-header reveal">
-          <span class="section-label">Founder FAQ</span>
-          <h2 class="section-title">Common questions before entering India.</h2>
-          <p class="section-copy">Still deciding? These are the questions founders ask on the first call.</p>
-        </div>
-        <div class="accordion reveal">
-          <article class="accordion-item open">
-            <button class="accordion-toggle" type="button" aria-expanded="true">Is this only community management? <span class="faq-icon"></span></button>
-            <div class="accordion-panel"><p>No. Community is where trust starts, but Flexist also helps with creators, ambassadors, partnerships, support, and user retention.</p></div>
-          </article>
-          <article class="accordion-item">
-            <button class="accordion-toggle" type="button" aria-expanded="false">Can early-stage projects work with Flexist? <span class="faq-icon"></span></button>
-            <div class="accordion-panel"><p>Yes, if the project has a clear product thesis and wants a serious India plan before spending budget on disconnected campaigns.</p></div>
-          </article>
-          <article class="accordion-item">
-            <button class="accordion-toggle" type="button" aria-expanded="false">What is the best first step? <span class="faq-icon"></span></button>
-            <div class="accordion-panel"><p>Open the founder inquiry form or use FlexistLabs to share your category, stage, budget, and biggest India priority.</p></div>
           </article>
         </div>
       </div>
