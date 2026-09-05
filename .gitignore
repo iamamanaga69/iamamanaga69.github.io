@@ -1,12 +1,13 @@
+# Dependencies
 node_modules/
-.next/
-dist/
-public/scripts/
-.env.local
-.env*.local
-.DS_Store
-*.log
 
-# build artifacts / stray files
-tsconfig.tsbuildinfo
-/*.png
+# Build outputs
+dist/
+.vercel/
+.astro/
+public/scripts/
+
+# IDE / System files
+.DS_Store
+*.local
+Thumbs.db

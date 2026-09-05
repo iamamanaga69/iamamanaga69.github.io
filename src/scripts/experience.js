@@ -1,4 +1,4 @@
-(document.readyState !== "loading" ? (cb => cb()) : (cb => document.addEventListener("DOMContentLoaded", cb)))(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const entries = document.querySelectorAll(".timeline-entry");
   
   /* Scroll animation using IntersectionObserver */

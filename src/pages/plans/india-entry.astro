@@ -1,0 +1,153 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/plans.css';
+
+const planSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'India Entry Plan',
+  serviceType: 'Web3 marketing and community growth',
+  provider: { '@type': 'Organization', name: 'Flexist', url: 'https://flexist.in' },
+  areaServed: { '@type': 'Country', name: 'India' },
+  description: 'India Entry plan — the ideal starting point for pre-launch Web3 projects entering the Indian market.',
+  url: 'https://flexist.in/plans/india-entry',
+  offers: [
+    { '@type': 'Offer', name: 'One-Time Setup', price: '500', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-entry' },
+    { '@type': 'Offer', name: 'Monthly Retainer', price: '350', priceCurrency: 'USD', url: 'https://flexist.in/plans/india-entry' },
+  ],
+};
+---
+
+<Layout
+  title="India Entry Plan | Flexist"
+  description="India Entry plan — the ideal starting point for pre-launch Web3 projects entering the Indian market."
+  canonical="https://flexist.in/plans/india-entry"
+  pageId="plans"
+  schema={planSchema}
+>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  </Fragment>
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="plan-detail-hero">
+      <div class="container plan-detail-content">
+        <span class="plan-badge">Best for Pre‑Launch</span>
+        <h1 class="plan-detail-title gradient-text">India Entry</h1>
+        <p class="plan-detail-subtitle">Your launchpad into India. We set up your community, run your first influencer campaign, and recruit your first ambassadors — everything you need to land with traction.</p>
+        <p class="plan-detail-price" style="margin-top:24px;font-family:var(--font-mono);font-size:.95rem;color:var(--text-secondary);letter-spacing:.02em">
+          <strong style="color:var(--text-primary);font-size:1.15rem">$500</strong> one‑time&nbsp;&nbsp;·&nbsp;&nbsp;<strong style="color:var(--text-primary);font-size:1.15rem">$350</strong>/mo
+        </p>
+        <div class="button-row" style="margin-top:20px">
+          <a class="neon-button" href="/inquiry">Start India Entry →</a>
+          <a class="ghost-button" href="/plans#compare">Compare Plans →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's Included + Timeline -->
+    <section class="section">
+      <div class="container">
+        <div class="plan-split">
+          <!-- Left: Features -->
+          <div class="reveal">
+            <span class="section-label">What's Included</span>
+            <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">Full Deliverable List</h2>
+            <ul class="feature-list" style="margin-top:28px">
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span><strong>India Market Audit</strong> — Competitive landscape, opportunity sizing, and recommended positioning for the Indian crypto user base.</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span><strong>Telegram Setup + 30 Days Management</strong> — Full group setup, welcome flows, anti-spam bots, and daily community management for one month.</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span><strong>KOL Micro Campaign (3‑5 Creators)</strong> — Handpicked Indian crypto influencers creating authentic content about your project.</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span><strong>Ambassador Recruitment (Up to 10)</strong> — Sourcing, vetting, and onboarding local ambassadors who represent your brand in India.</span>
+              </li>
+              <li>
+                <span class="feature-bullet">✓</span>
+                <span><strong>Weekly Report</strong> — Clear performance data on community growth, engagement, and campaign metrics.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Right: Timeline -->
+          <div class="reveal">
+            <span class="section-label">Execution Timeline</span>
+            <h2 class="section-title" style="font-size:clamp(1.8rem,4vw,3rem)">How We Roll Out</h2>
+            <div class="plan-timeline" style="margin-top:28px">
+              <div class="timeline-node">
+                <span class="timeline-week">Week 1</span>
+                <h4>Foundation</h4>
+                <p>Market audit delivery. Telegram group setup with bot configuration, welcome flows, and rules. Begin ambassador sourcing.</p>
+              </div>
+              <div class="timeline-node">
+                <span class="timeline-week">Week 2</span>
+                <h4>Activation</h4>
+                <p>KOL outreach and creator selection. Ambassador interviews begin. Community seeding and initial engagement campaigns.</p>
+              </div>
+              <div class="timeline-node">
+                <span class="timeline-week">Week 3+</span>
+                <h4>Growth</h4>
+                <p>KOL content goes live. Ambassadors onboarded and active. Weekly reporting begins. Ongoing Telegram management and moderation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who Is This For -->
+    <section class="section section-dark">
+      <div class="container">
+        <div class="section-header centered reveal">
+          <span class="section-label">Ideal For</span>
+          <h2 class="section-title">Who Is This For?</h2>
+        </div>
+        <div class="use-case-grid reveal">
+          <div class="use-case">
+            <h4>Pre‑Launch Projects</h4>
+            <p>You're about to launch or just launched and need a real community presence in India — not bots, real users.</p>
+          </div>
+          <div class="use-case">
+            <h4>Testing India Market Fit</h4>
+            <p>You want to understand if India is the right market before committing to a full growth program.</p>
+          </div>
+          <div class="use-case">
+            <h4>Bootstrap Budgets</h4>
+            <p>Your budget is tight but you still want professional-grade community setup and influencer activation.</p>
+          </div>
+          <div class="use-case">
+            <h4>First India Expansion</h4>
+            <p>You've never operated in India before and need an experienced partner to set the right foundation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal plans-cta-strip">
+          <h2>Compare All Plans</h2>
+          <p>See how India Entry stacks up against Growth and Partner tiers in a side-by-side feature comparison.</p>
+          <div class="button-row" style="justify-content:center">
+            <a class="neon-button" href="/plans#compare">View Comparison →</a>
+            <a class="ghost-button" href="/plans/india-growth">See India Growth →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script is:inline src="/scripts/plans.js"></script>
+</Layout>

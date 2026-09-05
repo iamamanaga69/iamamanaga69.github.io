@@ -1,8 +1,0 @@
-/* Remap the design-system font tokens onto next/font self-hosted families.
-   Loaded AFTER global.css so these win over the literal Google-Fonts names. */
-:root {
-  --font-display: var(--nf-bricolage), "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-body: var(--nf-inter), system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: var(--nf-jetbrains), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --font-accent: var(--nf-syne), var(--nf-bricolage), "Segoe UI", system-ui, sans-serif;
-}

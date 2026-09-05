@@ -1,4 +1,4 @@
-(document.readyState !== "loading" ? (cb => cb()) : (cb => document.addEventListener("DOMContentLoaded", cb)))(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const stateButtons = Array.from(document.querySelectorAll("[data-state-button]"));
   const stateOutput = document.querySelector("[data-state-output]");
 

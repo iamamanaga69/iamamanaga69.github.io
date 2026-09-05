@@ -121,12 +121,10 @@
   }
 
 
-  const boot = () => {
+  document.addEventListener("DOMContentLoaded", () => {
     initPriceToggle();
     initSmoothScroll();
 
     initPlanStickyNav();
-  };
-  if (document.readyState !== "loading") boot();
-  else document.addEventListener("DOMContentLoaded", boot);
+  });
 })();

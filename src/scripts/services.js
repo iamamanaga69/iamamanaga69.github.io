@@ -197,11 +197,9 @@
     });
   }
 
-  const boot = () => {
+  document.addEventListener("DOMContentLoaded", () => {
     initTabSwitcher();
     initBottomDrawer();
     initScrollSpy();
-  };
-  if (document.readyState !== "loading") boot();
-  else document.addEventListener("DOMContentLoaded", boot);
+  });
 })();

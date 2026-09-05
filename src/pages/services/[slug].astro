@@ -1,0 +1,165 @@
+﻿---
+import Layout from '../../layouts/Layout.astro';
+import seoServices from '../../data/seoServices.json';
+import '../../styles/services.css';
+
+export function getStaticPaths() {
+  return seoServices.map((service) => ({
+    params: { slug: service.slug },
+    props: { service }
+  }));
+}
+
+const { service } = Astro.props;
+const relatedServices = seoServices.filter((item) => service.related.includes(item.slug));
+const serviceUrl = `https://flexist.in/services/${service.slug}`;
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: service.faqs.map(([question, answer]) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer }
+  }))
+};
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  serviceType: service.keyword,
+  url: serviceUrl,
+  provider: {
+    '@type': 'Organization',
+    name: 'Flexist',
+    url: 'https://flexist.in'
+  },
+  areaServed: { '@type': 'Country', name: 'India' },
+  description: service.metaDescription
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://flexist.in/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://flexist.in/services' },
+    { '@type': 'ListItem', position: 3, name: service.title, item: serviceUrl }
+  ]
+};
+---
+
+<Layout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  canonical={serviceUrl}
+  pageId="services"
+  schema={[serviceSchema, faqSchema, breadcrumbSchema]}
+>
+  <main id="main-content">
+    <nav class="breadcrumb container" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span>→</span> <a href="/services">Services</a> <span>→</span> <span>{service.title}</span>
+    </nav>
+
+    <section class="page-hero">
+      <div class="container page-hero-content">
+        <p class="page-kicker">{service.keyword}</p>
+        <h1 class="page-title">{service.h1}</h1>
+        <p class="page-lede">{service.opening}</p>
+        <div class="button-row">
+          <a class="neon-button" href={`/inquiry?service=${service.slug}`}>Open Founder Inquiry</a>
+          <a class="ghost-button" href="/services">View All Services</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split-layout">
+        <div class="manifesto-copy reveal">
+          <span class="section-label">What This Includes</span>
+          <h2 class="section-title">{service.keyword} built for founder outcomes.</h2>
+          <p>Founders do not need disconnected tasks. They need a service that explains what happens first, what happens next, and how each channel helps India become a real user acquisition market.</p>
+          <ul class="value-list">
+            {service.includes.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <aside class="glass-card reveal">
+          <img src="/assets/images/flexist-avatar-192.png" alt={`${service.keyword} by Flexist`} loading="lazy" style="width:76px;height:76px;border-radius:50%;margin-bottom:18px">
+          <h3>Built Around India</h3>
+          <p>{service.whyIndia}</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-label">Why Flexist</span>
+          <h2 class="section-title">How Flexist does this differently.</h2>
+        </div>
+        <div class="comparison-grid">
+          <article class="glass-card compare-column negative reveal">
+            <h3>Generic Campaign Work</h3>
+            <ul>
+              <li>Follower-count decisions without context</li>
+              <li>One-off posts with no community follow-through</li>
+              <li>Reports based on screenshots, not market signal</li>
+            </ul>
+          </article>
+          <div class="vs-divider">VS</div>
+          <article class="glass-card compare-column positive reveal">
+            <h3>Flexist India Growth</h3>
+            <p>{service.difference}</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split-layout">
+        <div class="reveal">
+          <span class="section-label">Proof</span>
+          <h2 class="section-title">Real Web3 operating experience.</h2>
+          <p>{service.proof}</p>
+          <a class="ghost-button" href="/experience">View Experience</a>
+        </div>
+        <div class="glass-card reveal">
+          <h3>Related Services</h3>
+          <ul class="value-list">
+            {relatedServices.map((item) => <li><a href={`/services/${item.slug}`}>{item.title}</a></li>)}
+            <li><a href="/resources/blog/how-to-enter-the-india-web3-market">Read: How to enter the India Web3 market</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark">
+      <div class="container faq-layout">
+        <div class="section-header reveal">
+          <span class="section-label">FAQ</span>
+          <h2 class="section-title">{service.keyword} questions founders ask.</h2>
+        </div>
+        <div class="accordion reveal">
+          {service.faqs.map(([question, answer], index) => (
+            <article class={`accordion-item ${index === 0 ? 'open' : ''}`}>
+              <button class="accordion-toggle" type="button" aria-expanded={index === 0 ? 'true' : 'false'}>{question}<span class="faq-icon"></span></button>
+              <div class="accordion-panel"><p>{answer}</p></div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-block reveal">
+          <span class="section-label">Next Step</span>
+          <h2>Want {service.keyword.toLowerCase()} handled properly?</h2>
+          <p>Send your project stage, current community, India target, budget range, and main bottleneck. Flexist will return with a clear recommendation.</p>
+          <div class="button-row">
+            <a class="neon-button" href={`/inquiry?service=${service.slug}`}>Open Founder Inquiry</a>
+            <a class="ghost-button" href="https://t.me/FlexistCrypto">Message Telegram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

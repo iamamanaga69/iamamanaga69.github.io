@@ -1,4 +1,4 @@
-(document.readyState !== "loading" ? (cb => cb()) : (cb => document.addEventListener("DOMContentLoaded", cb)))(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const startNetworkGraph = () => NetworkGraph.init();
   if ("requestIdleCallback" in window) {
     window.requestIdleCallback(startNetworkGraph, { timeout: 1800 });

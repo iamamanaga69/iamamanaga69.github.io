@@ -57,5 +57,4 @@ const Counters = (() => {
   return { init };
 })();
 
-if (document.readyState !== "loading") Counters.init();
-else document.addEventListener("DOMContentLoaded", Counters.init);
+document.addEventListener("DOMContentLoaded", Counters.init);

@@ -1,4 +1,4 @@
-(document.readyState !== "loading" ? (cb => cb()) : (cb => document.addEventListener("DOMContentLoaded", cb)))(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("[data-inquiry-engine]");
   if (!form) return;
 
