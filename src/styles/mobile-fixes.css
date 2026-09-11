@@ -171,10 +171,9 @@
     font-size: 0.66rem !important;
   }
 
-  /* Hero command card — compact */
-  .hero-command-card {
+  /* Hero visual — compact */
+  .hero-visual {
     margin-top: 16px !important;
-    padding: 12px !important;
   }
 
   .hero-command-grid {
