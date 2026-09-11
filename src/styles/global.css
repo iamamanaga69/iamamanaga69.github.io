@@ -796,6 +796,30 @@ html[data-theme="light"] .theme-icon-moon {
   text-transform: uppercase;
 }
 
+.footer-brand-col {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-logo {
+  filter: drop-shadow(0 0 28px rgba(0, 212, 255, 0.12));
+  opacity: 0.72;
+  transition: opacity 400ms var(--ease-out), filter 400ms var(--ease-out), transform 400ms var(--ease-out);
+  width: 120px;
+  height: 120px;
+}
+
+.footer-logo:hover {
+  filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.35));
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+html[data-theme="light"] .footer-logo {
+  filter: drop-shadow(0 0 22px rgba(0, 102, 190, 0.12));
+}
+
 .skip-link {
   background: var(--accent-cyan);
   color: #001024;

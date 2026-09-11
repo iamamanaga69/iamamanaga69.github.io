@@ -1,0 +1,269 @@
+/* ============================================================================
+   PREMIUM FX STYLES — Spotlight, Shimmer, Grain, Section Reveals
+   Companion to premium-fx.js. All effects use transform/opacity/filter only.
+   ========================================================================= */
+
+
+/* ============================================================================
+   §1  SPOTLIGHT CARDS
+   A radial glow that tracks the cursor within each card.
+   Variables --spot-x / --spot-y / --spot-opacity are set by JS.
+   ========================================================================= */
+
+.has-spotlight {
+  position: relative;
+}
+
+.has-spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    600px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(0, 212, 255, 0.06) 0%,
+    rgba(123, 47, 255, 0.03) 30%,
+    transparent 70%
+  );
+  opacity: var(--spot-opacity, 0);
+  transition: opacity 350ms var(--ease-out);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Signal map and hero image get a stronger spotlight */
+.signal-map.has-spotlight::after,
+.hero-brand-art.has-spotlight::after {
+  background: radial-gradient(
+    500px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgba(0, 212, 255, 0.09) 0%,
+    rgba(123, 47, 255, 0.04) 35%,
+    transparent 70%
+  );
+}
+
+/* Don't let spotlight overlay block the glass-card border sweep */
+.glass-card.hoverable.has-spotlight::before {
+  z-index: 3;
+}
+
+
+/* ============================================================================
+   §2  SECTION TITLE SHIMMER
+   A gradient sweep that activates when headings scroll into view.
+   ========================================================================= */
+
+.has-shimmer {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    var(--accent-cyan) 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 250% 100%;
+  background-position: -50% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  transition: background-position 1.2s ease;
+}
+
+/* Gradient-text titles keep their existing gradient — just add a subtle brightness pulse */
+.has-shimmer.gradient-text {
+  background: linear-gradient(
+    100deg,
+    var(--text-primary) 0%,
+    var(--accent-cyan) 34%,
+    #5b8cff 52%,
+    var(--accent-purple) 70%,
+    var(--accent-cyan) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.has-shimmer.shimmer-active {
+  background-position: 150% 0;
+}
+
+.has-shimmer.shimmer-active.gradient-text {
+  animation: heroGradientPan 11s ease-in-out infinite;
+}
+
+
+/* ============================================================================
+   §3  GRAIN OVERLAY
+   A subtle noise texture for depth. Fixed position, covers the viewport.
+   Uses an inline SVG data URI — no external file needed.
+   ========================================================================= */
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* In light theme, reduce grain visibility */
+html[data-theme="light"] .grain-overlay {
+  opacity: 0.015;
+}
+
+
+/* ============================================================================
+   §4  COUNTER PULSE
+   Subtle scale-up bounce when counters finish their animation.
+   ========================================================================= */
+
+.stat-counter {
+  transition: transform 400ms var(--ease-out);
+}
+
+.stat-counter.counter-pulsed {
+  animation: counterBounce 600ms var(--ease-out);
+}
+
+@keyframes counterBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+/* Glow effect on stat numbers */
+.stat-counter strong {
+  transition: text-shadow 400ms var(--ease-out);
+}
+
+.stat-counter:hover strong {
+  text-shadow: 0 0 28px rgba(0, 255, 136, 0.45);
+}
+
+
+/* ============================================================================
+   §5  SCROLL-DRIVEN SECTION REVEALS
+   Parallax-lite: sections slide up gently as they enter view.
+   ========================================================================= */
+
+.premium-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out);
+}
+
+.premium-reveal.premium-reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Service/advantage cards get a slightly different timing */
+.premium-reveal:nth-child(2) {
+  transition-delay: 80ms;
+}
+
+.premium-reveal:nth-child(3) {
+  transition-delay: 160ms;
+}
+
+
+/* ============================================================================
+   §6  MARQUEE HOVER PAUSE
+   ========================================================================= */
+
+.marquee-paused .logo-track {
+  animation-play-state: paused;
+}
+
+
+/* ============================================================================
+   §7  ENHANCED BUTTON RIPPLE
+   A subtle ripple effect on neon-button click.
+   ========================================================================= */
+
+.neon-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.neon-button .btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 212, 255, 0.25);
+  transform: scale(0);
+  animation: btnRipple 600ms ease-out forwards;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes btnRipple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+
+/* ============================================================================
+   §8  PERFORMANCE MODE — kill premium effects
+   ========================================================================= */
+
+.performance-mode .grain-overlay,
+.performance-mode .has-spotlight::after {
+  display: none !important;
+}
+
+.performance-mode .has-shimmer {
+  background: none !important;
+  -webkit-text-fill-color: inherit !important;
+  color: inherit !important;
+}
+
+.performance-mode .premium-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.performance-mode .stat-counter.counter-pulsed {
+  animation: none !important;
+}
+
+
+/* ============================================================================
+   §A11Y  REDUCED MOTION
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .grain-overlay,
+  .has-spotlight::after {
+    display: none !important;
+  }
+
+  .has-shimmer {
+    background: none !important;
+    -webkit-text-fill-color: inherit !important;
+    color: inherit !important;
+  }
+
+  .premium-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .stat-counter.counter-pulsed {
+    animation: none !important;
+  }
+}

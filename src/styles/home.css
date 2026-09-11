@@ -12,7 +12,7 @@
 }
 
 .hero-brand-art {
-  max-width: 380px;
+  max-width: 480px;
   margin: 0 auto;
 }
 
@@ -21,12 +21,12 @@
   object-fit: cover;
   width: 100%;
   height: auto;
-  max-height: 500px;
+  border-radius: 17px;
 }
 
 .hero-grid-premium {
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
-  gap: 48px;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.62fr);
+  gap: 56px;
 }
 
 .hero-proof-list {
@@ -62,7 +62,7 @@
 .hero-visual {
   position: relative;
   z-index: 2;
-  max-width: 380px;
+  max-width: 480px;
   margin-left: auto;
 }
 

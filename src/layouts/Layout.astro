@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/components.css';
 import '../styles/animations.css';
+import '../styles/premium-fx.css';
 import '../styles/pages.css';
 import '../styles/mobile-fixes.css';
 import Analytics from '@vercel/analytics/astro';
@@ -192,6 +193,9 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
           </form>
           <div class="form-note" data-subscribe-note></div>
         </div>
+        <div class="footer-brand-col">
+          <img src="/assets/images/flexist-icon.svg" alt="Flexist" class="footer-logo" width="120" height="120" loading="lazy">
+        </div>
       </div>
       <div class="container footer-bottom">
         <span>&copy; {new Date().getFullYear()} Flexist</span>
@@ -202,6 +206,7 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
 
   <script is:inline defer src="/scripts/global.js"></script>
   <script is:inline defer src="/scripts/fx.js"></script>
+  <script is:inline defer src="/scripts/premium-fx.js"></script>
 
   <Analytics />
   <SpeedInsights />

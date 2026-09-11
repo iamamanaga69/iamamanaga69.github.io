@@ -11,3 +11,4 @@ public/scripts/
 .DS_Store
 *.local
 Thumbs.db
+.next
