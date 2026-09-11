@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flexist">
+  <title>Flexist</title>
+  <!-- Android maskable: ground bleeds to the edge, glyph stays inside the inner
+       66% so no platform crop clips it. -->
+  <rect width="64" height="64" fill="#08090C"/>
+  <g transform="translate(32,32) scale(0.66) translate(-32,-32)">
+    <path fill="#00E5A0" d="M16 14 H48 L42 22 H26 V30 H44 L38 38 H26 V50 H16 Z"/>
+  </g>
+</svg>

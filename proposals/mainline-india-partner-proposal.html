@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Flexist × Mainline — India Growth Partnership Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101720; --ink-soft:#3d4a5a; --ink-faint:#6b7787;
+  --rule:#dfe5ec; --rule-soft:#eef1f5;
+  --accent:#0b6fd4; --accent-deep:#064a8f; --teal:#07889b;
+  --wash:#f5f8fb;
+  --display:'Bricolage Grotesque',Georgia,serif;
+  --body:'Inter',-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'Courier New',monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:#e7ebf0;color:var(--ink);font-family:var(--body);font-size:10.5pt;line-height:1.62;-webkit-font-smoothing:antialiased}
+.paper{background:#fff;width:210mm;margin:24px auto;padding:19mm 20mm 17mm;box-shadow:0 4px 28px rgba(16,23,32,.14)}
+
+/* --- print --- */
+@page{size:A4;margin:13mm 0 11mm}
+@media print{
+  body{background:#fff;font-size:9.6pt;line-height:1.48}
+  .paper{width:auto;margin:0;padding:0 16mm;box-shadow:none}
+  .no-print{display:none!important}
+  /* let long sections flow across pages; only keep small units intact */
+  section{break-inside:auto;page-break-inside:auto;margin-bottom:16px}
+  .box,.tl-item,.sig,tr,.deliv li,ol.steps li,ul.plain li{break-inside:avoid;page-break-inside:avoid}
+  h2,h3{break-after:avoid;page-break-after:avoid}
+  thead{break-after:avoid}
+  a{color:var(--ink);text-decoration:none}
+  .cover{height:auto;min-height:228mm}
+  .deliv li{padding-bottom:8px;margin-bottom:8px}
+  .tl-item{padding:8px 0}
+  h2{font-size:14.5pt}
+  h3{font-size:10.8pt;margin:14px 0 4px}
+  p{margin-bottom:8px}
+  table{margin:11px 0}
+  td{padding:8px 12px 8px 0}
+  .box{padding:11px 14px;margin:12px 0}
+  .sig{margin-top:20px;padding-top:12px}
+  .paper>*:last-child{margin-bottom:0}
+}
+
+/* --- toolbar --- */
+.bar{position:sticky;top:0;z-index:9;background:#101720;color:#fff;padding:9px 16px;display:flex;gap:14px;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+.bar button{font:inherit;background:#0b6fd4;color:#fff;border:0;padding:7px 15px;border-radius:5px;cursor:pointer;letter-spacing:.06em}
+.bar button:hover{background:#064a8f}
+.bar span{color:#95a3b4}
+
+/* --- cover --- */
+.cover{display:flex;flex-direction:column;justify-content:space-between;min-height:238mm;page-break-after:always}
+.wordmark{font-family:var(--display);font-weight:700;font-size:23pt;letter-spacing:-.02em}
+.wordmark em{font-style:normal;color:var(--accent)}
+.tagline{font-family:var(--mono);font-size:7.6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-top:5px}
+.cover-mid{padding:0 0 6mm}
+.eyebrow{font-family:var(--mono);font-size:8pt;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+h1{font-family:var(--display);font-weight:700;font-size:33pt;line-height:1.06;letter-spacing:-.025em;margin:0 0 12px}
+.cover-sub{font-size:13pt;color:var(--ink-soft);max-width:135mm;line-height:1.5;margin:0}
+.rule{height:3px;background:var(--accent);width:64px;margin:20px 0 26px}
+.meta{border-top:1px solid var(--rule);padding-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:5px 30px;max-width:150mm}
+.meta div{display:flex;gap:8px;font-size:9.5pt;padding:3px 0}
+.meta b{font-family:var(--mono);font-size:7.6pt;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;min-width:74px;padding-top:2px}
+.cover-foot{font-family:var(--mono);font-size:8pt;color:var(--ink-faint);border-top:1px solid var(--rule);padding-top:11px;letter-spacing:.03em}
+
+/* --- sections --- */
+section{margin:0 0 26px}
+h2{font-family:var(--display);font-weight:700;font-size:16.5pt;letter-spacing:-.015em;margin:0 0 3px;line-height:1.2}
+.num{font-family:var(--mono);font-size:8pt;letter-spacing:.16em;color:var(--accent);display:block;margin-bottom:7px}
+.hr{border:0;border-top:1px solid var(--rule);margin:9px 0 15px}
+h3{font-family:var(--display);font-weight:600;font-size:11.5pt;margin:19px 0 5px;letter-spacing:-.01em}
+p{margin:0 0 10px}
+strong{font-weight:600;color:var(--ink)}
+a{color:var(--accent)}
+.lead{font-size:11pt;color:var(--ink-soft)}
+
+/* deliverables */
+.deliv{list-style:none;padding:0;margin:14px 0 0;counter-reset:d}
+.deliv li{counter-increment:d;position:relative;padding:0 0 13px 30px;margin-bottom:13px;border-bottom:1px solid var(--rule-soft)}
+.deliv li:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+.deliv li::before{content:counter(d,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:var(--mono);font-size:8pt;color:var(--accent);font-weight:500}
+.deliv b{display:block;font-family:var(--display);font-weight:600;font-size:10.8pt;margin-bottom:2px}
+.deliv span{color:var(--ink-soft)}
+
+/* timeline */
+.tl{margin-top:14px}
+.tl-item{display:grid;grid-template-columns:30mm 1fr;gap:12px;padding:11px 0;border-top:1px solid var(--rule-soft)}
+.tl-item:first-child{border-top:1px solid var(--rule)}
+.tl-when{font-family:var(--mono);font-size:8.2pt;letter-spacing:.09em;text-transform:uppercase;color:var(--teal);padding-top:2px}
+.tl-item b{font-family:var(--display);font-size:10.8pt;display:block;margin-bottom:2px}
+.tl-item p{margin:0;color:var(--ink-soft);font-size:10pt}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:9.8pt}
+th{text-align:left;font-family:var(--mono);font-size:7.6pt;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;padding:0 12px 7px 0;border-bottom:1.5px solid var(--ink)}
+td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule-soft);vertical-align:top;color:var(--ink-soft)}
+td:first-child{color:var(--ink);font-weight:500;width:36%}
+td b{white-space:nowrap}
+tr:last-child td{border-bottom:1px solid var(--rule)}
+.amt{font-family:var(--mono);color:var(--ink)!important;font-weight:500}
+
+/* callouts */
+.box{background:var(--wash);border-left:3px solid var(--accent);padding:14px 17px;margin:16px 0;font-size:10pt}
+.box p:last-child{margin-bottom:0}
+.box .lbl{font-family:var(--mono);font-size:7.6pt;letter-spacing:.13em;text-transform:uppercase;color:var(--accent-deep);margin-bottom:6px;display:block}
+.box.warn{border-left-color:var(--teal);background:#f2f9fa}
+.box.warn .lbl{color:var(--teal)}
+
+/* plain lists */
+ul.plain{margin:10px 0;padding-left:17px}
+ul.plain li{margin-bottom:6px;color:var(--ink-soft)}
+ol.steps{margin:14px 0 0;padding-left:0;list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding-left:28px;margin-bottom:11px;color:var(--ink-soft)}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:19px;height:19px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--mono);font-size:8pt;display:flex;align-items:center;justify-content:center}
+
+/* signature */
+.sig{margin-top:32px;border-top:1px solid var(--rule);padding-top:15px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.sig .who b{font-family:var(--display);font-size:12pt;display:block}
+.sig .who span{font-size:9.5pt;color:var(--ink-faint)}
+.sig .contact{font-family:var(--mono);font-size:8.4pt;color:var(--ink-faint);text-align:right;line-height:1.8}
+
+@media(max-width:760px){.paper{width:auto;margin:0;padding:22px 18px}.meta{grid-template-columns:1fr}.tl-item{grid-template-columns:1fr;gap:2px}h1{font-size:26pt}.cover{min-height:0}}
+</style>
+</head>
+<body>
+<div class="bar no-print">
+  <button onclick="window.print()">Save as PDF / Print</button>
+  <span>Print → Save as PDF → A4 → More settings: Background graphics <b style="color:#fff">ON</b>, Headers and footers <b style="color:#fff">OFF</b></span>
+</div>
+<div class="paper">
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div>
+    <div class="wordmark">FLEX<em>IST</em></div>
+    <div class="tagline">India-focused Web3 marketing &amp; community growth</div>
+  </div>
+
+  <div class="cover-mid">
+    <div class="eyebrow">Partnership Proposal</div>
+    <h1>India Growth<br>Partnership</h1>
+    <p class="cover-sub">Owning Mainline's India market — community, creators, ambassadors and partnerships, built around traders who actually deposit.</p>
+    <div class="rule"></div>
+    <div class="meta">
+      <div><b>Prepared for</b> <span>Amanda Wong<br>Mainline</span></div>
+      <div><b>Prepared by</b> <span>Aman<br>Flexist</span></div>
+      <div><b>Date</b> <span>4 September 2026</span></div>
+      <div><b>Plan</b> <span>India Partner</span></div>
+      <div><b>Retainer</b> <span>$1,800 / month</span></div>
+      <div><b>Initial term</b> <span>3 months from kickoff</span></div>
+    </div>
+  </div>
+
+  <div class="cover-foot">flexist.in &nbsp;·&nbsp; FlexistCrypto@gmail.com &nbsp;·&nbsp; t.me/FlexistCrypto &nbsp;·&nbsp; Confidential — prepared for Mainline only</div>
+</div>
+
+<!-- ============ 01 ============ -->
+<section>
+  <span class="num">01</span>
+  <h2>Understanding the objective</h2>
+  <hr class="hr">
+  <p class="lead">The goal is to build Mainline in India around genuine, long-term traders — not registration volume.</p>
+  <p>That needs four things working together: clean onboarding for Indian users, community support that is visibly active, tracking both sides can trust, and creators whose audiences actually trade. Your model already points the same way — a fixed creator fee scaled to reach and audience quality, <strong>$200 per Qualified First-Time Depositor</strong>, revenue share for creators who keep performing, and no payout on fake registrations or bot traffic. Everything below is built to produce depositors who trade, because that is the only outcome your model pays for.</p>
+</section>
+
+<!-- ============ 02 ============ -->
+<section>
+  <span class="num">02</span>
+  <h2>Scope of work — India Partner</h2>
+  <hr class="hr">
+  <p>Ten workstreams, all running concurrently for the term.</p>
+  <ol class="deliv">
+    <li><b>India market audit</b><span>Where Mainline's realistic Indian trader audience sits today — which Telegram groups, YouTube channels, X circles and regional communities discuss the platforms you compete with, and which of them convert.</span></li>
+    <li><b>Community setup and management</b><span>Telegram built and staffed (Discord too, if you want it): moderation, response flow, rules, activation calendar. IST coverage, so questions get answered while Indian users are awake.</span></li>
+    <li><b>Unlimited KOL campaigns</b><span>No cap on creator count or content cycles for the term. Selection weighted toward trading audiences — comment sections with real questions, not reply farms.</span></li>
+    <li><b>Full ambassador program</b><span>Recruitment, onboarding, training, task management, contribution scoring and rewards. Ambassadors carry local content, in-community support and regional-language reach.</span></li>
+    <li><b>Monthly partnership pipeline</b><span>Ongoing outreach to Indian trading communities, Web3 projects and media — collab campaigns, community swaps, co-marketing.</span></li>
+    <li><b>Monthly AMA coordination</b><span>One AMA a month with the Indian community: host, promotion, question curation, live moderation and follow-up.</span></li>
+    <li><b>App review management</b><span>Structured Play Store / App Store review campaign with real Indian users, plus review monitoring and responses. Drop this line if Mainline is web-only.</span></li>
+    <li><b>Dedicated Indian support</b><span>A named point of contact, IST availability, priority response on anything user-facing or time-sensitive.</span></li>
+    <li><b>Full network access</b><span>Introductions across the Indian Web3 network — exchange contacts, trading-community founders, project founders and crypto media.</span></li>
+    <li><b>Weekly founder call</b><span>30–45 minutes each week: what shipped, what the numbers say, what changes next.</span></li>
+  </ol>
+</section>
+
+<!-- ============ 03 ============ -->
+<section>
+  <span class="num">03</span>
+  <h2>Rollout</h2>
+  <hr class="hr">
+  <div class="tl">
+    <div class="tl-item"><div class="tl-when">Week 1</div><div><b>Deployment</b><p>Market audit delivered. Community platforms set up and staffed. Ambassador and KOL pipelines activated. First call with the roadmap and opening creator shortlist.</p></div></div>
+    <div class="tl-item"><div class="tl-when">Weeks 2–3</div><div><b>First output</b><p>First KOL wave live. Ambassador team operational. Partnership outreach in progress. Content calendar in execution. Month-one AMA scheduled.</p></div></div>
+    <div class="tl-item"><div class="tl-when">Month 2</div><div><b>Momentum</b><p>Second KOL wave. First partnerships closed. AMA completed. App review campaign launched. Full report with QFTD attribution per creator.</p></div></div>
+    <div class="tl-item"><div class="tl-when">Month 3</div><div><b>India ownership</b><p>Continuous operations across every channel, new creator cycles monthly, partnership pipeline flowing. By now the performance data shows where to concentrate spend.</p></div></div>
+  </div>
+  <div class="box warn">
+    <span class="lbl">Expectation worth setting</span>
+    <p>Creator response rates in India run roughly 40–60% even with existing relationships — schedules, exclusivity with competing platforms and internal approvals all get in the way. Expect the first wave to land <strong>5–8 confirmed creators out of 12–15 approached</strong>. Better said now than as a shortlist that quietly shrinks over three weeks.</p>
+  </div>
+</section>
+
+<!-- ============ 04 ============ -->
+<section>
+  <span class="num">04</span>
+  <h2>How the two budgets separate</h2>
+  <hr class="hr">
+  <table>
+    <thead><tr><th>Budget</th><th>Paid to</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Flexist retainer</td><td>Flexist</td><td class="amt">$1,800 / month</td></tr>
+      <tr><td>Creator campaign budget</td><td>The creators, directly</td><td class="amt">Variable — per creator</td></tr>
+    </tbody>
+  </table>
+  <p>The retainer covers management and execution of everything in Section 02. <strong>It does not include money that goes to creators.</strong> The creator budget is separate, set per creator, and follows the model you outlined: a fixed fee scaled to reach, engagement and audience quality, plus $200 per QFTD, plus revenue share for top performers.</p>
+  <div class="box">
+    <span class="lbl">Approval gate</span>
+    <p>No creator is committed and no campaign budget is spent without written approval from Mainline first. You receive the shortlist with audience metrics and quoted rates, and approve or decline each name. Your fixed exposure is the retainer; the performance money only moves when genuine depositors do.</p>
+  </div>
+  <p>On fraud: creators are screened for engagement authenticity before reaching your shortlist, and we do not use incentivised-signup farms or bounty platforms. If a creator's traffic does not convert into real trading activity, we stop the spend and tell you — including when it was a creator we recommended.</p>
+</section>
+
+<!-- ============ 05 ============ -->
+<section>
+  <span class="num">05</span>
+  <h2>Commercials</h2>
+  <hr class="hr">
+  <table>
+    <thead><tr><th>Item</th><th>Terms</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Plan</td><td colspan="2">India Partner — full scope, Section 02</td></tr>
+      <tr><td>Retainer</td><td colspan="2"><span class="amt">$1,800</span> per month</td></tr>
+      <tr><td>Initial term</td><td colspan="2">3 months from kickoff, monthly thereafter</td></tr>
+      <tr><td>Currency &amp; method</td><td colspan="2">USD — USDT (TRC-20 / ERC-20) or bank transfer</td></tr>
+    </tbody>
+  </table>
+  <p>The retainer sits below the usual market range for this scope, and it does not scale with the size of the Indian market or the number of creators activated — an unlimited-campaign scope at a fixed fee.</p>
+  <p><strong>Why three months:</strong> QFTDs from creator content compound over weeks. Month one is creator negotiation, briefing and first content. Month two is when per-creator attribution becomes readable. Month three is where budget moves onto what worked. A single month can only tell us whether creators replied, not whether India is working.</p>
+
+  <h3>Payment schedule</h3>
+  <table>
+    <thead><tr><th>Stage</th><th>Trigger</th><th>Amount</th></tr></thead>
+    <tbody>
+      <tr><td>Month 1 — activation</td><td>On signing. Formally activates network outreach and unlocks the India-specific partner deliverables.</td><td class="amt">$720</td></tr>
+      <tr><td>Month 1 — balance</td><td>On completion of the onboarding milestone defined below.</td><td class="amt">$1,080</td></tr>
+      <tr><td>Months 2 and 3</td><td>Invoiced at the start of each month, in advance.</td><td class="amt">$1,800</td></tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <span class="lbl">The onboarding milestone, defined</span>
+    <p><strong>"5–6 creators onboarded"</strong> means each has (a) confirmed participation in writing, (b) agreed commercial terms, and (c) locked a content slot or delivery date. It does not require the content to have published, since publication timing sits with the creators. The split above applies to month one only.</p>
+  </div>
+</section>
+
+<!-- ============ 06 ============ -->
+<section>
+  <span class="num">06</span>
+  <h2>Measurement and reporting</h2>
+  <hr class="hr">
+  <table>
+    <thead><tr><th>Cadence</th><th>What you get</th><th></th></tr></thead>
+    <tbody>
+      <tr><td>Weekly</td><td colspan="2">Creator pipeline status (approached / negotiating / confirmed / live), community activity, ambassador output, partnership conversations, and anything blocked.</td></tr>
+      <tr><td>Monthly</td><td colspan="2">QFTDs attributed per creator, cost per QFTD by creator tier, community growth as active-poster ratio rather than joins, ambassador scorecard, partnerships closed, and where next month's creator budget should concentrate.</td></tr>
+    </tbody>
+  </table>
+  <p>Attribution requires unique referral or tracking links per creator, plus read access to whatever dashboard reports deposits against them. Without that, creator performance is guesswork and neither side can defend the spend.</p>
+</section>
+
+<!-- ============ 07 ============ -->
+<section>
+  <span class="num">07</span>
+  <h2>Boundaries</h2>
+  <hr class="hr">
+  <h3>Not included in the retainer</h3>
+  <ul class="plain">
+    <li>Creator fees, $200 CPA payouts and revenue share — the separate campaign budget in Section 04</li>
+    <li>Paid advertising spend, giveaway and prize pools</li>
+    <li>Exchange listing fees, market making or liquidity provision</li>
+    <li>Legal drafting, contract translation or regulatory advice</li>
+    <li>Product, design or engineering work on Mainline's app or website</li>
+    <li>Bounty platforms and paid-signup networks — not used, on purpose</li>
+  </ul>
+  <h3>What we need from Mainline</h3>
+  <ul class="plain">
+    <li>Unique referral or tracking links per creator, and dashboard read access for attribution</li>
+    <li>Brand kit — logos, colours, approved messaging, and a do-not-say list</li>
+    <li>A 30-minute product walkthrough so creator briefs are technically accurate</li>
+    <li>One named approver for creators and spend, with 48-hour turnaround on approvals</li>
+    <li>Clarity on any Indian states, user types or claims that are out of scope for compliance</li>
+  </ul>
+</section>
+
+<!-- ============ 08 ============ -->
+<section>
+  <span class="num">08</span>
+  <h2>Next steps</h2>
+  <hr class="hr">
+  <ol class="steps">
+    <li>Review with your founder and team. Happy to answer anything in writing, or on a call if that is faster.</li>
+    <li><strong>Alignment call</strong> — 30 minutes, to confirm scope, the first creator shortlist direction, and tracking setup.</li>
+    <li><strong>Services agreement</strong> — a short SOW plus terms covering scope, payment, confidentiality and IP. Glad to work off Mainline's template if you have one; otherwise we will send ours for your team to review.</li>
+    <li><strong>$720 activation payment</strong>, per Section 05.</li>
+    <li><strong>Kickoff within 3 business days</strong> of payment clearing, with Week 1 deliverables as set out in Section 03.</li>
+  </ol>
+  <div class="box">
+    <span class="lbl">Validity</span>
+    <p>Pricing and terms hold for 21 days from the date on the cover.</p>
+  </div>
+</section>
+
+<div class="sig">
+  <div class="who">
+    <b>Aman</b>
+    <span>Flexist</span>
+  </div>
+  <div class="contact">
+    t.me/FlexistCrypto<br>
+    FlexistCrypto@gmail.com<br>
+    flexist.in
+  </div>
+</div>
+
+</div>
+</body>
+</html>

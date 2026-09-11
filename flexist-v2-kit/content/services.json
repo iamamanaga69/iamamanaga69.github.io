@@ -1,0 +1,83 @@
+{
+  "_note": "Six real services. `summary` is the one-line version for Home and list rows; `body` is the long version, for the detail page only. Home shows the four `primary: true` items. Do not print `body` on Home.",
+  "services": [
+    {
+      "id": "community",
+      "order": 1,
+      "primary": true,
+      "title": "Community Management",
+      "summary": "Telegram and Discord set up, moderated, and kept active — so joins turn into people who show up.",
+      "body": [
+        "A Telegram group isn't a community. People stick around when admins reply fast, the rules are clear, and there's a reason to keep talking.",
+        "We set up your Telegram and Discord, run the moderation, keep the content moving, and give people something to do — shaped around where your project is right now."
+      ],
+      "whatYouGet": ["Telegram and Discord setup plan", "Moderation guide and response flow", "Community activation calendar", "Weekly health notes"],
+      "proofPoint": "unielon-wallet"
+    },
+    {
+      "id": "india-entry",
+      "order": 2,
+      "primary": true,
+      "title": "India Market Entry",
+      "summary": "A channel map and a 90-day plan built around how Indian users actually find projects.",
+      "body": [
+        "India isn't one audience. People find projects through Telegram groups, YouTube, X, regional communities, and friends who vouch for them.",
+        "We look at your project, your stage, who you're trying to reach, and your budget — then pick the India channels that fit and the order to launch them in."
+      ],
+      "whatYouGet": ["India opportunity review", "Channel and audience map", "90-day action plan", "Simple progress signals"],
+      "proofPoint": "uxuy-wallet"
+    },
+    {
+      "id": "kol",
+      "order": 3,
+      "primary": true,
+      "title": "Creator & KOL Campaigns",
+      "summary": "Creator mixes across Indian crypto YouTube, X, and Telegram, each briefed around one action.",
+      "body": [
+        "Follower counts don't sell anything. The right creator comes down to who their audience actually trusts, what format they post in, what language they speak, and the exact action you want people to take.",
+        "Every campaign has one job — awareness, education, launch traffic, product usage, or steady credibility. It reads like it belongs in India, not something imported."
+      ],
+      "whatYouGet": ["Creator shortlist", "Campaign brief and schedule", "Regional creator mix", "Post-campaign review"],
+      "proofPoint": "lucky-dragon"
+    },
+    {
+      "id": "ambassadors",
+      "order": 4,
+      "primary": true,
+      "title": "Ambassador Programs",
+      "summary": "Recruit, train, task, and score ambassadors who do useful work instead of spam.",
+      "body": [
+        "India has plenty of motivated Web3 advocates. Most ambassador programs still fail because they pay people to spam instead of do useful work.",
+        "We recruit and onboard the right people, hand them clear tasks, train them, set the rewards, and report back so you can see who's actually contributing."
+      ],
+      "whatYouGet": ["Recruitment criteria", "Ambassador guide", "Contribution scorecard", "Monthly recognition plan"],
+      "proofPoint": "maestro-bots"
+    },
+    {
+      "id": "partnerships",
+      "order": 5,
+      "primary": false,
+      "title": "Partnership Development",
+      "summary": "Collabs, community swaps, and ecosystem introductions — checked for real fit first.",
+      "body": [
+        "Web3 growth comes from relationships. The right communities, projects, launch partners, and distribution channels get you results no standalone ad campaign can.",
+        "We check every relationship for real fit before spending your time on it."
+      ],
+      "whatYouGet": ["Partner opportunity map", "Outreach and follow-through", "Campaign collaboration briefs", "Pipeline tracking"],
+      "proofPoint": "rrg-ventures"
+    },
+    {
+      "id": "consulting",
+      "order": 6,
+      "primary": false,
+      "title": "Growth Consulting",
+      "summary": "Straight answers on where the India budget goes, before you scale spend.",
+      "body": [
+        "Sometimes what you need first is clarity. Where should the India budget go? Why is the community quiet? Which channel launches first? What does a realistic 90 days actually look like?",
+        "You leave with an action plan, not a generic report."
+      ],
+      "whatYouGet": ["Growth review", "Priority list", "Action plan", "Founder strategy session"],
+      "proofPoint": null
+    }
+  ]
+}

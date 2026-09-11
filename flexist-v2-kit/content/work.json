@@ -1,0 +1,56 @@
+{
+  "_framing": "These are engagements the founder personally ran, not corporate contracts signed by a Flexist entity. Label the section honestly — 'Where the work was done' or 'Operator history' — and give each entry a role line. Overstating this into 'our clients' is the one thing that would make the whole site unbelievable.",
+  "_homeSelection": ["unielon-wallet", "uxuy-wallet", "maestro-bots"],
+  "_todo": "rrg-ventures and fabwelt carry vague traction lines ('massive early traction', 'large active user base'). Either replace with a real number or cut the metric and keep only role + years. Do not leave a vague superlative on the page.",
+  "entries": [
+    {
+      "id": "unielon-wallet",
+      "client": "Unielon Wallet",
+      "years": "2022 – 2023",
+      "role": "Community & Social Lead",
+      "outcome": "Grew the community to 10,000+ real active investing members with zero bots, trading in the Doge ecosystem.",
+      "metric": { "value": "10,000+", "label": "real members, zero bots" }
+    },
+    {
+      "id": "uxuy-wallet",
+      "client": "UXUY Wallet",
+      "years": "2023 – 2024",
+      "role": "Lead Operations Operator",
+      "outcome": "Supported Telegram growth to 1.1M+ members and ran the community through their USDT gas-fee integration.",
+      "metric": { "value": "1.1M+", "label": "Telegram members supported" }
+    },
+    {
+      "id": "maestro-bots",
+      "client": "Maestro Bots",
+      "years": "2024 – present",
+      "role": "Indian Community Lead",
+      "outcome": "Built the Indian community to 1,350+ members with 250+ regular posters trading daily.",
+      "metric": { "value": "250+", "label": "daily active posters" }
+    },
+    {
+      "id": "lucky-dragon",
+      "client": "Lucky Dragon",
+      "years": "2024 – 2025",
+      "role": "Sole Marketer",
+      "outcome": "Took the project to 200+ unique holders and a market cap near $1M before the project quieted.",
+      "metric": { "value": "200+", "label": "unique holders" },
+      "_note": "Keep the 'before the project quieted' clause. Publishing an outcome that did not last is unusual, and it is exactly what makes the other four entries credible."
+    },
+    {
+      "id": "rrg-ventures",
+      "client": "RRG Ventures",
+      "years": "2021 – 2022",
+      "role": "Co-Founder & Collab Lead",
+      "outcome": "Worked directly with 9+ incubation-stage Web3 projects.",
+      "metric": { "value": "9+", "label": "projects incubated" }
+    },
+    {
+      "id": "fabwelt",
+      "client": "Fabwelt",
+      "years": "2020 – 2021",
+      "role": "Social & Content Manager",
+      "outcome": "Ran social channels and content through Fabwelt's peak growth period.",
+      "metric": null
+    }
+  ]
+}

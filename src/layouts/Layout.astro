@@ -17,6 +17,9 @@ interface Props {
   robots?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   preloadImage?: string;
+  ogType?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
 const {
@@ -28,6 +31,9 @@ const {
   robots = 'index, follow',
   schema,
   preloadImage,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
 } = Astro.props;
 
 const schemaJson = schema ? JSON.stringify(schema) : '';
@@ -47,7 +53,8 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   <meta name="robots" content={robots}>
 
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
+  <meta property="og:type" content={ogType}>
+  <meta property="og:locale" content="en_IN">
   <meta property="og:site_name" content="Flexist">
   <meta property="og:url" content={canonical}>
   <meta property="og:title" content={title}>
@@ -55,13 +62,17 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
   <meta property="og:image" content={ogImage}>
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
+  {publishedTime && <meta property="article:published_time" content={publishedTime}>}
+  {modifiedTime && <meta property="article:modified_time" content={modifiedTime}>}
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@flexistcrypto">
   <meta name="twitter:url" content={canonical}>
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={ogImage}>
+  <meta name="theme-color" content="#020408">
   
   <link rel="icon" type="image/png" href="/assets/images/flexist-avatar-192.png">
   {preloadImage && <link rel="preload" href={preloadImage} as="image">}
@@ -99,7 +110,7 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
           <a class={pageId === 'home' ? 'active' : ''} href="/">Home</a>
           <a class={pageId === 'flexistlabs' ? 'active' : ''} href="/flexistlabs">FlexistLabs</a>
           <a class={pageId === 'services' ? 'active' : ''} href="/services">Services</a>
-          <a class={pageId === 'resources' ? 'active' : ''} href="/resources">Resources</a>
+          <a class={['resources', 'blog'].includes(pageId) ? 'active' : ''} href="/resources/blog">Resources</a>
           
           <div class={`nav-group ${['plans', 'india-entry', 'india-growth', 'india-partner'].includes(pageId) ? 'active' : ''}`}>
             <a class={`nav-group-label ${['plans', 'india-entry', 'india-growth', 'india-partner'].includes(pageId) ? 'active' : ''}`} href="/plans">Plans</a>
@@ -173,7 +184,7 @@ const schemaJson = schema ? JSON.stringify(schema) : '';
               <a href="/flexistlabs">FlexistLabs</a>
               <a href="/services">Growth Services</a>
               <a href="/plans">Plans & Pricing</a>
-              <a href="/resources">Resources</a>
+              <a href="/resources/blog">Resources</a>
               <a href="/inquiry">Founder Inquiry</a>
             </div>
             <div class="footer-group">

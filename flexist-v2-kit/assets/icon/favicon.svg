@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flexist">
+  <title>Flexist</title>
+  <!-- Own ground so the mark reads on both light and dark browser chrome.
+       Replace #00E5A0 with the accent chosen for the build. -->
+  <rect width="64" height="64" rx="12" fill="#08090C"/>
+  <path fill="#00E5A0" d="M16 14 H48 L42 22 H26 V30 H44 L38 38 H26 V50 H16 Z"/>
+</svg>

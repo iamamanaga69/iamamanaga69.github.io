@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Static OG fallback / layout reference for the dynamic /api/og route.
+       Safe area is the inner 1120×550. Keep the headline to two lines, ~46
+       characters each. Accent (#00E5A0) appears exactly twice: the mark and the
+       rule. Convert <text> to outlines if you ship this file as-is. -->
+  <rect width="1200" height="630" fill="#08090C"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#FFFFFF" stroke-opacity="0.10"/>
+  <g transform="translate(80,78) scale(0.75)">
+    <path fill="#00E5A0" d="M13 10 H51 L45 18 H21 V28 H43 L37 36 H21 V54 H13 Z"/>
+  </g>
+  <text x="132" y="118" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="20"
+        letter-spacing="3" fill="#FFFFFF" fill-opacity="0.55">FLEXIST</text>
+  <text x="80" y="330" font-family="'Bricolage Grotesque',system-ui,sans-serif" font-size="76"
+        font-weight="600" letter-spacing="-2.5" fill="#F4F6F8">India&#8217;s Web3 marketing</text>
+  <text x="80" y="412" font-family="'Bricolage Grotesque',system-ui,sans-serif" font-size="76"
+        font-weight="600" letter-spacing="-2.5" fill="#F4F6F8">&amp; community growth agency</text>
+  <rect x="80" y="470" width="64" height="2" fill="#00E5A0"/>
+  <text x="80" y="540" font-family="'JetBrains Mono',ui-monospace,monospace" font-size="22"
+        letter-spacing="1" fill="#FFFFFF" fill-opacity="0.45">flexist.in</text>
+</svg>

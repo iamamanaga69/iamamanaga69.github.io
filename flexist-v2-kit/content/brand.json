@@ -1,0 +1,27 @@
+{
+  "name": "Flexist",
+  "domain": "flexist.in",
+  "url": "https://flexist.in",
+  "category": "Web3 marketing & community-growth agency",
+  "oneLine": "India's Web3 marketing & community growth agency.",
+  "whatItIs": "The India growth partner for global crypto projects — Telegram community management, KOL and creator campaigns, ambassador programs, and India market entry.",
+  "sellsTo": "Web3 founders, protocols, wallets, and exchanges expanding into India.",
+  "primaryCta": { "label": "Work with us", "href": "/contact" },
+  "secondaryCta": { "label": "See the work", "href": "/work" },
+  "contact": {
+    "email": "FlexistCrypto@gmail.com",
+    "telegram": { "handle": "@FlexistCrypto", "url": "https://t.me/FlexistCrypto" },
+    "x": { "handle": "@flexistcrypto", "url": "https://x.com/flexistcrypto" },
+    "linktree": { "url": "https://linktr.ee/FlexistWeb3" }
+  },
+  "voice": {
+    "rules": [
+      "Short declarative sentences. One idea per sentence.",
+      "Name the client, give the exact number, state the year.",
+      "No superlatives, no adjective stacking, no exclamation marks.",
+      "Contractions are fine. Corporate hedging is not.",
+      "Never claim a result that cannot be checked."
+    ],
+    "bannedWords": ["elevate", "unlock", "seamless", "empower", "leverage", "cutting-edge", "revolutionary", "game-changing", "supercharge", "transform your", "take your brand to the moon"]
+  }
+}

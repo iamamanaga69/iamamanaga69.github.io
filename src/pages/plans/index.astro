@@ -2,6 +2,31 @@
 import Layout from '../../layouts/Layout.astro';
 import plansData from '../../data/plans.json';
 import '../../styles/plans.css';
+
+const plansSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  'name': 'Flexist India Growth Plans',
+  'description': 'Bundled Web3 growth plans for India market entry',
+  'numberOfItems': 3,
+  'itemListElement': plansData.plans.map((plan: any, idx: number) => ({
+    '@type': 'ListItem',
+    'position': idx + 1,
+    'item': {
+      '@type': 'Service',
+      'name': plan.name,
+      'description': plan.description || `${plan.name} plan for India Web3 growth`,
+      'provider': { '@type': 'Organization', 'name': 'Flexist', 'url': 'https://flexist.in' },
+      'offers': {
+        '@type': 'Offer',
+        'price': plan.price_one,
+        'priceCurrency': 'USD',
+        'availability': 'https://schema.org/InStock',
+        'url': `https://flexist.in/plans/${plan.id}`
+      }
+    }
+  }))
+};
 ---
 
 <Layout
@@ -9,6 +34,7 @@ import '../../styles/plans.css';
   description="Simple bundled plans for India Web3 growth. Entry, Growth, and Partner tiers with clear deliverables."
   canonical="https://flexist.in/plans"
   pageId="plans"
+  schema={plansSchema}
 >
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com">

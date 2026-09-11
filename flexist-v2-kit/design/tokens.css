@@ -1,0 +1,92 @@
+/* Flexist — design tokens. Paste into globals.css, above everything else.
+   Rules that keep this from drifting into template territory:
+     • three greys, three inks, one accent. Nothing else gets a colour.
+     • the accent is defined once, here. Changing this line changes the brand.
+     • radii stop at 8px. Borders are always exactly 1px.
+     • four type sizes plus one mono label size. If you need a fifth, you are
+       solving a layout problem with type.                                     */
+
+:root {
+  color-scheme: dark;
+
+  /* ── ground ───────────────────────────────────────────────────────────── */
+  --ground-0: #08090C;              /* page                                  */
+  --ground-1: #0C0E12;              /* raised panel                          */
+  --ground-2: #12151A;              /* input, hover, active row              */
+
+  /* ── ink ──────────────────────────────────────────────────────────────── */
+  --ink-0: #F4F6F8;                 /* headings, primary body                */
+  --ink-1: #A2A9B4;                 /* secondary body                        */
+  --ink-2: #6B7280;                 /* mono labels, meta, disabled           */
+
+  /* ── line — hairlines instead of shadows, always 1px ──────────────────── */
+  --line-0: rgb(255 255 255 / 0.08);
+  --line-1: rgb(255 255 255 / 0.14);
+
+  /* ── accent — one hue, target under 5% of visible surface ─────────────── */
+  --accent: #00E5A0;                /* signal green. Not cyan, never purple. */
+  --accent-ink: #04150F;            /* text placed on the accent             */
+  --accent-wash: rgb(0 229 160 / 0.10);
+
+  --focus: #00E5A0;                 /* focus ring, 2px offset 2px            */
+
+  /* ── type ─────────────────────────────────────────────────────────────── */
+  --font-display: "Bricolage Grotesque", "Clash Display", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --size-display: clamp(2.75rem, 6.2vw, 5.25rem);
+  --size-title:   clamp(1.75rem, 3.1vw, 2.5rem);
+  --size-body:    1.0625rem;        /* 17px — 16 is the web default tell     */
+  --size-small:   0.875rem;
+  --size-label:   0.75rem;
+
+  --lh-display: 0.98;
+  --lh-title: 1.08;
+  --lh-body: 1.65;                  /* generous — this is what reads costly  */
+
+  --track-display: -0.03em;
+  --track-title: -0.02em;
+  --track-label: 0.14em;            /* mono labels, uppercase                */
+
+  /* ── space — a short scale, used strictly ─────────────────────────────── */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;  --s-5: 24px;
+  --s-6: 32px;  --s-7: 48px;  --s-8: 64px;  --s-9: 96px;  --s-10: 128px;
+  --space-section: clamp(6rem, 12vw, 11rem);
+
+  /* ── shape ────────────────────────────────────────────────────────────── */
+  --r-sm: 4px;  --r-md: 6px;  --r-lg: 8px;
+  --border: 1px;
+
+  /* ── measure ──────────────────────────────────────────────────────────── */
+  --container: 1180px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --measure: 66ch;                  /* max line length for prose             */
+  --nav-h: 68px;
+
+  /* ── motion ───────────────────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.16, 1, 0.30, 1);
+  --dur-1: 320ms;
+  --dur-2: 480ms;
+  --reveal-y: 12px;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --ground-0: #FBFBFA;
+  --ground-1: #FFFFFF;
+  --ground-2: #F2F3F1;
+  --ink-0: #0C0E12;
+  --ink-1: #4C525C;
+  --ink-2: #7A818C;
+  --line-0: rgb(12 14 18 / 0.10);
+  --line-1: rgb(12 14 18 / 0.18);
+  --accent: #00875A;                /* the dark-mode green fails AA on white */
+  --accent-ink: #FFFFFF;
+  --accent-wash: rgb(0 135 90 / 0.08);
+  --focus: #00875A;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-1: 1ms; --dur-2: 1ms; --reveal-y: 0px; }
+}

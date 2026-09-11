@@ -1,0 +1,12 @@
+{
+  "_note": "Seven service detail pages that already earn search traffic on the current site. Keep the slugs identical so nothing 301s. Each page stays short: what it is, what you get, one proof point, one CTA.",
+  "pages": [
+    { "slug": "telegram-community-management", "keyword": "Telegram Community Management", "h1": "Telegram Community Management for Crypto Projects in India", "service": "community" },
+    { "slug": "web3-marketing-agency-india", "keyword": "Web3 Marketing Agency India", "h1": "Web3 Marketing Agency India", "service": "india-entry" },
+    { "slug": "kol-influencer-marketing-india", "keyword": "Crypto KOL Marketing India", "h1": "Crypto KOL Marketing India", "service": "kol" },
+    { "slug": "crypto-marketing-agency-india", "keyword": "Crypto Marketing Agency India", "h1": "Crypto Marketing Agency India", "service": "india-entry" },
+    { "slug": "ambassador-program-management", "keyword": "Ambassador Program Management", "h1": "Web3 Ambassador Program Management", "service": "ambassadors" },
+    { "slug": "india-market-entry-services", "keyword": "India Web3 Marketing Services", "h1": "India Market Entry Services for Web3 Projects", "service": "india-entry" },
+    { "slug": "web3-community-building", "keyword": "Web3 Community Building", "h1": "Web3 Community Building for India Growth", "service": "community" }
+  ]
+}

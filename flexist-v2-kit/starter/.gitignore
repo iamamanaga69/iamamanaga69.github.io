@@ -1,0 +1,20 @@
+# Move this to the project root on the first commit — before any secret exists.
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# secrets — the important lines
+.env
+.env.local
+.env*.local
+
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+.DS_Store
+*.log
+npm-debug.log*
+coverage/

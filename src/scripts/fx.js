@@ -125,60 +125,6 @@ const FlexistFX = (() => {
   }
 
   // ---------------------------------------------------------------------------
-  // 3. Magnetic Button Effect
-  // ---------------------------------------------------------------------------
-
-  function initMagneticButtons() {
-    try {
-      if (shouldSkipHeavy() || isTouchDevice()) return;
-
-      const buttons = $$('.neon-button');
-      const MAX_SHIFT = 4; // px
-
-      buttons.forEach((btn) => {
-        const handleMove = (e) => {
-          const rect = btn.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-
-          // Normalised offset -1 … 1
-          const dx = (e.clientX - cx) / (rect.width / 2);
-          const dy = (e.clientY - cy) / (rect.height / 2);
-
-          const tx = clamp(dx * MAX_SHIFT, -MAX_SHIFT, MAX_SHIFT);
-          const ty = clamp(dy * MAX_SHIFT, -MAX_SHIFT, MAX_SHIFT);
-
-          btn.style.transform = `translate(${tx}px, ${ty}px)`;
-
-          // Expose mouse position for CSS glow
-          btn.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-          btn.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-        };
-
-        const handleLeave = () => {
-          btn.style.transition = 'transform 0.35s cubic-bezier(.25,.46,.45,.94)';
-          btn.style.transform = 'translate(0, 0)';
-          // Remove inline transition after it completes so it doesn't
-          // interfere with the mousemove transform.
-          const onEnd = () => {
-            btn.style.transition = '';
-            btn.removeEventListener('transitionend', onEnd);
-          };
-          btn.addEventListener('transitionend', onEnd);
-        };
-
-        btn.addEventListener('mousemove', handleMove);
-        btn.addEventListener('mouseleave', handleLeave);
-
-        onCleanup(() => {
-          btn.removeEventListener('mousemove', handleMove);
-          btn.removeEventListener('mouseleave', handleLeave);
-        });
-      });
-    } catch (_) { /* silent */ }
-  }
-
-  // ---------------------------------------------------------------------------
   // 4. Parallax Elements
   // ---------------------------------------------------------------------------
 
@@ -213,135 +159,6 @@ const FlexistFX = (() => {
       onScroll();
 
       onCleanup(() => window.removeEventListener('scroll', onScroll));
-    } catch (_) { /* silent */ }
-  }
-
-  // ---------------------------------------------------------------------------
-  // 5. Tilt Effect on Cards
-  // ---------------------------------------------------------------------------
-
-  function initCardTilt() {
-    try {
-      if (shouldSkipHeavy() || isTouchDevice()) return;
-
-      const MAX_ROT = 3; // degrees
-      const cards = $$('.glass-card.hoverable');
-
-      cards.forEach((card) => {
-        // Ensure perspective on parent
-        const parent = card.parentElement;
-        if (parent && !parent.style.perspective) {
-          parent.style.perspective = '800px';
-        }
-
-        const handleMove = (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          // Normalise to -1 … 1
-          const nx = (x / rect.width) * 2 - 1;
-          const ny = (y / rect.height) * 2 - 1;
-
-          // rotateX is driven by Y position (inverted), rotateY by X
-          const rotX = clamp(-ny * MAX_ROT, -MAX_ROT, MAX_ROT);
-          const rotY = clamp(nx * MAX_ROT, -MAX_ROT, MAX_ROT);
-
-          card.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        };
-
-        const handleLeave = () => {
-          card.style.transition =
-            'transform 0.5s cubic-bezier(.25,.46,.45,.94)';
-          card.style.transform = 'rotateX(0) rotateY(0)';
-          const onEnd = () => {
-            card.style.transition = '';
-            card.removeEventListener('transitionend', onEnd);
-          };
-          card.addEventListener('transitionend', onEnd);
-        };
-
-        card.addEventListener('mousemove', handleMove);
-        card.addEventListener('mouseleave', handleLeave);
-
-        onCleanup(() => {
-          card.removeEventListener('mousemove', handleMove);
-          card.removeEventListener('mouseleave', handleLeave);
-        });
-      });
-    } catch (_) { /* silent */ }
-  }
-
-  // ---------------------------------------------------------------------------
-  // 6. Mouse Glow Follower
-  // ---------------------------------------------------------------------------
-
-  function initMouseGlow() {
-    try {
-      if (shouldSkipHeavy() || isTouchDevice()) return;
-
-      const SIZE = 360; // px — radius of the glow
-      const glow = document.createElement('div');
-      glow.className = 'mouse-glow';
-      Object.assign(glow.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: `${SIZE}px`,
-        height: `${SIZE}px`,
-        borderRadius: '50%',
-        background:
-          'radial-gradient(circle, var(--accent-blue, rgba(41,121,255,0.12)) 0%, transparent 70%)',
-        opacity: '0.04',
-        pointerEvents: 'none',
-        zIndex: '-1',
-        willChange: 'transform',
-        filter: 'blur(40px)',
-        transform: 'translate(-50%, -50%) translate(0px, 0px)',
-      });
-
-      document.body.appendChild(glow);
-
-      // Current & target position
-      let mx = window.innerWidth / 2;
-      let my = window.innerHeight / 2;
-      let cx = mx;
-      let cy = my;
-      let rafId = null;
-      let running = false;
-
-      const tick = () => {
-        cx = lerp(cx, mx, 0.08);
-        cy = lerp(cy, my, 0.08);
-        glow.style.transform = `translate(-50%, -50%) translate(${cx}px, ${cy}px)`;
-        // Idle out once we've caught up to the pointer — no point re-compositing
-        // an expensive blurred gradient every frame while the mouse is still.
-        if (Math.abs(cx - mx) < 0.5 && Math.abs(cy - my) < 0.5) {
-          running = false;
-          return;
-        }
-        rafId = requestAnimationFrame(tick);
-      };
-
-      const start = () => {
-        if (running) return;
-        running = true;
-        rafId = requestAnimationFrame(tick);
-      };
-
-      const onMove = (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        start();
-      };
-
-      window.addEventListener('mousemove', onMove, { passive: true });
-
-      onCleanup(() => {
-        window.removeEventListener('mousemove', onMove);
-        cancelAnimationFrame(rafId);
-        glow.remove();
-      });
     } catch (_) { /* silent */ }
   }
 
@@ -579,11 +396,8 @@ const FlexistFX = (() => {
       initHeroTextReveal();
       initSmoothCounters();
 
-      // --- Heavy effects (skipped for low-end / reduced-motion) ---
-      initMagneticButtons();
+      // --- Light effects (skipped for low-end / reduced-motion) ---
       initParallax();
-      initCardTilt();
-      initMouseGlow();
     } catch (_) { /* silent */ }
   }
 
@@ -605,10 +419,7 @@ const FlexistFX = (() => {
     destroy,
     initStaggerReveals,
     initScrollProgress,
-    initMagneticButtons,
     initParallax,
-    initCardTilt,
-    initMouseGlow,
     initHeroTextReveal,
     initSmoothCounters,
     initPageLoad,

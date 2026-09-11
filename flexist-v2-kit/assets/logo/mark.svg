@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flexist">
+  <title>Flexist</title>
+  <!-- Monogram F. Both arms terminate on a 45° cut — the one deliberate device.
+       fill is currentColor, so it re-colours with the theme. Optically centred
+       in the 64-grid (13/13 side margins, 10/10 top/bottom). -->
+  <path fill="currentColor" d="M13 10 H51 L45 18 H21 V28 H43 L37 36 H21 V54 H13 Z"/>
+</svg>
