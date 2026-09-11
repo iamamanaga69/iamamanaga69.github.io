@@ -257,9 +257,9 @@ p {
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.8rem);
-  line-height: 1.08;
-  margin-bottom: 20px;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  line-height: 1.15;
+  margin-bottom: 16px;
 }
 
 .section-copy {
@@ -311,8 +311,8 @@ p {
 }
 
 .page-title {
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
-  line-height: 0.95;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1;
   margin-bottom: 26px;
   text-transform: uppercase;
 }
@@ -927,7 +927,7 @@ html[data-theme="light"] .theme-icon-moon {
   }
 
   .page-title {
-    font-size: clamp(3.35rem, 18vw, 5rem);
+    font-size: clamp(1.8rem, 10vw, 2.6rem);
   }
 
   .nav-actions .ghost-button {
@@ -1000,7 +1000,7 @@ html[data-theme="light"] .theme-icon-moon {
 
 @media (max-width: 480px) {
   .page-title {
-    font-size: clamp(2.2rem, 12vw, 3.2rem);
+    font-size: clamp(1.6rem, 9vw, 2.2rem);
   }
 
   .section {

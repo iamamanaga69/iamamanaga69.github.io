@@ -144,8 +144,8 @@
 }
 
 .service-block h2 {
-  font-size: clamp(2rem, 4vw, 3.65rem);
-  line-height: 0.98;
+  font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+  line-height: 1.05;
   margin: 12px 0 20px;
 }
 
