@@ -1,0 +1,383 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const calUsername = 'flexist';
+const eventType = '30min'; // Default to 30 min meeting
+const calUrl = `https://cal.com/${calUsername}/${eventType}`;
+---
+
+<Layout
+  title="Book a Strategy Call | Flexist"
+  description="Schedule a free 30-minute strategy call with Flexist to discuss your India growth, community building, or Web3 marketing needs."
+  canonical="https://flexist.in/book"
+  ogImage="https://flexist.in/assets/images/flexist-og.png"
+  pageId="book"
+>
+  <main class="book-page">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="gradient-text">Book a Strategy Call</span>
+          </h1>
+          <p class="hero-subtitle">
+            Get clarity on your India growth strategy. 30 minutes, zero pressure.
+          </p>
+          <div class="hero-features">
+            <div class="feature-item">
+              <span class="feature-icon">⚡</span>
+              <span>30-minute focused session</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🎯</span>
+              <span>Actionable recommendations</span>
+            </div>
+            <div class="feature-item">
+              <span class="feature-icon">🤝</span>
+              <span>No sales pressure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+      <div class="container">
+        <div class="booking-wrapper">
+          <!-- Left: Info -->
+          <div class="booking-info">
+            <h2>What to expect</h2>
+            <div class="info-list">
+              <div class="info-item">
+                <div class="info-number">01</div>
+                <div class="info-content">
+                  <h3>Share your goals</h3>
+                  <p>Tell us about your project, India targets, and current challenges.</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-number">02</div>
+                <div class="info-content">
+                  <h3>Get strategic clarity</h3>
+                  <p>We'll identify your biggest opportunities and fastest path to growth.</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <div class="info-number">03</div>
+                <div class="info-content">
+                  <h3>Walk away with next steps</h3>
+                  <p>Leave with a clear action plan you can execute immediately.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="info-note">
+              <p><strong>Perfect for:</strong> Web3 founders planning India expansion, community leaders, and marketing teams who want expert guidance.</p>
+            </div>
+          </div>
+
+          <!-- Right: Cal.com Embed -->
+          <div class="booking-embed">
+            <iframe
+              src={calUrl}
+              width="100%"
+              height="800"
+              style="border: 0; border-radius: 12px;"
+              title="Schedule a call with Flexist"
+              allow="payment"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="container">
+        <h2>Common questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Is this call really free?</h3>
+            <p>Yes, completely free. It's a strategy session to see if we're a good fit. No sales pitch.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What if I need to reschedule?</h3>
+            <p>No problem. You'll get a confirmation email with a reschedule link. Life happens.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Do I need to prepare anything?</h3>
+            <p>Just bring your questions and goals. The more specific, the better we can help.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What if I'm not ready to start yet?</h3>
+            <p>That's fine. Many founders book calls months before starting. We're here when you're ready.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alternative CTA -->
+    <section class="alt-cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Prefer to reach out first?</h2>
+          <p>Send us a message or check our services page to learn more about what we offer.</p>
+          <div class="cta-buttons">
+            <a href="/contact" class="ghost-button">Contact Us</a>
+            <a href="/services" class="ghost-button">View Services</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style is:inline>
+    .book-page {
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .hero-features {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+    }
+
+    /* Booking Section */
+    .booking-section {
+      padding: 60px 0 80px;
+    }
+
+    .booking-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .booking-info h2 {
+      font-size: 2rem;
+      margin-bottom: 32px;
+      color: var(--color-text);
+    }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .info-number {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--color-accent-purple), var(--color-accent-blue));
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      border-radius: 8px;
+    }
+
+    .info-content h3 {
+      font-size: 1.125rem;
+      margin-bottom: 8px;
+      color: var(--color-text);
+    }
+
+    .info-content p {
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .info-note {
+      padding: 20px;
+      background: var(--color-glass);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .info-note p {
+      margin: 0;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .info-note strong {
+      color: var(--color-text);
+    }
+
+    .booking-embed {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--color-border);
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 80px 0;
+      background: var(--bg-glass);
+    }
+
+    .faq-section h2 {
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 48px;
+      color: var(--text-primary);
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+    }
+
+    .faq-item h3 {
+      font-size: 1.125rem;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .faq-item p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Alternative CTA */
+    .alt-cta-section {
+      padding: 80px 0;
+    }
+
+    .cta-box {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 48px;
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .cta-box h2 {
+      font-size: 1.75rem;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .cta-box p {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .booking-wrapper {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .booking-embed iframe {
+        height: 700px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-section {
+        padding: 60px 0 40px;
+      }
+
+      .hero-features {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .booking-section {
+        padding: 40px 0 60px;
+      }
+
+      .booking-embed iframe {
+        height: 600px;
+      }
+
+      .faq-section {
+        padding: 60px 0;
+      }
+
+      .alt-cta-section {
+        padding: 60px 0;
+      }
+
+      .cta-box {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</Layout>
