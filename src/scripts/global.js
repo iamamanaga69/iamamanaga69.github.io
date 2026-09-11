@@ -183,7 +183,7 @@ const Flexist = (() => {
               <p class="footer-copy">India growth support for Web3 projects that want real users, active communities, and long-term trust.</p>
               <div class="social-links">
                 ${socialItems.map((item) => socialLink(item, true)).join("")}
-                <a class="social-icon" href="mailto:FlexistCrypto@gmail.com" aria-label="Email">
+                <a class="social-icon" href="mailto:owner@flexist.in" aria-label="Email">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v12H4V6Zm0 0 8 7 8-7"/></svg><span>Email</span>
                 </a>
               </div>

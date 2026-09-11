@@ -416,7 +416,7 @@ STEP 7: FOUNDER CONTACT
 - Additional Context: ${formData.context || "None provided"}`;
 
     const subject = `Flexist Inquiry — ${formData.projectName}`;
-    document.getElementById("ticketEmail").href = `mailto:FlexistCrypto@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    document.getElementById("ticketEmail").href = `mailto:owner@flexist.in?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     
     // Set Telegram Group Bot start link with ticket ID parameter
     const discussBtn = document.getElementById("ticketDiscussTelegram");
