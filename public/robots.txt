@@ -2,4 +2,13 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
+User-agent: GPTBot
+Disallow: /admin/
+
+User-agent: ClaudeBot
+Disallow: /admin/
+
+User-agent: PerplexityBot
+Disallow: /admin/
+
 Sitemap: https://flexist.in/sitemap.xml

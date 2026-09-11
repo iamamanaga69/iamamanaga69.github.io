@@ -70,47 +70,26 @@ const servicesFaqSchema = {
   <main id="main-content">
     <section class="page-hero"><div class="container page-hero-content"><p class="page-kicker">Services | Web3 Marketing India</p><h1 class="page-title">Web3 Marketing Services<br><span class="gradient-text">for India Expansion</span></h1><p class="page-lede">Pick the growth support your project needs now. Flexist can help with one service or build the full India expansion plan.</p><div class="chip-row services-sticky-tabs" id="servicesTabs"><a class="tag-chip active" href="#community">Community</a><a class="tag-chip" href="#india-entry">Expansion</a><a class="tag-chip" href="#kol">Creators</a><a class="tag-chip" href="#ambassadors">Ambassadors</a><a class="tag-chip" href="#partnerships">Partnerships</a><a class="tag-chip" href="#consulting">Consulting</a></div></div></section>
     <section class="section"><div class="container services-list">
-      
-      {servicesData.services.map((service, idx) => {
-        const isOdd = idx % 2 === 0;
-        return (
-          <>
-            <article class={`glass-card service-block ${isOdd ? 'odd-service' : 'even-service'}`} id={service.id}>
-              <span class="watermark-number">{String(idx + 1).padStart(2, '0')}</span>
-              {isOdd ? (
-                <>
-                  <div class="service-main">
-                    <span class="service-index">{service.index}</span>
-                    <h2>{service.title}</h2>
-                    {service.description.split('\n\n').map(p => <p>{p}</p>)}
-                  </div>
-                  <div class="service-deliverables">
-                    <h3>What You Get</h3>
-                    <ul class="value-list">
-                      {service.what_you_get.map(item => <li>{item}</li>)}
-                    </ul>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div class="service-deliverables">
-                    <h3>What You Get</h3>
-                    <ul class="value-list">
-                      {service.what_you_get.map(item => <li>{item}</li>)}
-                    </ul>
-                  </div>
-                  <div class="service-main">
-                    <span class="service-index">{service.index}</span>
-                    <h2>{service.title}</h2>
-                    {service.description.split('\n\n').map(p => <p>{p}</p>)}
-                  </div>
-                </>
-              )}
-            </article>
-            {idx < servicesData.services.length - 1 && <div class="glowing-divider"></div>}
-          </>
-        )
-      })}
+
+      {servicesData.services.map((service, idx) => (
+        <>
+          <article class="glass-card service-block" id={service.id}>
+            <span class="watermark-number">{String(idx + 1).padStart(2, '0')}</span>
+            <div class="service-main">
+              <span class="service-index">{service.index}</span>
+              <h2>{service.title}</h2>
+              {service.description.split('\n\n').map(p => <p>{p}</p>)}
+            </div>
+            <div class="service-deliverables">
+              <h3>What You Get</h3>
+              <ul class="value-list">
+                {service.what_you_get.map(item => <li>{item}</li>)}
+              </ul>
+            </div>
+          </article>
+          {idx < servicesData.services.length - 1 && <div class="glowing-divider"></div>}
+        </>
+      ))}
 
     </div></section>
     

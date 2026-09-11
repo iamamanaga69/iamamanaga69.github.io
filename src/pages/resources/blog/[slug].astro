@@ -1,4 +1,4 @@
-﻿---
+---
 import Layout from '../../../layouts/Layout.astro';
 import blogArticles from '../../../data/blogArticles.json';
 
@@ -19,6 +19,9 @@ const articleSchema = {
   '@type': 'Article',
   headline: article.title,
   description: article.description,
+  datePublished: article.datePublished || '2026-09-01',
+  dateModified: article.dateModified || '2026-09-11',
+  image: article.image || 'https://flexist.in/assets/images/flexist-og.png',
   author: { '@type': 'Organization', name: 'Flexist' },
   publisher: {
     '@type': 'Organization',
@@ -27,6 +30,36 @@ const articleSchema = {
   },
   mainEntityOfPage: canonical
 };
+
+// Simple markdown-to-HTML converter (handles H2, H3, paragraphs, lists, bold, links)
+function renderMarkdown(md: string): string {
+  if (!md) return '';
+  let html = md;
+  // Headings
+  html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+  // Bold
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  // Unordered lists
+  html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+  html = html.replace(/((?:<li>.*<\/li>\n?)+)/g, '<ul>$1</ul>');
+  // Ordered lists
+  html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
+  // Paragraphs (double newline)
+  html = html.replace(/\n\n/g, '</p><p>');
+  html = '<p>' + html + '</p>';
+  // Clean up empty paragraphs and fix nesting
+  html = html.replace(/<p>\s*<\/p>/g, '');
+  html = html.replace(/<p>\s*(<h[23]>)/g, '$1');
+  html = html.replace(/(<\/h[23]>)\s*<\/p>/g, '$1');
+  html = html.replace(/<p>\s*(<ul>)/g, '$1');
+  html = html.replace(/(<\/ul>)\s*<\/p>/g, '$1');
+  return html;
+}
 ---
 
 <Layout
@@ -35,6 +68,9 @@ const articleSchema = {
   canonical={canonical}
   pageId="resources"
   schema={articleSchema}
+  ogType="article"
+  publishedTime={article.datePublished}
+  modifiedTime={article.dateModified}
 >
   <main id="main-content">
     <article>
@@ -43,6 +79,13 @@ const articleSchema = {
           <p class="page-kicker">{article.cluster}</p>
           <h1 class="page-title">{article.title}</h1>
           <p class="page-lede">{article.intro}</p>
+          <div class="article-meta">
+            <span class="meta-item">By Flexist Team</span>
+            <span class="meta-sep">·</span>
+            <span class="meta-item">{article.datePublished || 'Sep 2026'}</span>
+            <span class="meta-sep">·</span>
+            <span class="meta-item">{Math.ceil((article.body || '').split(/\s+/).length / 200)} min read</span>
+          </div>
           <div class="button-row">
             <a class="neon-button" href={`/services/${article.service}`}>Relevant Service</a>
             <a class="ghost-button" href="/inquiry">Ask Flexist</a>
@@ -52,20 +95,16 @@ const articleSchema = {
 
       <section class="section">
         <div class="container split-layout">
-          <div class="manifesto-copy reveal">
-            <h2 class="section-title">What founders should understand first.</h2>
-            <p>{article.intro}</p>
-            <p>For Web3 projects, growth does not start when a post goes live. It starts when the user has enough context to trust the project, ask a good question, and take the next step. That is why Flexist connects community, creators, ambassadors, partnerships, and content instead of treating them as separate tasks.</p>
-            <h2>How this connects to India growth</h2>
-            <p>India is a social, community-led market. Users often discover projects through Telegram, YouTube, X, regional communities, and trusted peers. A strong plan turns those discovery points into a clear route: awareness, trust, joining, activation, retention, and advocacy.</p>
-            <h2>Founder action checklist</h2>
-            <ul class="value-list">
-              <li>Define the exact Indian user you want to reach.</li>
-              <li>Make sure Telegram or Discord can answer new-user questions quickly.</li>
-              <li>Choose creators by trust and fit, not only follower count.</li>
-              <li>Use ambassadors for useful contribution, not noise.</li>
-              <li>Track community signal weekly so campaigns improve over time.</li>
-            </ul>
+          <div class="manifesto-copy reveal blog-body">
+            {article.body ? (
+              <Fragment set:html={renderMarkdown(article.body)} />
+            ) : (
+              <Fragment>
+                <h2>What founders should understand first.</h2>
+                <p>{article.intro}</p>
+                <p>For Web3 projects, growth does not start when a post goes live. It starts when the user has enough context to trust the project, ask a good question, and take the next step.</p>
+              </Fragment>
+            )}
           </div>
           <aside class="glass-card reveal">
             <span class="section-label">Related Reading</span>
@@ -92,3 +131,57 @@ const articleSchema = {
     </article>
   </main>
 </Layout>
+
+<style>
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem 0 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  .meta-sep {
+    color: var(--accent-cyan);
+    opacity: 0.5;
+  }
+  .blog-body h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  .blog-body h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .blog-body p {
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+  }
+  .blog-body ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  .blog-body li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  .blog-body strong {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+  .blog-body a {
+    color: var(--accent-cyan);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .blog-body a:hover {
+    color: var(--accent-blue);
+  }
+</style>
