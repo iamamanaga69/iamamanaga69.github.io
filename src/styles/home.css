@@ -8,12 +8,12 @@
 }
 
 .hero-grid-premium {
-  grid-template-columns: minmax(0, 1.06fr) minmax(340px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
 }
 
 .hero-grid-premium .hero-title {
-  font-size: clamp(4rem, 11vw, 9.4rem);
-  line-height: 0.82;
+  font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+  line-height: 0.88;
   max-width: 940px;
 }
 
@@ -376,16 +376,16 @@
 }
 
 .hero-grid.hero-grid-premium {
-  grid-template-columns: minmax(0, 1.06fr) minmax(340px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
 }
 
 .hero-grid.hero-grid-premium .hero-title {
-  font-size: clamp(3.7rem, 9.6vw, 8.2rem);
-  line-height: 0.84;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 0.9;
 }
 
 .hero-grid.hero-grid-premium .hero-tagline {
-  font-size: clamp(1.35rem, 3vw, 2.45rem);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
 }
 
 .home-hero {
@@ -408,10 +408,10 @@
 }
 
 .hero-grid {
-  align-items: start;
+  align-items: center;
   display: grid;
   gap: 36px;
-  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.6fr);
 }
 
 #network-canvas {
@@ -441,10 +441,9 @@
   border: 1px solid var(--border-glow);
   border-radius: 18px;
   box-shadow: var(--glow-blue);
-  margin: 0;
+  margin: 0 auto;
   overflow: hidden;
   position: relative;
-  transform: rotate(1.8deg);
   z-index: 1;
 }
 
@@ -475,17 +474,17 @@
 }
 
 .hero-title {
-  font-size: clamp(4.9rem, 14vw, 11rem);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 800;
   letter-spacing: -0.028em;
-  line-height: 0.82;
+  line-height: 0.9;
   margin: 8px 0 28px;
   text-indent: 0;
 }
 
 .hero-tagline {
-  font-size: clamp(1.5rem, 3.5vw, 3rem);
-  line-height: 0.98;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  line-height: 1.1;
   margin-bottom: 18px;
   max-width: 740px;
 }
@@ -938,16 +937,19 @@
   .hero-grid.hero-grid-premium {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
+    align-items: center;
   }
 
   .hero-brand-art {
-    opacity: 0.24;
-    position: absolute;
-    right: -92px;
-    top: 108px;
-    transform: rotate(2deg);
-    width: 340px;
+    opacity: 1;
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
   }
 
   .hero-brand-art figcaption {
@@ -1315,8 +1317,8 @@
 /* Floating proof badge over the hero image */
 .hero-float-badge {
   position: absolute;
-  left: -14px;
-  bottom: -14px;
+  top: 14px;
+  right: 14px;
   display: grid;
   gap: 3px;
   padding: 12px 16px;
@@ -1392,7 +1394,7 @@
 }
 
 @media (max-width: 768px) {
-  .hero-float-badge { left: 10px; bottom: 10px; padding: 10px 13px; }
+  .hero-float-badge { top: 10px; right: 10px; padding: 10px 13px; }
   .hero-float-badge strong { font-size: 1.2rem; }
   [data-page="home"] .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   [data-page="home"] .metric-grid .stat-counter { border-right: 0; }
